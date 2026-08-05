@@ -50,11 +50,31 @@ function iso(s) {
 const IMG_ROOT = path.join(ROOT, 'assets', 'img', 'projects');
 const IMG_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
 
+// Case-insensitive by design: Windows dev machines don't care whether a file
+// is named "-Standalone.jpg" or "-standalone.jpg", but most live servers run
+// Linux, where those are two different files — a case mismatch here builds
+// fine and 404s only after deploy. Scanning the real directory listing and
+// matching on lowercase means whatever case the file actually has on disk is
+// what gets baked into the <img src>, so it works everywhere either way.
+var imgDirCache = {};
+function listImgDir(slug) {
+  if (!(slug in imgDirCache)) {
+    var dir = path.join(IMG_ROOT, slug);
+    imgDirCache[slug] = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+  }
+  return imgDirCache[slug];
+}
+
 function findImage(slug, name) {
-  for (var i = 0; i < IMG_EXTS.length; i++) {
-    var file = slug + '-' + name + IMG_EXTS[i];
-    if (fs.existsSync(path.join(IMG_ROOT, slug, file))) {
-      return 'assets/img/projects/' + slug + '/' + file;
+  var wantBase = (slug + '-' + name).toLowerCase();
+  var entries = listImgDir(slug);
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
+    var ext = path.extname(entry).toLowerCase();
+    if (IMG_EXTS.indexOf(ext) === -1) continue;
+    var base = entry.slice(0, entry.length - path.extname(entry).length).toLowerCase();
+    if (base === wantBase) {
+      return 'assets/img/projects/' + slug + '/' + entry; // preserve the real on-disk name/case
     }
   }
   return null;
