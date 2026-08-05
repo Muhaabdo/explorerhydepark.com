@@ -42,6 +42,35 @@ function iso(s) {
   return '⁦' + s + '⁩';
 }
 
+// Real-photo lookup: drop a file at
+// assets/img/projects/<slug>/<slug>-<name>.(jpg|jpeg|png|webp) and the next
+// build picks it up automatically — no HTML editing per image. Naming is the
+// project slug + the "type" (hero / gallery-1..6 / a unit's English type key
+// e.g. "apartment" / location), so every file is self-describing on disk.
+const IMG_ROOT = path.join(ROOT, 'assets', 'img', 'projects');
+const IMG_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
+
+function findImage(slug, name) {
+  for (var i = 0; i < IMG_EXTS.length; i++) {
+    var file = slug + '-' + name + IMG_EXTS[i];
+    if (fs.existsSync(path.join(IMG_ROOT, slug, file))) {
+      return 'assets/img/projects/' + slug + '/' + file;
+    }
+  }
+  return null;
+}
+
+/** Renders a real <img> when a matching file exists on disk, else the same
+ * placeholder box used everywhere else — callers don't need to branch. */
+function mediaSlot(slug, name, altText, placeholderText, icon, prefix, wrapperStyle) {
+  var found = findImage(slug, name);
+  var styleAttr = wrapperStyle ? ' style="' + wrapperStyle + '"' : '';
+  if (found) {
+    return '<img class="real-img"' + styleAttr + ' src="' + (prefix || '') + found + '" alt="' + escapeHtml(altText) + '" loading="lazy">';
+  }
+  return '<div class="img-slot"' + styleAttr + '><i class="fa-solid ' + (icon || 'fa-image') + '"></i><span>' + escapeHtml(placeholderText) + '</span></div>';
+}
+
 function slugifyType(type) {
   return String(type).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
@@ -179,7 +208,7 @@ function unitsMarkup(p) {
     var countTag = (u.count != null) ? '<span class="tag">متاح ' + u.count + '</span>' : '';
     return (
       '        <div class="card">\n' +
-      '          <div class="card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(u.placeholder) + '</span></div></div>\n' +
+      '          <div class="card__media">' + mediaSlot(p.slug, u.key, u.name + ' — ' + p.nameEn, u.placeholder, 'fa-image', '../') + '</div>\n' +
       '          <div class="card__body">\n' +
       '            <h3 class="card__title"><bdi class="en">' + escapeHtml(u.name) + '</bdi></h3>\n' +
       '            <div class="card__tags"><span class="tag">' + escapeHtml(u.area) + '</span>' + roomsTag + countTag + '</div>\n' +
@@ -232,7 +261,9 @@ function galleryMarkup(p) {
   var items = [1, 2, 3, 4, 5, 6];
   return items.map(function (i) {
     return (
-      '        <div class="gallery__item"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة ' + i + ' من ' + iso(p.nameEn) + '</span></div></div>'
+      '        <div class="gallery__item">' +
+      mediaSlot(p.slug, 'gallery-' + i, p.nameEn + ' — ' + i, 'صورة ' + i + ' من ' + iso(p.nameEn), 'fa-image', '../') +
+      '</div>'
     );
   }).join('\n');
 }
@@ -319,7 +350,7 @@ function page(p, allMerged) {
 '<body>\n\n' +
 nav() + '\n\n' +
 '  <section class="hero">\n' +
-'    <div class="hero__bg"><div class="img-slot" style="position:absolute;inset:0"><i class="fa-solid fa-image"></i><span>' + escapeHtml(p.heroPlaceholder) + '</span></div></div>\n' +
+'    <div class="hero__bg">' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', '../', 'position:absolute;inset:0') + '</div>\n' +
 '    <div class="hero__overlay"></div>\n' +
 '    <div class="hero__content">\n' +
 '      <div class="hero__eyebrow">Explorer Hyde Park</div>\n' +
@@ -400,7 +431,7 @@ amenitiesMarkup(p) + '\n' +
 '  <section class="section">\n' +
 '    <h2 class="section-title">الموقع</h2>\n' +
 '    <div class="location-grid">\n' +
-'      <div class="location-map"><div class="img-slot"><i class="fa-solid fa-map-location-dot"></i><span>خريطة / صورة الموقع</span></div></div>\n' +
+'      <div class="location-map">' + mediaSlot(p.slug, 'location', p.areaAr + ' — ' + p.nameEn, 'خريطة / صورة الموقع', 'fa-map-location-dot', '../') + '</div>\n' +
 '      <div style="display:flex;flex-direction:column;gap:14px">\n' +
 '        <h3 style="font-size:22px">' + escapeHtml(p.areaAr) + '</h3>\n' +
 '        <p style="margin:0;font-size:17px;line-height:1.7;opacity:.85">' + escapeHtml(p.locationText) + '</p>\n' +
@@ -433,12 +464,12 @@ footer() + '\n\n' +
 
 /** The one project-card partial — used on the homepage grid AND the related-projects
  * carousel on each project page, so both places always show the identical card. */
-function projectCardMarkup(p, href, extraClass) {
+function projectCardMarkup(p, href, extraClass, imgPrefix) {
   return (
     '    <a href="' + href + '" class="card project-card' + (extraClass ? ' ' + extraClass : '') + '" style="text-decoration:none;color:inherit">\n' +
     '      <div class="card__media project-card__media">\n' +
     '        <span class="badge-area">' + escapeHtml(p.areaAr) + '</span>\n' +
-    '        <div class="img-slot" style="position:absolute;inset:0"><i class="fa-solid fa-image"></i><span>' + escapeHtml(p.heroPlaceholder) + '</span></div>\n' +
+    '        ' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', imgPrefix, 'position:absolute;inset:0') + '\n' +
     '      </div>\n' +
     '      <div class="card__body project-card__body">\n' +
     '        <span class="project-card__name"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></span>\n' +
@@ -475,7 +506,7 @@ function relatedProjectsMarkup(p, allMerged) {
   var others = allMerged.filter(function (o) { return o.slug !== p.slug; });
   if (!others.length) return '';
   var cards = others.map(function (o) {
-    return projectCardMarkup(o, './' + o.slug + '.html', 'related-carousel__card');
+    return projectCardMarkup(o, './' + o.slug + '.html', 'related-carousel__card', '../');
   }).join('');
   return (
     '  <section class="section section--gray" style="padding-inline:0">\n' +
@@ -489,6 +520,54 @@ function relatedProjectsMarkup(p, allMerged) {
   );
 }
 
+/** Live checklist of exactly which image files each project still needs —
+ * regenerated every build so it always matches the current unit types. */
+function imageChecklist(merged) {
+  var lines = [
+    '# Project photos — drop-in checklist',
+    '',
+    'Auto-generated by `node tools/build-pages.js` — do not hand-edit, it will',
+    'be overwritten. Add files, rerun the build, and the ✅/⬜ marks update and',
+    'the real photo replaces the placeholder box on the site automatically.',
+    '',
+    'Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).',
+    '',
+  ];
+  merged.forEach(function (p) {
+    var dir = 'assets/img/projects/' + p.slug + '/';
+    lines.push('## ' + p.nameEn + '  (`' + dir + '`)', '');
+    var wants = [['hero', 'main exterior / render — used on this page and on the project card everywhere else']];
+    for (var i = 1; i <= 6; i++) wants.push(['gallery-' + i, 'gallery photo ' + i]);
+    wants.push(['location', 'map or location photo']);
+    p.units.forEach(function (u) { wants.push([u.key, u.name + ' unit photo']); });
+    wants.forEach(function (w) {
+      var name = w[0], desc = w[1];
+      var have = !!findImage(p.slug, name);
+      lines.push((have ? '- [x] ' : '- [ ] ') + '`' + p.slug + '-' + name + '.jpg`' + (have ? ' ✅' : '') + ' — ' + desc);
+    });
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+
+/** Splices the homepage project cards straight into index.html between two
+ * marker comments — no manual copy/paste step once images (or prices) change. */
+function updateIndexHtml(merged) {
+  var indexPath = path.join(ROOT, 'index.html');
+  var html = fs.readFileSync(indexPath, 'utf8');
+  var start = '<!-- AUTO:PROJECTS:START -->';
+  var end = '<!-- AUTO:PROJECTS:END -->';
+  var startIdx = html.indexOf(start);
+  var endIdx = html.indexOf(end);
+  if (startIdx === -1 || endIdx === -1) {
+    console.log('  (skipped index.html — markers ' + start + ' / ' + end + ' not found; paste tools/homepage-cards.snippet.html manually)');
+    return;
+  }
+  var updated = html.slice(0, startIdx + start.length) + '\n' + homepageCards(merged) + '  ' + html.slice(endIdx);
+  fs.writeFileSync(indexPath, updated, 'utf8');
+  console.log('updated index.html #projects section in place');
+}
+
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 var merged = projects.map(mergeProject);
 merged.forEach(function (p) {
@@ -498,4 +577,7 @@ merged.forEach(function (p) {
     (p.preliminary ? '  (⚠ pricing not yet confirmed by developer)' : ''));
 });
 fs.writeFileSync(path.join(__dirname, 'homepage-cards.snippet.html'), homepageCards(merged), 'utf8');
-console.log('wrote tools/homepage-cards.snippet.html (paste into index.html #projects section)');
+console.log('wrote tools/homepage-cards.snippet.html');
+updateIndexHtml(merged);
+fs.writeFileSync(path.join(IMG_ROOT, 'README.md'), imageChecklist(merged), 'utf8');
+console.log('wrote assets/img/projects/README.md (image checklist)');
