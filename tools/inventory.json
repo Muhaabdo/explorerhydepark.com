@@ -1,0 +1,3485 @@
+{
+  "generated_from": "inventory 2026-07-15",
+  "projects": {
+    "Garden Lakes": {
+      "Apartment": {
+        "min_price": 6800000,
+        "max_price": 25700000,
+        "count": 33,
+        "bua_min": 68.0,
+        "bua_max": 154.0,
+        "min_unit_bua": 71.0,
+        "finishings": [
+          "Core & Shell",
+          "Finished"
+        ]
+      },
+      "Standalone": {
+        "min_price": 37680000,
+        "max_price": 46740000,
+        "count": 2,
+        "bua_min": 242.0,
+        "bua_max": 242.0,
+        "min_unit_bua": 242.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Townhouse": {
+        "min_price": 24470000,
+        "max_price": 30480000,
+        "count": 4,
+        "bua_min": 215.0,
+        "bua_max": 215.0,
+        "min_unit_bua": 215.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Twin House": {
+        "min_price": 29000000,
+        "max_price": 33560000,
+        "count": 3,
+        "bua_min": 242.0,
+        "bua_max": 242.0,
+        "min_unit_bua": 242.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      }
+    },
+    "HP Signature": {
+      "Apartment": {
+        "min_price": 6590000,
+        "max_price": 17300000,
+        "count": 32,
+        "bua_min": 68.2,
+        "bua_max": 148.4,
+        "min_unit_bua": 68.2,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Standalone": {
+        "min_price": 43120000,
+        "max_price": 46130000,
+        "count": 4,
+        "bua_min": 240.0,
+        "bua_max": 268.0,
+        "min_unit_bua": 240.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Townhouse": {
+        "min_price": 23540000,
+        "max_price": 28600000,
+        "count": 9,
+        "bua_min": 195.0,
+        "bua_max": 195.0,
+        "min_unit_bua": 195.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Twin House": {
+        "min_price": 31300000,
+        "max_price": 32820000,
+        "count": 5,
+        "bua_min": 215.0,
+        "bua_max": 215.0,
+        "min_unit_bua": 215.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      }
+    },
+    "Hyde Park Central": {
+      "Apartment": {
+        "min_price": 6430000,
+        "max_price": 16450000,
+        "count": 87,
+        "bua_min": 63.0,
+        "bua_max": 156.0,
+        "min_unit_bua": 70.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Quad": {
+        "min_price": 25540000,
+        "max_price": 29290000,
+        "count": 13,
+        "bua_min": 217.0,
+        "bua_max": 217.0,
+        "min_unit_bua": 217.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Standalone": {
+        "min_price": 50140000,
+        "max_price": 50140000,
+        "count": 1,
+        "bua_min": 265.0,
+        "bua_max": 265.0,
+        "min_unit_bua": 265.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      },
+      "Townhouse": {
+        "min_price": 25520000,
+        "max_price": 31940000,
+        "count": 9,
+        "bua_min": 212.0,
+        "bua_max": 212.0,
+        "min_unit_bua": 212.0,
+        "finishings": [
+          "Core & Shell"
+        ]
+      }
+    },
+    "Hyde Park New Cairo": {
+      "Apartment": {
+        "min_price": 7220000,
+        "max_price": 25360000,
+        "count": 36,
+        "bua_min": 75.0,
+        "bua_max": 178.8,
+        "min_unit_bua": 75.0,
+        "finishings": [
+          "Core & Shell",
+          "Finished"
+        ]
+      },
+      "Standalone": {
+        "min_price": 74250000,
+        "max_price": 385000000,
+        "count": 7,
+        "bua_min": 327.7,
+        "bua_max": 1287.0,
+        "min_unit_bua": 327.7,
+        "finishings": [
+          "Core & Shell",
+          "Finished",
+          "SEMI FINISHED"
+        ]
+      }
+    },
+    "Seashore Ras El Hekma": {
+      "Apartment": {
+        "min_price": 8410000,
+        "max_price": 19710000,
+        "count": 72,
+        "bua_min": 63.0,
+        "bua_max": 138.0,
+        "min_unit_bua": 80.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Beach Chalet": {
+        "min_price": 22450000,
+        "max_price": 22450000,
+        "count": 1,
+        "bua_min": 130.0,
+        "bua_max": 130.0,
+        "min_unit_bua": 130.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Beach Medium Villa": {
+        "min_price": 138750000,
+        "max_price": 198990000,
+        "count": 4,
+        "bua_min": 385.0,
+        "bua_max": 385.0,
+        "min_unit_bua": 385.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Small Villa": {
+        "min_price": 103650000,
+        "max_price": 133160000,
+        "count": 4,
+        "bua_min": 245.0,
+        "bua_max": 245.0,
+        "min_unit_bua": 245.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Standard Chalet": {
+        "min_price": 13030000,
+        "max_price": 22710000,
+        "count": 4,
+        "bua_min": 76.4,
+        "bua_max": 135.7,
+        "min_unit_bua": 76.4,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Townhouse": {
+        "min_price": 34340000,
+        "max_price": 70070000,
+        "count": 23,
+        "bua_min": 182.0,
+        "bua_max": 195.0,
+        "min_unit_bua": 182.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Twin House": {
+        "min_price": 55900000,
+        "max_price": 59020000,
+        "count": 4,
+        "bua_min": 193.0,
+        "bua_max": 195.0,
+        "min_unit_bua": 193.0,
+        "finishings": [
+          "Finished"
+        ]
+      },
+      "Twin House with Roof": {
+        "min_price": 75810000,
+        "max_price": 75810000,
+        "count": 1,
+        "bua_min": 218.0,
+        "bua_max": 218.0,
+        "min_unit_bua": 218.0,
+        "finishings": [
+          "Finished"
+        ]
+      }
+    }
+  },
+  "units": [
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/3B-1/105",
+      "rooms": 1,
+      "bua_sqm": 71.0,
+      "finishing": "Core & Shell",
+      "price": 6800000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/9-4/403",
+      "rooms": 1,
+      "bua_sqm": 73.5,
+      "finishing": "Core & Shell",
+      "price": 7630000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/1-G/G04",
+      "rooms": 1,
+      "bua_sqm": 68.0,
+      "finishing": "Core & Shell",
+      "price": 9010000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/1-3/303",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Core & Shell",
+      "price": 10970000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/3A-4/401",
+      "rooms": 2,
+      "bua_sqm": 103.9578755,
+      "finishing": "Core & Shell",
+      "price": 11260000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/8B-G/G06",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 13170000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/3B-1/104",
+      "rooms": 3,
+      "bua_sqm": 154.0371745,
+      "finishing": "Core & Shell",
+      "price": 15810000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/8A-4/403",
+      "rooms": 3,
+      "bua_sqm": 154.0371745,
+      "finishing": "Core & Shell",
+      "price": 15970000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/2-4/403",
+      "rooms": 3,
+      "bua_sqm": 154.0371745,
+      "finishing": "Core & Shell",
+      "price": 15970000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL5/9-1/101",
+      "rooms": 3,
+      "bua_sqm": 154.0371745,
+      "finishing": "Core & Shell",
+      "price": 16570000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/6-1/105",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Finished",
+      "price": 15210000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/6-2/205",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Finished",
+      "price": 15515000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/6-1/107",
+      "rooms": 2,
+      "bua_sqm": 113.0,
+      "finishing": "Finished",
+      "price": 16975000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/6-3/302",
+      "rooms": 2,
+      "bua_sqm": 113.0,
+      "finishing": "Finished",
+      "price": 16990000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/3-G/G05",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Finished",
+      "price": 17105000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/3-1/107",
+      "rooms": 2,
+      "bua_sqm": 113.0,
+      "finishing": "Finished",
+      "price": 17175000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/4B-3/303",
+      "rooms": 2,
+      "bua_sqm": 140.8129819,
+      "finishing": "Finished",
+      "price": 20260000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/3-1/103",
+      "rooms": 3,
+      "bua_sqm": 152.0,
+      "finishing": "Finished",
+      "price": 22890000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/6-G/G06",
+      "rooms": 3,
+      "bua_sqm": 152.0,
+      "finishing": "Finished",
+      "price": 25375000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/3-G/G06",
+      "rooms": 3,
+      "bua_sqm": 152.0,
+      "finishing": "Finished",
+      "price": 25700000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/3-G/G03",
+      "rooms": 3,
+      "bua_sqm": 152.0,
+      "finishing": "Finished",
+      "price": 25700000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL1/10/G01",
+      "rooms": 3,
+      "bua_sqm": 150.3636992,
+      "finishing": "Core & Shell",
+      "price": 18005000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL1/1/G02",
+      "rooms": 3,
+      "bua_sqm": 150.3636992,
+      "finishing": "Core & Shell",
+      "price": 18010000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL1/9/G01",
+      "rooms": 3,
+      "bua_sqm": 150.3636992,
+      "finishing": "Core & Shell",
+      "price": 18460000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL1/10/G02",
+      "rooms": 3,
+      "bua_sqm": 150.3636992,
+      "finishing": "Core & Shell",
+      "price": 18530000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL1/6/G02",
+      "rooms": 3,
+      "bua_sqm": 150.3636992,
+      "finishing": "Core & Shell",
+      "price": 18835000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/10-4/402",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Finished",
+      "price": 15500000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/8-G/G02",
+      "rooms": 2,
+      "bua_sqm": 105.0,
+      "finishing": "Finished",
+      "price": 16840000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/8-4/401",
+      "rooms": 3,
+      "bua_sqm": 145.0,
+      "finishing": "Finished",
+      "price": 18980000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/7-4/401",
+      "rooms": 3,
+      "bua_sqm": 145.0,
+      "finishing": "Finished",
+      "price": 19260000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/10-2/201",
+      "rooms": 3,
+      "bua_sqm": 145.0,
+      "finishing": "Finished",
+      "price": 20290000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/7-G/G01",
+      "rooms": 3,
+      "bua_sqm": 145.0,
+      "finishing": "Finished",
+      "price": 21800000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Apartment",
+      "unit_name": "GL3/10-G/G06",
+      "rooms": 3,
+      "bua_sqm": 145.0,
+      "finishing": "Finished",
+      "price": 21980000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Standalone",
+      "unit_name": "GL1/SA/24",
+      "rooms": null,
+      "bua_sqm": 242.0,
+      "finishing": "Core & Shell",
+      "price": 37680000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Standalone",
+      "unit_name": "GL1/SA/10",
+      "rooms": null,
+      "bua_sqm": 242.0,
+      "finishing": "Core & Shell",
+      "price": 46740000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Townhouse",
+      "unit_name": "GL2/6PLEX/14C",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 24470000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Townhouse",
+      "unit_name": "GL2/4PLEX/3A",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 28450000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Townhouse",
+      "unit_name": "GL4/4PLEX/1D",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 29200000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Townhouse",
+      "unit_name": "GL4/4PLEX/21D",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 30480000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Twin House",
+      "unit_name": "GL1/TW/36B",
+      "rooms": null,
+      "bua_sqm": 242.0,
+      "finishing": "Core & Shell",
+      "price": 29000000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Twin House",
+      "unit_name": "GL1/TW/36A",
+      "rooms": null,
+      "bua_sqm": 242.0,
+      "finishing": "Core & Shell",
+      "price": 31310000
+    },
+    {
+      "project": "Garden Lakes",
+      "type": "Twin House",
+      "unit_name": "GL1/TW/35A",
+      "rooms": null,
+      "bua_sqm": 242.0,
+      "finishing": "Core & Shell",
+      "price": 33560000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/16A/303",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6590000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/15A/103",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6650000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/16A/103",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6650000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/4B/301",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6710000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/4B/101",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6770000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/4B/201",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6820000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/8B/101",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6820000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/12B/301",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6880000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/16B/201",
+      "rooms": 1,
+      "bua_sqm": 68.20878826,
+      "finishing": "Core & Shell",
+      "price": 6880000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/304",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 9420000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/13/101",
+      "rooms": 2,
+      "bua_sqm": 99.52941176,
+      "finishing": "Core & Shell",
+      "price": 9620000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/17/101",
+      "rooms": 2,
+      "bua_sqm": 99.52941176,
+      "finishing": "Core & Shell",
+      "price": 9620000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/14/304",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 9830000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/301",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10000000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/101",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10090000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/13/304",
+      "rooms": 2,
+      "bua_sqm": 107.9341176,
+      "finishing": "Core & Shell",
+      "price": 10170000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/17/304",
+      "rooms": 2,
+      "bua_sqm": 107.9341176,
+      "finishing": "Core & Shell",
+      "price": 10170000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/2/301",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10180000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/201",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10180000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/17/104",
+      "rooms": 2,
+      "bua_sqm": 107.9341176,
+      "finishing": "Core & Shell",
+      "price": 10260000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/2/201",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10350000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/13/204",
+      "rooms": 2,
+      "bua_sqm": 107.9341176,
+      "finishing": "Core & Shell",
+      "price": 10350000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/17/204",
+      "rooms": 2,
+      "bua_sqm": 107.9341176,
+      "finishing": "Core & Shell",
+      "price": 10350000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/4A/102",
+      "rooms": 2,
+      "bua_sqm": 108.4491194,
+      "finishing": "Core & Shell",
+      "price": 10400000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/15B/302",
+      "rooms": 2,
+      "bua_sqm": 108.277884,
+      "finishing": "Core & Shell",
+      "price": 10470000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/G04",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 11270000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/3/G01",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 11710000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/16A/G02",
+      "rooms": 2,
+      "bua_sqm": 108.4491194,
+      "finishing": "Core & Shell",
+      "price": 12640000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/17/G04",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 12960000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/4B/203",
+      "rooms": 3,
+      "bua_sqm": 148.4040581,
+      "finishing": "Core & Shell",
+      "price": 14620000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/11B/103",
+      "rooms": 3,
+      "bua_sqm": 148.4040581,
+      "finishing": "Core & Shell",
+      "price": 15560000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/13/G03",
+      "rooms": 3,
+      "bua_sqm": 131.0,
+      "finishing": "Core & Shell",
+      "price": 17300000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Standalone",
+      "unit_name": "HPS/SV1/23",
+      "rooms": null,
+      "bua_sqm": 240.0,
+      "finishing": "Core & Shell",
+      "price": 43120000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Standalone",
+      "unit_name": "HPS/SV1/24",
+      "rooms": null,
+      "bua_sqm": 240.0,
+      "finishing": "Core & Shell",
+      "price": 43120000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Standalone",
+      "unit_name": "HPS/SV1/25",
+      "rooms": null,
+      "bua_sqm": 240.0,
+      "finishing": "Core & Shell",
+      "price": 43150000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Standalone",
+      "unit_name": "HPS/SV2/29",
+      "rooms": null,
+      "bua_sqm": 268.0,
+      "finishing": "Core & Shell",
+      "price": 46130000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/34D",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 23540000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/4PLEX/37C",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 23940000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/36C",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 23980000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/48B",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 24300000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/34A",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 27000000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/4PLEX/37A",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 27670000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/34F",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 27740000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/6PLEX/35F",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 27850000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Townhouse",
+      "unit_name": "HPS/4PLEX/37D",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Core & Shell",
+      "price": 28600000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Twin House",
+      "unit_name": "HPS/TW/20A",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 31300000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Twin House",
+      "unit_name": "HPS/TW/49A",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 32090000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Twin House",
+      "unit_name": "HPS/TW/32B",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 32340000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Twin House",
+      "unit_name": "HPS/TW/31B",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 32780000
+    },
+    {
+      "project": "HP Signature",
+      "type": "Twin House",
+      "unit_name": "HPS/TW/32A",
+      "rooms": null,
+      "bua_sqm": 215.0,
+      "finishing": "Core & Shell",
+      "price": 32820000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-14/802",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 8700000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/802",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 8950000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-19/802",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 9120000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-14/801",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 9120000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/801",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 9380000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-9/801",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 9420000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/404",
+      "rooms": 2,
+      "bua_sqm": 101.4277929,
+      "finishing": "Core & Shell",
+      "price": 9500000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-20/305",
+      "rooms": 2,
+      "bua_sqm": 114.282313,
+      "finishing": "Core & Shell",
+      "price": 9860000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-19/702",
+      "rooms": 2,
+      "bua_sqm": 111.8010899,
+      "finishing": "Core & Shell",
+      "price": 10220000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/305",
+      "rooms": 2,
+      "bua_sqm": 101.4277929,
+      "finishing": "Core & Shell",
+      "price": 10230000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-19/801",
+      "rooms": 1,
+      "bua_sqm": 93.35967302,
+      "finishing": "Core & Shell",
+      "price": 10240000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/701",
+      "rooms": 2,
+      "bua_sqm": 111.8010899,
+      "finishing": "Core & Shell",
+      "price": 10510000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/803",
+      "rooms": 2,
+      "bua_sqm": 114.106267,
+      "finishing": "Core & Shell",
+      "price": 10520000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-9/701",
+      "rooms": 2,
+      "bua_sqm": 111.8010899,
+      "finishing": "Core & Shell",
+      "price": 10540000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-6/605",
+      "rooms": 2,
+      "bua_sqm": 114.282313,
+      "finishing": "Core & Shell",
+      "price": 10700000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-7/405",
+      "rooms": 2,
+      "bua_sqm": 114.282313,
+      "finishing": "Core & Shell",
+      "price": 10800000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-12/804",
+      "rooms": 2,
+      "bua_sqm": 114.106267,
+      "finishing": "Core & Shell",
+      "price": 11370000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-8/102",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 13090000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-22/301",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 13140000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-6/501",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 13330000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-10/502",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 13600000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-22/302",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 14330000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-18/602",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 14360000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-8/401",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 14390000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-10/201",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 14430000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-10/501",
+      "rooms": 3,
+      "bua_sqm": 150.1264601,
+      "finishing": "Core & Shell",
+      "price": 14650000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/CR-18/705",
+      "rooms": 3,
+      "bua_sqm": 131.1569926,
+      "finishing": "Core & Shell",
+      "price": 15000000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-7A/106",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6430000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/106",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6500000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-7A/705",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6500000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-2A/806",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6530000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/603",
+      "rooms": 1,
+      "bua_sqm": 63.0,
+      "finishing": "Core & Shell",
+      "price": 6550000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/704",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6570000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/306",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 6750000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/603",
+      "rooms": 1,
+      "bua_sqm": 63.0,
+      "finishing": "Core & Shell",
+      "price": 6860000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/401",
+      "rooms": 1,
+      "bua_sqm": 71.0,
+      "finishing": "Core & Shell",
+      "price": 7270000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-34B/404",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 7310000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/404",
+      "rooms": 1,
+      "bua_sqm": 70.0,
+      "finishing": "Core & Shell",
+      "price": 7380000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-7A/402",
+      "rooms": 1,
+      "bua_sqm": 71.0,
+      "finishing": "Core & Shell",
+      "price": 8240000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/G07",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Core & Shell",
+      "price": 8260000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/G07",
+      "rooms": 1,
+      "bua_sqm": 69.0,
+      "finishing": "Core & Shell",
+      "price": 8270000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/901",
+      "rooms": 1,
+      "bua_sqm": 66.0,
+      "finishing": "Core & Shell",
+      "price": 8660000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/G03",
+      "rooms": 1,
+      "bua_sqm": 63.0,
+      "finishing": "Core & Shell",
+      "price": 9380000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-3C/G03",
+      "rooms": 1,
+      "bua_sqm": 71.0,
+      "finishing": "Core & Shell",
+      "price": 9460000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-6B/205",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 9520000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/206",
+      "rooms": 2,
+      "bua_sqm": 102.0,
+      "finishing": "Core & Shell",
+      "price": 9560000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/901",
+      "rooms": 1,
+      "bua_sqm": 66.0,
+      "finishing": "Core & Shell",
+      "price": 9620000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/506",
+      "rooms": 2,
+      "bua_sqm": 102.0,
+      "finishing": "Core & Shell",
+      "price": 9700000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/601",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 9800000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-6B/501",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 9840000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/403",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 10030000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/202",
+      "rooms": 2,
+      "bua_sqm": 102.0,
+      "finishing": "Core & Shell",
+      "price": 10320000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-1C/704",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Core & Shell",
+      "price": 10420000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-1C/308",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Core & Shell",
+      "price": 10710000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-3C/308",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Core & Shell",
+      "price": 10710000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-34B/505",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 11070000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/308",
+      "rooms": 2,
+      "bua_sqm": 117.0,
+      "finishing": "Core & Shell",
+      "price": 11080000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/501",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 11180000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/601",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 11410000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/405",
+      "rooms": 3,
+      "bua_sqm": 136.0,
+      "finishing": "Core & Shell",
+      "price": 11430000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/G01",
+      "rooms": 2,
+      "bua_sqm": 104.0,
+      "finishing": "Core & Shell",
+      "price": 11430000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-2A/901",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Core & Shell",
+      "price": 11480000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/104",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 11500000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-2A/405",
+      "rooms": 3,
+      "bua_sqm": 136.0,
+      "finishing": "Core & Shell",
+      "price": 11530000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-1C/505",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 11560000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-3C/505",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 11560000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/701",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Core & Shell",
+      "price": 11630000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-7A/701",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 12070000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-34B/G01",
+      "rooms": 2,
+      "bua_sqm": 104.0,
+      "finishing": "Core & Shell",
+      "price": 12100000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/G05",
+      "rooms": 2,
+      "bua_sqm": 104.0,
+      "finishing": "Core & Shell",
+      "price": 12170000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-1C/901",
+      "rooms": 3,
+      "bua_sqm": 156.0,
+      "finishing": "Core & Shell",
+      "price": 12270000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-2A/G04",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 12320000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/601",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 12380000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-3C/806",
+      "rooms": 3,
+      "bua_sqm": 156.0,
+      "finishing": "Core & Shell",
+      "price": 12520000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/802",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Core & Shell",
+      "price": 12520000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-2A/606",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 12620000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/401",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 12670000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/404",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 12670000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-4A/G04",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 12740000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/806",
+      "rooms": 3,
+      "bua_sqm": 156.0,
+      "finishing": "Core & Shell",
+      "price": 12930000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-1C/G06",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 13490000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-3C/G06",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 13500000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-34B/804",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Core & Shell",
+      "price": 13510000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/801",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Core & Shell",
+      "price": 13630000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-5C/G06",
+      "rooms": 3,
+      "bua_sqm": 135.0,
+      "finishing": "Core & Shell",
+      "price": 13730000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-8B/G05",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 15030000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Apartment",
+      "unit_name": "HPC/WR-35B/G01",
+      "rooms": 3,
+      "bua_sqm": 148.0,
+      "finishing": "Core & Shell",
+      "price": 16450000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/1B",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 25540000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/4D",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 26490000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/2B",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 26490000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/15A",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 26890000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/12A",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27050000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/9D",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27760000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/9C",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27760000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/7C",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27760000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/10D",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27870000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/8C",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27960000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/8D",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 27980000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/11C",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 28590000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Quad",
+      "unit_name": "HPC/QD/6D",
+      "rooms": null,
+      "bua_sqm": 217.0,
+      "finishing": "Core & Shell",
+      "price": 29290000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Standalone",
+      "unit_name": "HPC/SA2/16",
+      "rooms": null,
+      "bua_sqm": 265.0,
+      "finishing": "Core & Shell",
+      "price": 50140000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/4PLEX/80B",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 25520000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/6PLEX/79C",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 25540000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/6PLEX/79E",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 25580000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/6PLEX/8C",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 26290000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/6PLEX/34E",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 26900000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/4PLEX/104A",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 30580000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/4PLEX/6D",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 30880000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/4PLEX/26D",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 31120000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Townhouse",
+      "unit_name": "HPC/4PLEX/2A",
+      "rooms": null,
+      "bua_sqm": 212.0,
+      "finishing": "Core & Shell",
+      "price": 31940000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/2-5/501",
+      "rooms": 1,
+      "bua_sqm": 75.0,
+      "finishing": "Core & Shell",
+      "price": 7220000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/12A-G/G04",
+      "rooms": 1,
+      "bua_sqm": 88.0,
+      "finishing": "Core & Shell",
+      "price": 9090000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/16B-G/G04",
+      "rooms": 1,
+      "bua_sqm": 82.0,
+      "finishing": "Core & Shell",
+      "price": 9400000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/21-G/G03",
+      "rooms": 1,
+      "bua_sqm": 75.0,
+      "finishing": "Core & Shell",
+      "price": 9950000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/21-1/104",
+      "rooms": 2,
+      "bua_sqm": 120.0,
+      "finishing": "Core & Shell",
+      "price": 14490000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/20-1/103",
+      "rooms": 2,
+      "bua_sqm": 120.0,
+      "finishing": "Core & Shell",
+      "price": 14490000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/5B-1/103",
+      "rooms": 2,
+      "bua_sqm": 125.5541697,
+      "finishing": "Core & Shell",
+      "price": 14600000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/20-2/203",
+      "rooms": 2,
+      "bua_sqm": 118.343149,
+      "finishing": "Core & Shell",
+      "price": 14650000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/20-G/G03",
+      "rooms": 2,
+      "bua_sqm": 115.3363569,
+      "finishing": "Core & Shell",
+      "price": 15270000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/12A-4/402",
+      "rooms": 2,
+      "bua_sqm": 122.8766917,
+      "finishing": "Core & Shell",
+      "price": 15290000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/11B-4/403",
+      "rooms": 2,
+      "bua_sqm": 125.4352737,
+      "finishing": "Core & Shell",
+      "price": 15610000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/19B-G/G03",
+      "rooms": 2,
+      "bua_sqm": 122.8766917,
+      "finishing": "Core & Shell",
+      "price": 16660000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/19A-G/G02",
+      "rooms": 2,
+      "bua_sqm": 123.0,
+      "finishing": "Core & Shell",
+      "price": 16680000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/2-3/306",
+      "rooms": 3,
+      "bua_sqm": 176.6487981,
+      "finishing": "Core & Shell",
+      "price": 19530000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPG/10-4/406",
+      "rooms": 3,
+      "bua_sqm": 178.842476,
+      "finishing": "Core & Shell",
+      "price": 19770000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-5/505",
+      "rooms": 1,
+      "bua_sqm": 78.28484038,
+      "finishing": "Finished",
+      "price": 10280000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/6-5/502",
+      "rooms": 1,
+      "bua_sqm": 78.28484038,
+      "finishing": "Finished",
+      "price": 10280000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/3-5/505",
+      "rooms": 1,
+      "bua_sqm": 78.28484038,
+      "finishing": "Finished",
+      "price": 10280000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/2-5/502",
+      "rooms": 1,
+      "bua_sqm": 78.28484038,
+      "finishing": "Finished",
+      "price": 10790000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/1-5/505",
+      "rooms": 1,
+      "bua_sqm": 78.28484038,
+      "finishing": "Finished",
+      "price": 10790000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/3-G/G06",
+      "rooms": 1,
+      "bua_sqm": 87.40398162,
+      "finishing": "Finished",
+      "price": 11100000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-4/406",
+      "rooms": 2,
+      "bua_sqm": 116.1478755,
+      "finishing": "Finished",
+      "price": 13200000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/1-5/506",
+      "rooms": 2,
+      "bua_sqm": 116.1478755,
+      "finishing": "Finished",
+      "price": 13530000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-4/405",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 13850000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-G/G03",
+      "rooms": 1,
+      "bua_sqm": 87.40398162,
+      "finishing": "Finished",
+      "price": 13980000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-G/G05",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 14100000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/1-G/G03",
+      "rooms": 1,
+      "bua_sqm": 87.40398162,
+      "finishing": "Finished",
+      "price": 14400000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/2-3/302",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 14550000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/6-3/304",
+      "rooms": 2,
+      "bua_sqm": 116.1478755,
+      "finishing": "Finished",
+      "price": 16310000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-2/204",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 16400000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/6-G/G03",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 17790000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/4-G/G03",
+      "rooms": 2,
+      "bua_sqm": 116.2267803,
+      "finishing": "Finished",
+      "price": 17790000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/2-3/306",
+      "rooms": 3,
+      "bua_sqm": 160.6840028,
+      "finishing": "Finished",
+      "price": 19690000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/1-4/401",
+      "rooms": 3,
+      "bua_sqm": 160.6840028,
+      "finishing": "Finished",
+      "price": 19690000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/6-G/G05",
+      "rooms": 3,
+      "bua_sqm": 160.6840028,
+      "finishing": "Finished",
+      "price": 25360000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Apartment",
+      "unit_name": "HPPW/5-G/G02",
+      "rooms": 3,
+      "bua_sqm": 160.6840028,
+      "finishing": "Finished",
+      "price": 25360000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC18/V/48",
+      "rooms": null,
+      "bua_sqm": 327.7,
+      "finishing": "Core & Shell",
+      "price": 79750000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC18P/G2/30",
+      "rooms": null,
+      "bua_sqm": 355.0,
+      "finishing": "Core & Shell",
+      "price": 94640000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC19/V/79",
+      "rooms": null,
+      "bua_sqm": 327.7,
+      "finishing": "Core & Shell",
+      "price": 74250000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC1/A3/18",
+      "rooms": null,
+      "bua_sqm": 1287.0,
+      "finishing": "SEMI FINISHED",
+      "price": 385000000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC7/T2/26",
+      "rooms": 1,
+      "bua_sqm": 370.0,
+      "finishing": "Finished",
+      "price": 80000000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC9/B2/10",
+      "rooms": null,
+      "bua_sqm": 926.0,
+      "finishing": "Core & Shell",
+      "price": 244500000
+    },
+    {
+      "project": "Hyde Park New Cairo",
+      "type": "Standalone",
+      "unit_name": "HPDC9/B2/11",
+      "rooms": null,
+      "bua_sqm": 926.0,
+      "finishing": "Core & Shell",
+      "price": 249900000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/202",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 8410000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/406",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 8480000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-9/504",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 8960000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-7/501",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9070000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/302",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 9590000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-42/405",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9600000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/402",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9610000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/401",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 9700000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-29/504",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 9720000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-34/405",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9780000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-34/504",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9850000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-28/205",
+      "rooms": 1,
+      "bua_sqm": 80.0,
+      "finishing": "Finished",
+      "price": 9860000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-28/302",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 9930000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-53/G05",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 11990000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-42/G05",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 12180000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-29/502",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Finished",
+      "price": 12230000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/306",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 12380000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-28/502",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Finished",
+      "price": 12450000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-7/201",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 12850000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-56/G05",
+      "rooms": 1,
+      "bua_sqm": 79.0,
+      "finishing": "Finished",
+      "price": 13120000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/G06",
+      "rooms": 2,
+      "bua_sqm": 106.0,
+      "finishing": "Finished",
+      "price": 13320000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/101",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 13480000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-42/106",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 13560000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-29/101",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 13680000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/201",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 13770000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-17/G03",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Finished",
+      "price": 13810000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-29/201",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 13950000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/301",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 14020000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-53/306",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 14030000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTC-57/203",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Finished",
+      "price": 14040000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-42/306",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 14100000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTC-57/103",
+      "rooms": 3,
+      "bua_sqm": 127.0,
+      "finishing": "Finished",
+      "price": 14510000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTB-46/201",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Finished",
+      "price": 14580000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-9/206",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 14580000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-27/206",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 14950000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-56/206",
+      "rooms": 2,
+      "bua_sqm": 110.0,
+      "finishing": "Finished",
+      "price": 15010000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTB-30/103",
+      "rooms": 3,
+      "bua_sqm": 127.0,
+      "finishing": "Finished",
+      "price": 15160000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTC-41/201",
+      "rooms": 2,
+      "bua_sqm": 112.0,
+      "finishing": "Finished",
+      "price": 15320000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-29/206",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 15830000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-27/306",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 15860000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-47/101",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 16100000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTB-49/103",
+      "rooms": 3,
+      "bua_sqm": 127.0,
+      "finishing": "Finished",
+      "price": 16180000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-48/206",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 16260000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-56/101",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 16690000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-44/306",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 16880000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-53/301",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 16890000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-42/301",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 16980000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTB-43/G01",
+      "rooms": 3,
+      "bua_sqm": 128.0,
+      "finishing": "Finished",
+      "price": 17600000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-48/306",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 17610000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTA-56/301",
+      "rooms": 3,
+      "bua_sqm": 138.0,
+      "finishing": "Finished",
+      "price": 18900000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN5/LTB-49/G03",
+      "rooms": 3,
+      "bua_sqm": 127.0,
+      "finishing": "Finished",
+      "price": 19710000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-2/203",
+      "rooms": 1,
+      "bua_sqm": 67.0,
+      "finishing": "Finished",
+      "price": 9060000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-3/203",
+      "rooms": 1,
+      "bua_sqm": 67.0,
+      "finishing": "Finished",
+      "price": 9220000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-5/G03",
+      "rooms": 1,
+      "bua_sqm": 63.0,
+      "finishing": "Finished",
+      "price": 10500000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-3/G02",
+      "rooms": 1,
+      "bua_sqm": 63.0,
+      "finishing": "Finished",
+      "price": 10630000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-2/503",
+      "rooms": 2,
+      "bua_sqm": 87.0,
+      "finishing": "Finished",
+      "price": 14260000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-3/503",
+      "rooms": 2,
+      "bua_sqm": 87.0,
+      "finishing": "Finished",
+      "price": 14520000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-1/403",
+      "rooms": 3,
+      "bua_sqm": 104.0,
+      "finishing": "Finished",
+      "price": 15080000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-5/303",
+      "rooms": 3,
+      "bua_sqm": 121.0,
+      "finishing": "Finished",
+      "price": 15400000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-5/301",
+      "rooms": 3,
+      "bua_sqm": 119.0,
+      "finishing": "Finished",
+      "price": 15680000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-3/301",
+      "rooms": 3,
+      "bua_sqm": 119.0,
+      "finishing": "Finished",
+      "price": 15810000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-3/303",
+      "rooms": 3,
+      "bua_sqm": 121.0,
+      "finishing": "Finished",
+      "price": 16120000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-5/401",
+      "rooms": 3,
+      "bua_sqm": 104.0,
+      "finishing": "Finished",
+      "price": 16150000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSC-4/303",
+      "rooms": 3,
+      "bua_sqm": 121.0,
+      "finishing": "Finished",
+      "price": 16550000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSB-13/G02",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 9660000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSA-17/G05",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 9820000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSB-12/G02",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 10220000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSB-19/G03",
+      "rooms": 1,
+      "bua_sqm": 65.0,
+      "finishing": "Finished",
+      "price": 10400000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSA-20/G04",
+      "rooms": 3,
+      "bua_sqm": 120.0,
+      "finishing": "Finished",
+      "price": 16790000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSA-17/G04",
+      "rooms": 3,
+      "bua_sqm": 120.0,
+      "finishing": "Finished",
+      "price": 17880000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSA-14/G04",
+      "rooms": 3,
+      "bua_sqm": 120.0,
+      "finishing": "Finished",
+      "price": 19080000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Apartment",
+      "unit_name": "HPN4/WSA-5/G04",
+      "rooms": 3,
+      "bua_sqm": 120.0,
+      "finishing": "Finished",
+      "price": 19250000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Beach Chalet",
+      "unit_name": "HPN3/BCB-22/G04",
+      "rooms": 3,
+      "bua_sqm": 130.0,
+      "finishing": "Finished",
+      "price": 22450000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Beach Medium Villa",
+      "unit_name": "HPN1/BMV/49",
+      "rooms": null,
+      "bua_sqm": 385.0,
+      "finishing": "Finished",
+      "price": 138750000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Beach Medium Villa",
+      "unit_name": "HPN1/BMV/50",
+      "rooms": null,
+      "bua_sqm": 385.0,
+      "finishing": "Finished",
+      "price": 154950000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Beach Medium Villa",
+      "unit_name": "HPN1/BMV/44A",
+      "rooms": null,
+      "bua_sqm": 385.0,
+      "finishing": "Finished",
+      "price": 195320000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Beach Medium Villa",
+      "unit_name": "HPN1/BMV/44B",
+      "rooms": null,
+      "bua_sqm": 385.0,
+      "finishing": "Finished",
+      "price": 198990000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Small Villa",
+      "unit_name": "HPN1/SV/39",
+      "rooms": null,
+      "bua_sqm": 245.0,
+      "finishing": "Finished",
+      "price": 103650000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Small Villa",
+      "unit_name": "HPN1/SV/40B",
+      "rooms": null,
+      "bua_sqm": 245.0,
+      "finishing": "Finished",
+      "price": 111850000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Small Villa",
+      "unit_name": "HPN1/SV/41B",
+      "rooms": null,
+      "bua_sqm": 245.0,
+      "finishing": "Finished",
+      "price": 125290000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Small Villa",
+      "unit_name": "HPN1/SV/34D",
+      "rooms": null,
+      "bua_sqm": 245.0,
+      "finishing": "Finished",
+      "price": 133160000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Standard Chalet",
+      "unit_name": "HPN3/SVB-52/G03",
+      "rooms": 1,
+      "bua_sqm": 76.3911824,
+      "finishing": "Finished",
+      "price": 13030000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Standard Chalet",
+      "unit_name": "HPN3/SVB-55/G03",
+      "rooms": 1,
+      "bua_sqm": 76.3911824,
+      "finishing": "Finished",
+      "price": 13090000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Standard Chalet",
+      "unit_name": "HPN3/SVA-39/102",
+      "rooms": 3,
+      "bua_sqm": 135.7049099,
+      "finishing": "Finished",
+      "price": 22230000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Standard Chalet",
+      "unit_name": "HPN3/SVA-50/102",
+      "rooms": 3,
+      "bua_sqm": 135.7049099,
+      "finishing": "Finished",
+      "price": 22710000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71F",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 44430000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71G",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 44440000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71E",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 44630000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71D",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 44840000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71C",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 45060000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71B",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 45600000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66G",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 48130000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66F",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 48390000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66D",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 48880000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66C",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 48890000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66B",
+      "rooms": null,
+      "bua_sqm": 187.0,
+      "finishing": "Finished",
+      "price": 49410000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71H",
+      "rooms": null,
+      "bua_sqm": 185.0,
+      "finishing": "Finished",
+      "price": 53250000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/36C",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 53490000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/36B",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 53600000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/71A",
+      "rooms": null,
+      "bua_sqm": 185.0,
+      "finishing": "Finished",
+      "price": 53700000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/8Plex/66H",
+      "rooms": null,
+      "bua_sqm": 185.0,
+      "finishing": "Finished",
+      "price": 55770000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/36A",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 57050000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/36D",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 57670000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/37C",
+      "rooms": null,
+      "bua_sqm": 193.0,
+      "finishing": "Finished",
+      "price": 60410000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/37A",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Finished",
+      "price": 68390000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN1/4Plex/37D",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Finished",
+      "price": 70070000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN3/6Plex/15E",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 34340000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Townhouse",
+      "unit_name": "HPN3/6Plex/9F",
+      "rooms": null,
+      "bua_sqm": 182.0,
+      "finishing": "Finished",
+      "price": 39290000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Twin House",
+      "unit_name": "HPN1/ TW/72A",
+      "rooms": null,
+      "bua_sqm": 193.0,
+      "finishing": "Finished",
+      "price": 55900000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Twin House",
+      "unit_name": "HPN1/ TW/72B",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Finished",
+      "price": 56810000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Twin House",
+      "unit_name": "HPN1/ TW/68A",
+      "rooms": null,
+      "bua_sqm": 193.0,
+      "finishing": "Finished",
+      "price": 58010000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Twin House",
+      "unit_name": "HPN1/ TW/68B",
+      "rooms": null,
+      "bua_sqm": 195.0,
+      "finishing": "Finished",
+      "price": 59020000
+    },
+    {
+      "project": "Seashore Ras El Hekma",
+      "type": "Twin House with Roof",
+      "unit_name": "HPN1/TW/38A",
+      "rooms": null,
+      "bua_sqm": 218.0,
+      "finishing": "Finished",
+      "price": 75810000
+    }
+  ]
+}

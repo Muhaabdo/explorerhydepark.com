@@ -1,0 +1,96 @@
+/**
+ * Source of truth for Hyde Park project CONTENT (copy, amenities, location,
+ * generic FAQs). Pricing/units/available-count come from `pricing.json`
+ * (developer inventory export) and are merged in at build time by
+ * `pricingKey` — edit prices there, not here.
+ *
+ * After editing either file, run `node tools/build-pages.js` to regenerate
+ * the static pages in /projects and the project cards on the homepage.
+ */
+
+module.exports = [
+  {
+    slug: 'hyde-park-central',
+    pricingKey: 'hyde-central',
+    nameEn: 'Hyde Park Central',
+    areaAr: 'القاهرة الجديدة',
+    areaSlug: 'new-cairo',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك سنترال مشروع سكني متكامل في القاهرة الجديدة، يضم شققًا وتاون هاوس وكواد وفيلات مستقلة بمساحات متنوعة، مع خطة سداد ميسّرة تصل حتى 8 سنوات.',
+    paymentPlan: { downPct: 5, years: 8 },
+    amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'نادي اجتماعي', 'مدارس قريبة'],
+    locationText: 'يقع هايد بارك سنترال في القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-new-cairo',
+    pricingKey: 'hyde-new-cairo',
+    nameEn: 'Hyde Park New Cairo',
+    areaAr: 'القاهرة الجديدة',
+    areaSlug: 'new-cairo',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك نيو كايرو هو المجتمع السكني الرئيسي للعلامة في القاهرة الجديدة، ويضم شققًا وفيلات مستقلة وسط مساحات خضراء ممتدة.',
+    paymentPlan: { downPct: 5, years: 8 },
+    amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'مدارس قريبة'],
+    locationText: 'يقع هايد بارك نيو كايرو في قلب القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-terraces',
+    pricingKey: 'hyde-terraces',
+    nameEn: 'Hyde Park Terraces',
+    areaAr: 'القاهرة الجديدة',
+    areaSlug: 'new-cairo',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك تراسيس مشروع سكني في القاهرة الجديدة يضم تاون هاوس وفيلات مستقلة بتصميم يعتمد على التراسات المفتوحة. * يُرجى التأكد من الاسم الرسمي بالإنجليزية للمشروع.',
+    paymentPlan: { downPct: 10, years: 8 },
+    amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'مدارس قريبة'],
+    locationText: 'يقع هايد بارك تراسيس في القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-taony',
+    pricingKey: 'tawny',
+    nameEn: 'Hyde Park Taony',
+    areaAr: 'أكتوبر',
+    areaSlug: 'october',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك تاوني مشروع سكني في مدينة 6 أكتوبر يجمع بين التاون هاوس والتوين هاوس والفيلات المستقلة بتصميم عصري. * يُرجى أيضًا التأكد من الاسم الرسمي بالإنجليزية للمشروع.',
+    paymentPlan: { downPct: 10, years: 7 },
+    amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'نادي اجتماعي', 'مدارس قريبة'],
+    locationText: 'يقع هايد بارك تاوني في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-garden-lake',
+    pricingKey: 'garden-lakes',
+    nameEn: 'Hyde Park Garden Lake',
+    areaAr: 'أكتوبر',
+    areaSlug: 'october',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك جاردن ليك مشروع سكني في 6 أكتوبر يتميز بإطلالات على بحيرة صناعية ومساحات خضراء واسعة، ويضم شققًا وتاون هاوس وتوين هاوس وفيلات مستقلة.',
+    paymentPlan: { downPct: 10, years: 8 },
+    amenities: ['بحيرة صناعية', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'مدارس قريبة'],
+    locationText: 'يقع هايد بارك جاردن ليك في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-signature',
+    pricingKey: 'signature',
+    nameEn: 'Hyde Park Signature',
+    areaAr: 'أكتوبر',
+    areaSlug: 'october',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك سيجنتشر هو الطراز الفاخر من علامة هايد بارك في 6 أكتوبر، بشقق وتاون هاوس وتوين هاوس وفيلات مستقلة وتشطيبات راقية.',
+    paymentPlan: { downPct: 10, years: 8 },
+    amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة 24 ساعة', 'مطاعم وكافيهات', 'جيم وسبا', 'نادي اجتماعي'],
+    locationText: 'يقع هايد بارك سيجنتشر في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+  {
+    slug: 'hyde-park-sea-shore',
+    pricingKey: 'seashore',
+    nameEn: 'Hyde Park Sea Shore',
+    areaAr: 'الساحل الشمالي',
+    areaSlug: 'north-coast',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: 'هايد بارك سي شور مشروع ساحلي على الساحل الشمالي يضم شققًا وشاليهات وتاون هاوس وتوين هاوس وفيلات على البحر مباشرة.',
+    paymentPlan: { downPct: 10, years: 6 },
+    amenities: ['شاطئ خاص', 'حمامات سباحة', 'أمن وحراسة', 'مطاعم وكافيهات', 'نادي شاطئي'],
+    locationText: 'يقع هايد بارك سي شور على الساحل الشمالي. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+  },
+];

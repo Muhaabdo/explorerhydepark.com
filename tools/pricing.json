@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "lastUpdated": "2026-08-04",
+    "currency": "EGP",
+    "priceBasis": "Lowest available price per unit type (developer inventory export).",
+    "source": "Hyde Park developer inventory — Available units only."
+  },
+  "projects": {
+    "garden-lakes": {
+      "refreshed": true,
+      "availableUnits": 42,
+      "minPrice": 6800000,
+      "bedrooms": [
+        1,
+        2,
+        3
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 6800000,
+          "areaMin": 68.0,
+          "areaMax": 154.04,
+          "bedrooms": [
+            1,
+            2,
+            3
+          ],
+          "count": 33
+        },
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 24470000,
+          "areaMin": 215.0,
+          "areaMax": 215.0,
+          "bedrooms": [],
+          "count": 4
+        },
+        {
+          "type": "Twin House",
+          "label": "توين هاوس",
+          "minPrice": 29000000,
+          "areaMin": 242.0,
+          "areaMax": 242.0,
+          "bedrooms": [],
+          "count": 3
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 37680000,
+          "areaMin": 242.0,
+          "areaMax": 242.0,
+          "bedrooms": [],
+          "count": 2
+        }
+      ]
+    },
+    "signature": {
+      "refreshed": true,
+      "availableUnits": 50,
+      "minPrice": 6590000,
+      "bedrooms": [
+        1,
+        2,
+        3
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 6590000,
+          "areaMin": 68.21,
+          "areaMax": 148.4,
+          "bedrooms": [
+            1,
+            2,
+            3
+          ],
+          "count": 32
+        },
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 23540000,
+          "areaMin": 195.0,
+          "areaMax": 195.0,
+          "bedrooms": [],
+          "count": 9
+        },
+        {
+          "type": "Twin House",
+          "label": "توين هاوس",
+          "minPrice": 31300000,
+          "areaMin": 215.0,
+          "areaMax": 215.0,
+          "bedrooms": [],
+          "count": 5
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 43120000,
+          "areaMin": 240.0,
+          "areaMax": 268.0,
+          "bedrooms": [],
+          "count": 4
+        }
+      ]
+    },
+    "hyde-central": {
+      "refreshed": true,
+      "availableUnits": 110,
+      "minPrice": 6430000,
+      "bedrooms": [
+        1,
+        2,
+        3
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 6430000,
+          "areaMin": 63.0,
+          "areaMax": 156.0,
+          "bedrooms": [
+            1,
+            2,
+            3
+          ],
+          "count": 87
+        },
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 25520000,
+          "areaMin": 212.0,
+          "areaMax": 212.0,
+          "bedrooms": [],
+          "count": 9
+        },
+        {
+          "type": "Quad",
+          "label": "كواد",
+          "minPrice": 25540000,
+          "areaMin": 217.0,
+          "areaMax": 217.0,
+          "bedrooms": [],
+          "count": 13
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 50140000,
+          "areaMin": 265.0,
+          "areaMax": 265.0,
+          "bedrooms": [],
+          "count": 1
+        }
+      ]
+    },
+    "hyde-new-cairo": {
+      "refreshed": true,
+      "availableUnits": 43,
+      "minPrice": 7220000,
+      "bedrooms": [
+        1,
+        2,
+        3
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 7220000,
+          "areaMin": 75.0,
+          "areaMax": 178.84,
+          "bedrooms": [
+            1,
+            2,
+            3
+          ],
+          "count": 36
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 74250000,
+          "areaMin": 327.7,
+          "areaMax": 1287.0,
+          "bedrooms": [
+            1
+          ],
+          "count": 7
+        }
+      ]
+    },
+    "seashore": {
+      "refreshed": true,
+      "availableUnits": 113,
+      "minPrice": 8410000,
+      "bedrooms": [
+        1,
+        2,
+        3
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 8410000,
+          "areaMin": 63.0,
+          "areaMax": 138.0,
+          "bedrooms": [
+            1,
+            2,
+            3
+          ],
+          "count": 72
+        },
+        {
+          "type": "Standard Chalet",
+          "label": "شاليه ستاندرد",
+          "minPrice": 13030000,
+          "areaMin": 76.39,
+          "areaMax": 135.7,
+          "bedrooms": [
+            1,
+            3
+          ],
+          "count": 4
+        },
+        {
+          "type": "Beach Chalet",
+          "label": "شاليه شاطئ",
+          "minPrice": 22450000,
+          "areaMin": 130.0,
+          "areaMax": 130.0,
+          "bedrooms": [
+            3
+          ],
+          "count": 1
+        },
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 34340000,
+          "areaMin": 182.0,
+          "areaMax": 195.0,
+          "bedrooms": [],
+          "count": 23
+        },
+        {
+          "type": "Twin House",
+          "label": "توين هاوس",
+          "minPrice": 55900000,
+          "areaMin": 193.0,
+          "areaMax": 195.0,
+          "bedrooms": [],
+          "count": 4
+        },
+        {
+          "type": "Twin House with Roof",
+          "label": "توين هاوس بروف",
+          "minPrice": 75810000,
+          "areaMin": 218.0,
+          "areaMax": 218.0,
+          "bedrooms": [],
+          "count": 1
+        },
+        {
+          "type": "Small Villa",
+          "label": "فيلا صغيرة",
+          "minPrice": 103650000,
+          "areaMin": 245.0,
+          "areaMax": 245.0,
+          "bedrooms": [],
+          "count": 4
+        },
+        {
+          "type": "Beach Medium Villa",
+          "label": "فيلا شاطئ متوسطة",
+          "minPrice": 138750000,
+          "areaMin": 385.0,
+          "areaMax": 385.0,
+          "bedrooms": [],
+          "count": 4
+        }
+      ]
+    },
+    "hyde-terraces": {
+      "refreshed": true,
+      "availableUnits": 7,
+      "minPrice": 23400000,
+      "bedrooms": [],
+      "units": [
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 23400000,
+          "areaMin": 196,
+          "areaMax": 198,
+          "bedrooms": [],
+          "count": null
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 23400000,
+          "areaMin": 240,
+          "areaMax": 285,
+          "bedrooms": [],
+          "count": null
+        }
+      ]
+    },
+    "tawny": {
+      "refreshed": true,
+      "availableUnits": null,
+      "minPrice": 15300000,
+      "bedrooms": [],
+      "units": [
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 15300000,
+          "areaMin": 208,
+          "areaMax": 246,
+          "bedrooms": [],
+          "count": null
+        },
+        {
+          "type": "Twin House",
+          "label": "توين هاوس",
+          "minPrice": 18000000,
+          "areaMin": 208,
+          "areaMax": null,
+          "bedrooms": [],
+          "count": null
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 25000000,
+          "areaMin": 288,
+          "areaMax": null,
+          "bedrooms": [],
+          "count": null
+        }
+      ]
+    }
+  }
+}
