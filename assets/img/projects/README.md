@@ -23,29 +23,29 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 
 ## Hyde Park New Cairo  (`assets/img/projects/hyde-park-new-cairo/`)
 
-- [ ] `hyde-park-new-cairo-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-new-cairo-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-new-cairo-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-new-cairo-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-new-cairo-gallery-4.jpg` — gallery photo 4
-- [ ] `hyde-park-new-cairo-gallery-5.jpg` — gallery photo 5
-- [ ] `hyde-park-new-cairo-gallery-6.jpg` — gallery photo 6
-- [ ] `hyde-park-new-cairo-location.jpg` — map or location photo
-- [ ] `hyde-park-new-cairo-apartment.jpg` — Apartment unit photo
-- [ ] `hyde-park-new-cairo-standalone.jpg` — Standalone unit photo
+- [x] `hyde-park-new-cairo-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-new-cairo-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-new-cairo-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `hyde-park-new-cairo-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `hyde-park-new-cairo-gallery-4.jpg` ✅ — gallery photo 4
+- [x] `hyde-park-new-cairo-gallery-5.jpg` ✅ — gallery photo 5
+- [x] `hyde-park-new-cairo-gallery-6.jpg` ✅ — gallery photo 6
+- [x] `hyde-park-new-cairo-location.jpg` ✅ — map or location photo
+- [x] `hyde-park-new-cairo-apartment.jpg` ✅ — Apartment unit photo
+- [x] `hyde-park-new-cairo-standalone.jpg` ✅ — Standalone unit photo
 
 ## Hyde Park Terraces  (`assets/img/projects/hyde-park-terraces/`)
 
-- [ ] `hyde-park-terraces-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-terraces-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-terraces-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-terraces-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-terraces-gallery-4.jpg` — gallery photo 4
-- [ ] `hyde-park-terraces-gallery-5.jpg` — gallery photo 5
-- [ ] `hyde-park-terraces-gallery-6.jpg` — gallery photo 6
-- [ ] `hyde-park-terraces-location.jpg` — map or location photo
-- [ ] `hyde-park-terraces-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-terraces-standalone.jpg` — Standalone unit photo
+- [x] `hyde-park-terraces-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-terraces-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-terraces-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `hyde-park-terraces-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `hyde-park-terraces-gallery-4.jpg` ✅ — gallery photo 4
+- [x] `hyde-park-terraces-gallery-5.jpg` ✅ — gallery photo 5
+- [x] `hyde-park-terraces-gallery-6.jpg` ✅ — gallery photo 6
+- [x] `hyde-park-terraces-location.jpg` ✅ — map or location photo
+- [x] `hyde-park-terraces-townhouse.jpg` ✅ — Townhouse unit photo
+- [x] `hyde-park-terraces-standalone.jpg` ✅ — Standalone unit photo
 
 ## Hyde Park Taony  (`assets/img/projects/hyde-park-taony/`)
 
