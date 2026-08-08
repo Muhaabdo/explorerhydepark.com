@@ -93,19 +93,19 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 
 ## Hyde Park Sea Shore  (`assets/img/projects/hyde-park-sea-shore/`)
 
-- [ ] `hyde-park-sea-shore-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-sea-shore-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-sea-shore-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-sea-shore-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-sea-shore-gallery-4.jpg` — gallery photo 4
-- [ ] `hyde-park-sea-shore-gallery-5.jpg` — gallery photo 5
-- [ ] `hyde-park-sea-shore-gallery-6.jpg` — gallery photo 6
-- [ ] `hyde-park-sea-shore-location.jpg` — map or location photo
-- [ ] `hyde-park-sea-shore-apartment.jpg` — Apartment unit photo
-- [ ] `hyde-park-sea-shore-standard-chalet.jpg` — Standard Chalet unit photo
-- [ ] `hyde-park-sea-shore-beach-chalet.jpg` — Beach Chalet unit photo
-- [ ] `hyde-park-sea-shore-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-sea-shore-twin-house.jpg` — Twin House unit photo
-- [ ] `hyde-park-sea-shore-twin-house-with-roof.jpg` — Twin House with Roof unit photo
-- [ ] `hyde-park-sea-shore-small-villa.jpg` — Small Villa unit photo
-- [ ] `hyde-park-sea-shore-beach-medium-villa.jpg` — Beach Medium Villa unit photo
+- [x] `hyde-park-sea-shore-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-sea-shore-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-sea-shore-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `hyde-park-sea-shore-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `hyde-park-sea-shore-gallery-4.jpg` ✅ — gallery photo 4
+- [x] `hyde-park-sea-shore-gallery-5.jpg` ✅ — gallery photo 5
+- [x] `hyde-park-sea-shore-gallery-6.jpg` ✅ — gallery photo 6
+- [x] `hyde-park-sea-shore-location.jpg` ✅ — map or location photo
+- [x] `hyde-park-sea-shore-apartment.jpg` ✅ — Apartment unit photo
+- [x] `hyde-park-sea-shore-standard-chalet.jpg` ✅ — Standard Chalet unit photo
+- [x] `hyde-park-sea-shore-beach-chalet.jpg` ✅ — Beach Chalet unit photo
+- [x] `hyde-park-sea-shore-townhouse.jpg` ✅ — Townhouse unit photo
+- [x] `hyde-park-sea-shore-twin-house.jpg` ✅ — Twin House unit photo
+- [x] `hyde-park-sea-shore-twin-house-with-roof.jpg` ✅ — Twin House with Roof unit photo
+- [x] `hyde-park-sea-shore-small-villa.jpg` ✅ — Small Villa unit photo
+- [x] `hyde-park-sea-shore-beach-medium-villa.jpg` ✅ — Beach Medium Villa unit photo
