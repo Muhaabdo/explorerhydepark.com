@@ -570,6 +570,53 @@ function imageChecklist(merged) {
   return lines.join('\n');
 }
 
+var SITE_ORIGIN = 'https://www.explorerhydepark.com';
+
+// thank-you.html is deliberately excluded — it carries <meta name="robots"
+// content="noindex, follow"> so it shouldn't be advertised for indexing.
+function sitemapUrls(merged) {
+  var today = new Date().toISOString().slice(0, 10);
+  var urls = [
+    { loc: SITE_ORIGIN + '/', changefreq: 'weekly', priority: '1.0' },
+    { loc: SITE_ORIGIN + '/contact.html', changefreq: 'monthly', priority: '0.6' },
+    { loc: SITE_ORIGIN + '/privacy.html', changefreq: 'yearly', priority: '0.3' },
+  ];
+  merged.forEach(function (p) {
+    urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.9' });
+  });
+  urls.forEach(function (u) { u.lastmod = today; });
+  return urls;
+}
+
+function writeSitemap(merged) {
+  var urls = sitemapUrls(merged);
+  var body = urls.map(function (u) {
+    return (
+      '  <url>\n' +
+      '    <loc>' + u.loc + '</loc>\n' +
+      '    <lastmod>' + u.lastmod + '</lastmod>\n' +
+      '    <changefreq>' + u.changefreq + '</changefreq>\n' +
+      '    <priority>' + u.priority + '</priority>\n' +
+      '  </url>'
+    );
+  }).join('\n');
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">\n' +
+    body + '\n' +
+    '</urlset>\n';
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml, 'utf8');
+  console.log('wrote sitemap.xml (' + urls.length + ' urls)');
+}
+
+function writeRobotsTxt() {
+  var txt =
+    'User-agent: *\n' +
+    'Allow: /\n\n' +
+    'Sitemap: ' + SITE_ORIGIN + '/sitemap.xml\n';
+  fs.writeFileSync(path.join(ROOT, 'robots.txt'), txt, 'utf8');
+  console.log('wrote robots.txt');
+}
+
 /** Splices the homepage project cards straight into index.html between two
  * marker comments — no manual copy/paste step once images (or prices) change. */
 function updateIndexHtml(merged) {
@@ -601,3 +648,5 @@ console.log('wrote tools/homepage-cards.snippet.html');
 updateIndexHtml(merged);
 fs.writeFileSync(path.join(IMG_ROOT, 'README.md'), imageChecklist(merged), 'utf8');
 console.log('wrote assets/img/projects/README.md (image checklist)');
+writeSitemap(merged);
+writeRobotsTxt();
