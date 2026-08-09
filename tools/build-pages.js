@@ -21,6 +21,8 @@ const pricing = require('./pricing.json');
 const SITE_NAME = 'Explorer Hyde Park';
 const ROOT = path.join(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'projects');
+const SITE_ORIGIN = 'https://www.explorerhydepark.com';
+const OG_DEFAULT_IMAGE = SITE_ORIGIN + '/assets/img/og-default.jpg';
 
 function fmt(n) {
   return Math.round(n).toLocaleString('en-US');
@@ -29,6 +31,15 @@ function fmt(n) {
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
+
+// Inverse of escapeHtml — used to pull already-escaped text back out of
+// hand-written static HTML (title/description) so it can be safely
+// re-escaped into a new attribute without double-escaping.
+function unescapeHtml(s) {
+  return String(s).replace(/&amp;|&lt;|&gt;|&quot;/g, function (m) {
+    return { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"' }[m];
   });
 }
 
@@ -345,6 +356,73 @@ function preliminaryNotice(p) {
   );
 }
 
+/** Absolute URL to a project's real hero photo if one exists on disk,
+ * else the shared fallback image — same findImage lookup mediaSlot uses. */
+function ogImageUrl(slug) {
+  var found = findImage(slug, 'hero');
+  return found ? SITE_ORIGIN + '/' + found : OG_DEFAULT_IMAGE;
+}
+
+/** Open Graph + Twitter Card <meta> block. title/description are raw
+ * (unescaped) text — this function handles escaping; url/image must
+ * already be absolute URLs. */
+function ogTagsMarkup(opts) {
+  var title = escapeHtml(opts.title);
+  var description = escapeHtml(opts.description);
+  return (
+    '<meta property="og:type" content="website">\n' +
+    '<meta property="og:title" content="' + title + '">\n' +
+    '<meta property="og:description" content="' + description + '">\n' +
+    '<meta property="og:url" content="' + opts.url + '">\n' +
+    '<meta property="og:image" content="' + opts.image + '">\n' +
+    '<meta property="og:image:width" content="1200">\n' +
+    '<meta property="og:image:height" content="630">\n' +
+    '<meta property="og:site_name" content="Explorer Hyde Park">\n' +
+    '<meta property="og:locale" content="ar_AR">\n' +
+    '<meta name="twitter:card" content="summary_large_image">\n' +
+    '<meta name="twitter:title" content="' + title + '">\n' +
+    '<meta name="twitter:description" content="' + description + '">\n' +
+    '<meta name="twitter:image" content="' + opts.image + '">'
+  );
+}
+
+var OG_BLOCK_START = '<!-- AUTO:OG:START -->';
+var OG_BLOCK_END = '<!-- AUTO:OG:END -->';
+
+/** Splices an OG/Twitter block right after <link rel="canonical"> in a
+ * hand-written static page (index/contact/privacy) — title, description
+ * and the canonical URL are read back from the page's own tags so the
+ * OG data always matches what's already there, no duplication. Wrapped
+ * in AUTO:OG markers so re-running the build updates in place instead of
+ * stacking duplicate blocks. thank-you.html is never passed in here — it
+ * carries noindex and shouldn't be promoted for social sharing. */
+function injectStaticOgTags(relPath, imageUrl) {
+  var filePath = path.join(ROOT, relPath);
+  var html = fs.readFileSync(filePath, 'utf8');
+  var titleMatch = html.match(/<title>([\s\S]*?)<\/title>/);
+  var descMatch = html.match(/<meta name="description" content="([^"]*)">/);
+  var canonicalMatch = html.match(/<link rel="canonical" href="([^"]*)">/);
+  if (!titleMatch || !descMatch || !canonicalMatch) {
+    console.log('  (skipped ' + relPath + ' — could not find title/description/canonical tags)');
+    return;
+  }
+
+  var block = OG_BLOCK_START + '\n' + ogTagsMarkup({
+    title: unescapeHtml(titleMatch[1]),
+    description: unescapeHtml(descMatch[1]),
+    url: canonicalMatch[1],
+    image: imageUrl,
+  }) + '\n' + OG_BLOCK_END;
+
+  var blockRegex = new RegExp(OG_BLOCK_START + '[\\s\\S]*?' + OG_BLOCK_END);
+  var updated = blockRegex.test(html)
+    ? html.replace(blockRegex, block)
+    : html.replace(canonicalMatch[0], canonicalMatch[0] + '\n' + block);
+
+  fs.writeFileSync(filePath, updated, 'utf8');
+  console.log('updated OG/Twitter tags in ' + relPath);
+}
+
 function page(p, allMerged) {
   var title = p.nameEn + ' | ' + SITE_NAME + ' — أسعار ومساحات وخطط السداد';
   var description = p.intro.replace(/\s*\*.*$/, '').slice(0, 155);
@@ -361,6 +439,7 @@ function page(p, allMerged) {
 '<title>' + escapeHtml(title) + '</title>\n' +
 '<meta name="description" content="' + escapeHtml(description) + '">\n' +
 '<link rel="canonical" href="' + canonical + '">\n' +
+ogTagsMarkup({ title: title, description: description, url: canonical, image: ogImageUrl(p.slug) }) + '\n' +
 '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
 '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\n' +
@@ -570,8 +649,6 @@ function imageChecklist(merged) {
   return lines.join('\n');
 }
 
-var SITE_ORIGIN = 'https://www.explorerhydepark.com';
-
 // thank-you.html is deliberately excluded — it carries <meta name="robots"
 // content="noindex, follow"> so it shouldn't be advertised for indexing.
 function sitemapUrls(merged) {
@@ -650,3 +727,6 @@ fs.writeFileSync(path.join(IMG_ROOT, 'README.md'), imageChecklist(merged), 'utf8
 console.log('wrote assets/img/projects/README.md (image checklist)');
 writeSitemap(merged);
 writeRobotsTxt();
+injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
+injectStaticOgTags('contact.html', OG_DEFAULT_IMAGE);
+injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
