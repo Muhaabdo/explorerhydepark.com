@@ -78,7 +78,7 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 
 ## Hyde Park Signature  (`assets/img/projects/hyde-park-signature/`)
 
-- [ ] `hyde-park-signature-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-signature-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
 - [ ] `hyde-park-signature-gallery-1.jpg` — gallery photo 1
 - [ ] `hyde-park-signature-gallery-2.jpg` — gallery photo 2
 - [ ] `hyde-park-signature-gallery-3.jpg` — gallery photo 3

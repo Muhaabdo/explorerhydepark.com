@@ -434,6 +434,13 @@ function page(p, allMerged) {
   return '<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
+'<!-- Google Tag Manager -->\n' +
+'<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
+'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
+'j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=\n' +
+'\'https://www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);\n' +
+'})(window,document,\'script\',\'dataLayer\',\'GTM-5FD83KJ7\');</script>\n' +
+'<!-- End Google Tag Manager -->\n' +
 '<meta charset="UTF-8">\n' +
 '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
 '<title>' + escapeHtml(title) + '</title>\n' +
@@ -447,6 +454,10 @@ ogTagsMarkup({ title: title, description: description, url: canonical, image: og
 '<link rel="stylesheet" href="../assets/css/style.css">\n' +
 '</head>\n' +
 '<body>\n\n' +
+'<!-- Google Tag Manager (noscript) -->\n' +
+'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
+'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
+'<!-- End Google Tag Manager (noscript) -->\n\n' +
 nav() + '\n\n' +
 '  <section class="hero">\n' +
 '    <div class="hero__bg">' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', '../', 'position:absolute;inset:0') + '</div>\n' +
