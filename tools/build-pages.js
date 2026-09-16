@@ -168,10 +168,10 @@ function mergeProject(p) {
 
 function nav() {
   var links = [
-    { href: '../index.html', label: 'الرئيسية' },
-    { href: '../index.html#projects', label: 'المشاريع' },
-    { href: '../index.html#about', label: 'من نحن' },
-    { href: '../contact.html', label: 'تواصل معنا' },
+    { href: '/', label: 'الرئيسية' },
+    { href: '/#projects', label: 'المشاريع' },
+    { href: '/#about', label: 'من نحن' },
+    { href: '/contact', label: 'تواصل معنا' },
   ];
   var desktop = links.map(function (l) {
     return '<a href="' + l.href + '">' + l.label + '</a>';
@@ -182,7 +182,7 @@ function nav() {
 
   return (
     '  <nav class="navbar">\n' +
-    '    <a href="../index.html" class="navbar__brand">Explorer Hyde Park</a>\n' +
+    '    <a href="/" class="navbar__brand">Explorer Hyde Park</a>\n' +
     '    <div class="navbar__links">\n' +
     '        ' + desktop + '\n' +
     '    </div>\n' +
@@ -206,15 +206,15 @@ function footer() {
     '      </div>\n' +
     '      <div class="footer__col">\n' +
     '        <span class="footer__heading">روابط سريعة</span>\n' +
-    '        <a href="../index.html">الرئيسية</a>\n' +
-    '        <a href="../index.html#about">من نحن</a>\n' +
-    '        <a href="../contact.html">تواصل معنا</a>\n' +
-    '        <a href="../privacy.html">سياسة الخصوصية</a>\n' +
+    '        <a href="/">الرئيسية</a>\n' +
+    '        <a href="/#about">من نحن</a>\n' +
+    '        <a href="/contact">تواصل معنا</a>\n' +
+    '        <a href="/privacy">سياسة الخصوصية</a>\n' +
     '      </div>\n' +
     '      <div class="footer__col">\n' +
     '        <span class="footer__heading">المشاريع</span>\n' +
     projects.map(function (p) {
-      return '        <a href="./' + p.slug + '.html">' + p.nameEn + '</a>\n';
+      return '        <a href="/projects/' + p.slug + '">' + p.nameEn + '</a>\n';
     }).join('') +
     '      </div>\n' +
     '      <div class="footer__col">\n' +
@@ -426,7 +426,7 @@ function injectStaticOgTags(relPath, imageUrl) {
 function page(p, allMerged) {
   var title = p.nameEn + ' | ' + SITE_NAME + ' — أسعار ومساحات وخطط السداد';
   var description = p.intro.replace(/\s*\*.*$/, '').slice(0, 155);
-  var canonical = 'https://www.explorerhydepark.com/projects/' + p.slug + '.html';
+  var canonical = 'https://www.explorerhydepark.com/projects/' + p.slug;
   var availableBadge = (p.availableUnits != null)
     ? '\n        <span class="hero__price-label" style="margin-inline-start:8px">· ' + p.availableUnits + ' وحدة متاحة</span>'
     : '';
@@ -559,7 +559,7 @@ faqsMarkup(p) + '\n' +
 '    <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px">\n' +
 '      <h2 class="section-title on-dark">اطلب اتصال بخصوص <bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></h2>\n' +
 '      <p style="margin:0;text-align:center;color:#D8D8D8;font-size:16px">اترك بياناتك وسيتواصل معك فريقنا في أقرب وقت</p>\n' +
-leadFormMarkup(p, '../thank-you.html', '../privacy.html') + '\n' +
+leadFormMarkup(p, '/thank-you', '/privacy') + '\n' +
 '      <p class="form-note">Explorer Hyde Park منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</p>\n' +
 '    </div>\n' +
 '  </section>\n\n' +
@@ -603,7 +603,7 @@ function homepageCards(merged) {
     out += '  <h3 style="text-align:center;color:var(--navy);opacity:.7;font-weight:700;font-size:16px;margin:0 0 16px;">' + escapeHtml(area) + '</h3>\n';
     out += '  <div class="grid grid--projects" style="margin-bottom:44px">\n';
     byArea[area].forEach(function (p) {
-      out += projectCardMarkup(p, 'projects/' + p.slug + '.html');
+      out += projectCardMarkup(p, '/projects/' + p.slug);
     });
     out += '  </div>\n';
   });
@@ -616,7 +616,7 @@ function relatedProjectsMarkup(p, allMerged) {
   var others = allMerged.filter(function (o) { return o.slug !== p.slug; });
   if (!others.length) return '';
   var cards = others.map(function (o) {
-    return projectCardMarkup(o, './' + o.slug + '.html', 'related-carousel__card', '../');
+    return projectCardMarkup(o, '/projects/' + o.slug, 'related-carousel__card', '../');
   }).join('');
   return (
     '  <section class="section section--gray" style="padding-inline:0">\n' +
@@ -666,11 +666,11 @@ function sitemapUrls(merged) {
   var today = new Date().toISOString().slice(0, 10);
   var urls = [
     { loc: SITE_ORIGIN + '/', changefreq: 'weekly', priority: '1.0' },
-    { loc: SITE_ORIGIN + '/contact.html', changefreq: 'monthly', priority: '0.6' },
-    { loc: SITE_ORIGIN + '/privacy.html', changefreq: 'yearly', priority: '0.3' },
+    { loc: SITE_ORIGIN + '/contact', changefreq: 'monthly', priority: '0.6' },
+    { loc: SITE_ORIGIN + '/privacy', changefreq: 'yearly', priority: '0.3' },
   ];
   merged.forEach(function (p) {
-    urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.9' });
+    urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug, changefreq: 'weekly', priority: '0.9' });
   });
   urls.forEach(function (u) { u.lastmod = today; });
   return urls;

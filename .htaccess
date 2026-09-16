@@ -1,16 +1,38 @@
 Options -MultiViews
 RewriteEngine On
 
-# Old "Taony" slug (typo) -> corrected "Tawny" slug.
+# --- 1. Old "Taony" slug (typo) -> canonical Tawny URL. Unconditional on
+# host/scheme so a taony request lands on the FULL canonical URL directly,
+# in one hop, instead of first getting host/scheme-fixed here and then
+# needing a second hop through rule 2 to fix the slug too.
 # Covers: /projects/hyde-park-taony, /projects/hyde-park-taony/,
 # /projects/hyde-park-taony.html, /projects/hyde-park-taony/index.html
-RewriteRule ^projects/hyde-park-taony(/index)?(\.html)?/?$ /projects/hyde-park-tawny [R=301,L]
+# (any host, any scheme, with or without trailing slash).
+RewriteRule ^projects/hyde-park-taony(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-tawny [R=301,L]
 
-# Redirect requests for *.html to extensionless URLs.
-RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
-RewriteRule ^ %1 [R=301,L]
+# --- 2. Canonical host + scheme + no .html + no trailing slash, all fixed
+# in a single 301 (never chained). Phase 2a flags requests that are safe to
+# rewrite the trailing slash off of (the homepage, or any path that isn't a
+# real on-disk directory) so a genuine directory keeps working normally.
+# Phase 2b fires only when something is actually non-canonical, using a
+# capture over the untouched original request line (THE_REQUEST) so host,
+# scheme, ".html" and a trailing slash are all corrected together.
+RewriteCond %{REQUEST_URI} =/ [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ - [E=CANON_OK:1]
 
-# Internally map extensionless URLs to existing .html files.
+RewriteCond %{ENV:CANON_OK} =1
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.explorerhydepark\.com$ [NC,OR]
+RewriteCond %{THE_REQUEST} \.html[/?\s] [NC,OR]
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/+.+/(?:\?\S*)?\sHTTP [NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/+(.*?)(?:\.html)?/?(?:\?\S*)?\sHTTP [NC]
+RewriteRule ^ https://www.explorerhydepark.com/%1 [R=301,L]
+
+# --- 3. Internally map extensionless URLs to their .html files on disk.
+# No external redirect (no R flag) — must stay last so it never re-enters
+# rule 2. Real files (robots.txt, sitemap.xml, assets/...) and real
+# directories are untouched since they don't satisfy these conditions.
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+)$ $1.html [L]
