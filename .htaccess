@@ -10,6 +10,15 @@ RewriteEngine On
 # (any host, any scheme, with or without trailing slash).
 RewriteRule ^projects/hyde-park-taony(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-tawny [R=301,L]
 
+# --- 1b. "index"/"index.html" is the docroot's DirectoryIndex file, not a
+# distinct page — must 301 straight to the site root in one hop. Without
+# this, rule 2's generic ".html"-stripping capture would turn
+# "/index.html" into "/index" (stripping only the extension), which then
+# passes rule 3's extensionless->.html check and serves 200 — a duplicate
+# homepage at a non-canonical URL. Unconditional on host/scheme, same
+# pattern as rule 1, and must run before rule 2 for the same reason.
+RewriteRule ^index(\.html)?/?$ https://www.explorerhydepark.com/ [NC,R=301,L]
+
 # --- 2. Canonical host + scheme + no .html + no trailing slash, all fixed
 # in a single 301 (never chained). Phase 2a flags requests that are safe to
 # rewrite the trailing slash off of (the homepage, or any path that isn't a
