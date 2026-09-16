@@ -47,19 +47,19 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-terraces-townhouse.jpg` ✅ — Townhouse unit photo
 - [x] `hyde-park-terraces-standalone.jpg` ✅ — Standalone unit photo
 
-## Hyde Park Taony  (`assets/img/projects/hyde-park-taony/`)
+## Hyde Park Tawny  (`assets/img/projects/hyde-park-tawny/`)
 
-- [ ] `hyde-park-taony-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-taony-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-taony-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-taony-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-taony-gallery-4.jpg` — gallery photo 4
-- [ ] `hyde-park-taony-gallery-5.jpg` — gallery photo 5
-- [ ] `hyde-park-taony-gallery-6.jpg` — gallery photo 6
-- [ ] `hyde-park-taony-location.jpg` — map or location photo
-- [ ] `hyde-park-taony-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-taony-twin-house.jpg` — Twin House unit photo
-- [ ] `hyde-park-taony-standalone.jpg` — Standalone unit photo
+- [ ] `hyde-park-tawny-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
+- [ ] `hyde-park-tawny-gallery-1.jpg` — gallery photo 1
+- [ ] `hyde-park-tawny-gallery-2.jpg` — gallery photo 2
+- [ ] `hyde-park-tawny-gallery-3.jpg` — gallery photo 3
+- [ ] `hyde-park-tawny-gallery-4.jpg` — gallery photo 4
+- [ ] `hyde-park-tawny-gallery-5.jpg` — gallery photo 5
+- [ ] `hyde-park-tawny-gallery-6.jpg` — gallery photo 6
+- [ ] `hyde-park-tawny-location.jpg` — map or location photo
+- [ ] `hyde-park-tawny-townhouse.jpg` — Townhouse unit photo
+- [ ] `hyde-park-tawny-twin-house.jpg` — Twin House unit photo
+- [ ] `hyde-park-tawny-standalone.jpg` — Standalone unit photo
 
 ## Hyde Park Garden Lake  (`assets/img/projects/hyde-park-garden-lake/`)
 

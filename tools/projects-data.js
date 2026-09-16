@@ -46,9 +46,9 @@ module.exports = [
     locationText: 'يقع هايد بارك تراسيس في القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
   },
   {
-    slug: 'hyde-park-taony',
+    slug: 'hyde-park-tawny',
     pricingKey: 'tawny',
-    nameEn: 'Hyde Park Taony',
+    nameEn: 'Hyde Park Tawny',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
