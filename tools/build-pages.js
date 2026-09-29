@@ -92,6 +92,40 @@ function findImage(slug, name) {
   return null;
 }
 
+/** Intrinsic { width, height } of a JPEG / PNG / WebP file (sniffed from the
+ * bytes, not the extension — some ".jpg" files here are really WebP), or
+ * null. Used for explicit width/height on the hero image. */
+function imageSize(relPath) {
+  var buf;
+  try { buf = fs.readFileSync(path.join(ROOT, relPath)); } catch (e) { return null; }
+  if (buf.length > 24 && buf.readUInt32BE(0) === 0x89504E47) {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+  if (buf.length > 30 && buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') {
+    var chunk = buf.toString('ascii', 12, 16);
+    if (chunk === 'VP8 ') return { width: buf.readUInt16LE(26) & 0x3fff, height: buf.readUInt16LE(28) & 0x3fff };
+    if (chunk === 'VP8L') {
+      var b = buf.readUInt32LE(21);
+      return { width: (b & 0x3fff) + 1, height: ((b >> 14) & 0x3fff) + 1 };
+    }
+    if (chunk === 'VP8X') return { width: buf.readUIntLE(24, 3) + 1, height: buf.readUIntLE(27, 3) + 1 };
+    return null;
+  }
+  if (buf[0] === 0xFF && buf[1] === 0xD8) {
+    var i = 2;
+    while (i + 9 < buf.length) {
+      if (buf[i] !== 0xFF) { i++; continue; }
+      var marker = buf[i + 1];
+      // SOF0..SOF15 except DHT (C4), JPG (C8), DAC (CC) carry the frame size.
+      if (marker >= 0xC0 && marker <= 0xCF && marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC) {
+        return { width: buf.readUInt16BE(i + 7), height: buf.readUInt16BE(i + 5) };
+      }
+      i += 2 + buf.readUInt16BE(i + 2);
+    }
+  }
+  return null;
+}
+
 /** Renders a real <img> when a matching file exists on disk, else the same
  * placeholder box used everywhere else — callers don't need to branch. */
 function mediaSlot(slug, name, altText, placeholderText, icon, prefix, wrapperStyle) {
@@ -125,6 +159,30 @@ function formatRooms(bedrooms) {
  * time so no price, count or area is ever typed by hand. Every helper must
  * cope with a project that has no inventory rows (Terraces, Tawny), no
  * apartments, or availableUnits: null. */
+
+// Short Arabic family label per unit type (hero subtitle; unit tabs later).
+// Variants collapse into one family (both chalets → شاليه, all villas → فيلا).
+var TYPE_SHORT_AR = {
+  'Apartment': 'شقق',
+  'Townhouse': 'تاون',
+  'Quad': 'كواد',
+  'Twin House': 'توين',
+  'Twin House with Roof': 'توين',
+  'Standalone': 'فيلا',
+  'Small Villa': 'فيلا',
+  'Beach Medium Villa': 'فيلا',
+  'Standard Chalet': 'شاليه',
+  'Beach Chalet': 'شاليه',
+};
+
+function shortTypeAr(u) {
+  return TYPE_SHORT_AR[u.name] || u.nameAr;
+}
+
+/** Distinct values, first occurrence order. */
+function uniq(list) {
+  return list.filter(function (v, i) { return list.indexOf(v) === i; });
+}
 
 var AR_MONTHS = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
 
@@ -271,7 +329,8 @@ function mergeProject(p) {
   });
 }
 
-function nav() {
+/** overlay: transparent over a hero image until the page scrolls (project pages). */
+function nav(overlay) {
   var links = [
     { href: '/', label: 'الرئيسية' },
     { href: '/#projects', label: 'المشاريع' },
@@ -286,7 +345,7 @@ function nav() {
   }).join('\n      ');
 
   return (
-    '  <nav class="navbar">\n' +
+    '  <nav class="navbar' + (overlay ? ' navbar--overlay' : '') + '">\n' +
     '    <a href="/" class="navbar__brand">Explorer Hyde Park</a>\n' +
     '    <div class="navbar__links">\n' +
     '        ' + desktop + '\n' +
@@ -393,15 +452,167 @@ function faqsMarkup(p) {
   }).join('\n');
 }
 
+/** "8 سنين" / "سنة" / "سنتين" / "12 سنة" — Arabic counted-noun agreement. */
+function yearsAr(n) {
+  if (n === 1) return 'سنة';
+  if (n === 2) return 'سنتين';
+  if (n >= 3 && n <= 10) return n + ' سنين';
+  return n + ' سنة';
+}
+
+/** Arabic list join: "أ وب وج" (first item, then "، و" before the rest when asked). */
+function joinAr(items) {
+  if (items.length <= 1) return items.join('');
+  return items[0] + '، و' + items.slice(1).join(' و');
+}
+
+/** Area range covered by a unit's groups ({ min, max }), null-safe. */
+function groupsAreaRange(groups) {
+  var mins = groups.map(function (g) { return g.areaMin; }).filter(function (v) { return v != null; });
+  var maxs = groups.map(function (g) { return g.areaMax != null ? g.areaMax : g.areaMin; }).filter(function (v) { return v != null; });
+  if (!mins.length) return null;
+  return { min: Math.min.apply(null, mins), max: Math.max.apply(null, maxs) };
+}
+
+function heroMarkup(p) {
+  var img = findImage(p.slug, 'hero');
+  var media;
+  if (img) {
+    var size = imageSize(img);
+    media = '<img class="pp-hero__img" src="../' + img + '" alt="' + escapeHtml(p.nameEn + ' — ' + p.areaAr) + '"' +
+      (size ? ' width="' + size.width + '" height="' + size.height + '"' : '') + ' fetchpriority="high" decoding="async">';
+  } else {
+    media = '<div class="img-slot pp-hero__img"><i class="fa-solid fa-image"></i><span>' + escapeHtml(p.heroPlaceholder) + '</span></div>';
+  }
+  var subtitle = [p.areaAr].concat(uniq(p.units.map(shortTypeAr))).join(' · ');
+  var badge = p.availableUnits ? '        <span class="pp-badge">' + p.availableUnits + ' وحدة متاحة</span>\n' : '';
+  var prelim = p.preliminary ? ' <span class="pp-price-card__note">سعر مبدئي</span>' : '';
+
+  return (
+    '  <header class="pp-hero">\n' +
+    '    <div class="pp-hero__media">\n' +
+    '      ' + media + '\n' +
+    '      <div class="pp-hero__shade"></div>\n' +
+    '      <div class="pp-hero__text">\n' +
+    badge +
+    '        <h1 class="pp-hero__title"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></h1>\n' +
+    '        <p class="pp-hero__sub">' + escapeHtml(subtitle) + '</p>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <div class="pp-price-card">\n' +
+    '      <p class="pp-price-card__price"><span class="pp-price-card__label">يبدأ من</span> <bdi class="en pp-price-card__value">' + fmt(p.startingPrice) + '</bdi> <span class="pp-price-card__label">جنيه</span>' + prelim + '</p>\n' +
+    '      <div class="pp-price-card__tiles">\n' +
+    '        <div class="pp-tile"><span class="pp-tile__label">مقدم من</span><bdi class="en pp-tile__value">' + p.paymentPlan.downPct + '%</bdi></div>\n' +
+    '        <div class="pp-tile"><span class="pp-tile__label">تقسيط حتى</span><span class="pp-tile__value">' + yearsAr(p.paymentPlan.years) + '</span></div>\n' +
+    '        <a class="pp-tile pp-tile--link" href="#calc"><span class="pp-tile__label">قسطك كام؟</span><span class="pp-tile__value">احسبه ←</span></a>\n' +
+    '      </div>\n' +
+    '      <a class="pp-btn pp-btn--green pp-btn--block" href="#units">شوف الوحدات اللي في ميزانيتك</a>\n' +
+    '    </div>\n' +
+    '  </header>\n'
+  );
+}
+
+function sectionNavMarkup(p) {
+  var chips = [['units', 'الوحدات'], ['calc', 'احسب قسطك']];
+  if (p.galleryImages.length) chips.push(['gallery', 'الصور']);
+  chips.push(['location', 'الموقع'], ['faq', 'الأسئلة']);
+  return (
+    '  <nav class="pp-chips" aria-label="أقسام الصفحة" data-section-nav>\n' +
+    chips.map(function (c) {
+      return '    <a class="pp-chip" href="#' + c[0] + '">' + c[1] + '</a>\n';
+    }).join('') +
+    '  </nav>\n'
+  );
+}
+
+/** Answer-first summary paragraph, built only from data. Returns HTML. */
+function summaryHtml(p) {
+  var parts = p.units.map(function (u) {
+    if (u.name !== 'Apartment') return escapeHtml(u.nameAr);
+    var r = groupsAreaRange(u.groups);
+    if (!r) return escapeHtml(u.nameAr);
+    var a = Math.round(r.min), b = Math.round(r.max);
+    return 'شقق ' + (a === b ? 'بمساحة ' + a + ' م²' : 'من ' + a + ' لـ ' + b + ' م²');
+  });
+  var kind = p.areaSlug === 'north-coast' ? 'مشروع ساحلي' : 'مشروع سكني';
+  var available = p.availableUnits
+    ? 'المتاح حالياً <strong>' + p.availableUnits + ' وحدة</strong>: '
+    : 'الوحدات المتاحة: ';
+  var finishing = p.finishingLabel ? '، والوحدات بتتسلّم ' + escapeHtml(p.finishingLabel) : '';
+  return (
+    escapeHtml(p.nameAr) + ' (<bdi class="en">' + escapeHtml(p.nameEn) + '</bdi>) ' + kind +
+    ' من هايد بارك للتطوير العقاري في ' + escapeHtml(p.areaAr) + '. ' +
+    available + joinAr(parts) + '. ' +
+    'الأسعار بتبدأ من <strong><bdi class="en">' + fmt(p.startingPrice) + '</bdi> جنيه</strong>' +
+    ' بمقدم من ' + p.paymentPlan.downPct + '% وتقسيط لحد ' + yearsAr(p.paymentPlan.years) + finishing + '.'
+  );
+}
+
+function overviewMarkup(p) {
+  var facts = [['الموقع', escapeHtml(p.areaAr)]];
+  var a = Math.round(p.areaRange.min), b = Math.round(p.areaRange.max);
+  facts.push(['المساحات', '<bdi class="en">' + (a === b ? fmt(a) : fmt(a) + ' – ' + fmt(b)) + '</bdi> م²']);
+  if (p.finishingLabel) facts.push(['التشطيب', escapeHtml(p.finishingLabel)]);
+  if (p.deliveryYear) facts.push(['الاستلام', '<bdi class="en">' + escapeHtml(p.deliveryYear) + '</bdi>']);
+  if (p.pricePerSqm) facts.push(['سعر المتر (شقق) من', '<bdi class="en">' + fmt(p.pricePerSqm) + '</bdi> ج/م²']);
+  facts.push(['المطوّر', 'هايد بارك للتطوير']);
+
+  var byline = (p.lastUpdatedAr ? 'محدّث: ' + p.lastUpdatedAr + ' · ' : '') +
+    'من مخزون المطوّر · إعداد فريق <bdi class="en">Explorer Hyde Park</bdi>';
+
+  return (
+    '  <section class="pp-section" id="overview">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">' + escapeHtml(p.nameAr) + ' في سطور</h2>\n' +
+    '      <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
+    '      <p class="pp-byline">' + byline + '</p>\n' +
+    '      <dl class="pp-facts">\n' +
+    facts.map(function (f) {
+      return '        <div class="pp-fact"><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>\n';
+    }).join('') +
+    '      </dl>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** Main image + thumbnail strip. Omitted entirely when a project has no gallery photos. */
 function galleryMarkup(p) {
-  var items = [1, 2, 3, 4, 5, 6];
-  return items.map(function (i) {
+  var imgs = p.galleryImages;
+  if (!imgs.length) return '';
+  var alt = function (n) { return 'صورة ' + n + ' من مشروع ' + p.nameEn + ' في ' + p.areaAr; };
+  var thumbs = imgs.map(function (src, i) {
     return (
-      '        <div class="gallery__item">' +
-      mediaSlot(p.slug, 'gallery-' + i, p.nameEn + ' — ' + i, 'صورة ' + i + ' من ' + iso(p.nameEn), 'fa-image', '../') +
-      '</div>'
+      '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../' + src + '" data-alt="' + escapeHtml(alt(i + 1)) + '"' +
+      ' aria-label="صورة ' + (i + 1) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
+      '<img src="../' + src + '" alt="" loading="lazy" decoding="async"></button>\n'
     );
-  }).join('\n');
+  }).join('');
+  return (
+    '  <section class="pp-section pp-section--gray" id="gallery" data-gallery>\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">صور المشروع</h2>\n' +
+    '      <div class="pp-gallery__main">\n' +
+    '        <img src="../' + imgs[0] + '" alt="' + escapeHtml(alt(1)) + '" decoding="async" data-gallery-main>\n' +
+    '        <span class="pp-gallery__count" data-gallery-count><bdi class="en">1 / ' + imgs.length + '</bdi></span>\n' +
+    '      </div>\n' +
+    '      <div class="pp-gallery__thumbs">\n' +
+    thumbs +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** Mobile-only bottom bar (hidden ≥768px, where the floating WhatsApp button stays). */
+function stickyBarMarkup(p) {
+  return (
+    '  <div class="pp-sticky-bar">\n' +
+    '    <a href="#" class="pp-sticky-bar__btn pp-sticky-bar__btn--wa" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ' + iso(p.nameEn) + '" data-cta-location="sticky"><i class="fa-brands fa-whatsapp"></i> واتساب</a>\n' +
+    '    <a href="#" class="pp-sticky-bar__btn pp-sticky-bar__btn--call" data-phone-link>اتصال</a>\n' +
+    '    <a href="#units" class="pp-sticky-bar__btn pp-sticky-bar__btn--units">الوحدات</a>\n' +
+    '  </div>\n'
+  );
 }
 
 function phoneFieldMarkup() {
@@ -452,12 +663,9 @@ function leadFormMarkup(p, successUrl, privacyHref) {
 function preliminaryNotice(p) {
   if (!p.preliminary) return '';
   return (
-    '  <div class="container" style="margin-top:100px">\n' +
-    '    <div style="background:#FFF7DE;border:1px solid ' +
-    '#F7DB32;color:#5c4a00;border-radius:12px;padding:14px 18px;font-size:14.5px;text-align:center;">\n' +
-    '      ⚠ أسعار هذا المشروع من آخر تحديث متاح ولسه محتاجة تأكيد نهائي من المطوّر — تواصل معنا واتساب لأحدث المعلومات.\n' +
-    '    </div>\n' +
-    '  </div>'
+    '  <div class="pp-wrap pp-notice">\n' +
+    '    ⚠ أسعار هذا المشروع من آخر تحديث متاح ولسه محتاجة تأكيد نهائي من المطوّر — تواصل معنا واتساب لأحدث المعلومات.\n' +
+    '  </div>\n'
   );
 }
 
@@ -532,9 +740,6 @@ function page(p, allMerged) {
   var title = p.nameEn + ' | ' + SITE_NAME + ' — أسعار ومساحات وخطط السداد';
   var description = p.intro.replace(/\s*\*.*$/, '').slice(0, 155);
   var canonical = 'https://www.explorerhydepark.com/projects/' + p.slug;
-  var availableBadge = (p.availableUnits != null)
-    ? '\n        <span class="hero__price-label" style="margin-inline-start:8px">· ' + p.availableUnits + ' وحدة متاحة</span>'
-    : '';
 
   return '<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
@@ -558,41 +763,24 @@ ogTagsMarkup({ title: title, description: description, url: canonical, image: og
 '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">\n' +
 '<link rel="stylesheet" href="../assets/css/style.css">\n' +
 '</head>\n' +
-'<body>\n\n' +
+'<body class="pp-page">\n\n' +
 '<!-- Google Tag Manager (noscript) -->\n' +
 '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
 'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
 '<!-- End Google Tag Manager (noscript) -->\n\n' +
-nav() + '\n\n' +
-'  <section class="hero">\n' +
-'    <div class="hero__bg">' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', '../', 'position:absolute;inset:0') + '</div>\n' +
-'    <div class="hero__overlay"></div>\n' +
-'    <div class="hero__content">\n' +
-'      <div class="hero__eyebrow">Explorer Hyde Park</div>\n' +
-'      <h1 class="hero__title"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></h1>\n' +
-'      <div class="hero__location"><span class="dot"></span><span>' + escapeHtml(p.areaAr) + '</span></div>\n' +
-'      <div class="hero__price">\n' +
-'        <span class="hero__price-label">يبدأ من</span>\n' +
-'        <span class="hero__price-value">' + fmt(p.startingPrice) + ' <small>جنيه</small></span>' + availableBadge + '\n' +
-'      </div>\n' +
-'      <div class="hero__ctas">\n' +
-'        <a href="#" class="btn btn-whatsapp" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ' + iso(p.nameEn) + '"><i class="fa-brands fa-whatsapp"></i> تواصل واتساب لمعرفة كل التفاصيل</a>\n' +
-'        <a href="#" class="btn btn-outline" data-phone-link><i class="fa-solid fa-phone"></i> اتصل بنا</a>\n' +
-'      </div>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-preliminaryNotice(p) + '\n\n' +
-'  <section class="section" style="max-width:900px;margin:0 auto;text-align:center;">\n' +
-'    <h2 class="section-title" style="margin-bottom:18px">نبذة عن المشروع</h2>\n' +
-'    <p style="font-size:clamp(17px,2vw,20px);line-height:1.7;margin:0">' + escapeHtml(p.intro) + '</p>\n' +
-'  </section>\n\n' +
-'  <section class="section">\n' +
+nav(true) + '\n\n' +
+heroMarkup(p) + '\n' +
+sectionNavMarkup(p) + '\n' +
+preliminaryNotice(p) +
+overviewMarkup(p) + '\n' +
+galleryMarkup(p) + '\n' +
+'  <section class="section" id="units">\n' +
 '    <h2 class="section-title">الوحدات المتاحة</h2>\n' +
 '    <div class="grid grid--units">\n' +
 unitsMarkup(p) + '\n' +
 '    </div>\n' +
 '  </section>\n\n' +
-'  <section class="section section--gray" data-calculator>\n' +
+'  <section class="section section--gray" id="calc" data-calculator>\n' +
 '    <h2 class="section-title" style="margin-bottom:8px">احسب قسطك الشهري</h2>\n' +
 '    <p class="section-sub">قدّر القسط الشهري بناءً على المقدم ومدة السداد</p>\n' +
 '    <div class="calc-card">\n' +
@@ -618,32 +806,7 @@ priceOptionsMarkup(p) + '\n' +
 '      <a href="#" class="btn btn-sky btn-block" data-whatsapp-link data-whatsapp-message="اطلب خطة الأسعار كاملة لمشروع ' + iso(p.nameEn) + '"><i class="fa-brands fa-whatsapp"></i> اطلب خطة الأسعار كاملة</a>\n' +
 '    </div>\n' +
 '  </section>\n\n' +
-'  <section class="section">\n' +
-'    <h2 class="section-title" style="margin-bottom:40px">خطة السداد</h2>\n' +
-'    <div class="stat-row">\n' +
-'      <div class="stat-card"><span class="stat-card__label">المقدم</span><span class="stat-card__value">' + p.paymentPlan.downPct + '%</span></div>\n' +
-'      <div class="stat-card"><span class="stat-card__label">مدة التقسيط</span><span class="stat-card__value">' + p.paymentPlan.years + ' <small>سنوات</small></span></div>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section section--gray" style="padding-inline:0">\n' +
-'    <h2 class="section-title">معرض الصور</h2>\n' +
-'    <div class="gallery">\n' +
-'      <div class="gallery__track">\n' +
-galleryMarkup(p) + '\n' +
-'      </div>\n' +
-'      <div class="gallery__nav">\n' +
-'        <button data-gallery-prev aria-label="السابق">‹</button>\n' +
-'        <button data-gallery-next aria-label="التالي">›</button>\n' +
-'      </div>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section section--gray">\n' +
-'    <h2 class="section-title">المميزات والخدمات</h2>\n' +
-'    <div class="grid grid--amenities">\n' +
-amenitiesMarkup(p) + '\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section">\n' +
+'  <section class="section" id="location">\n' +
 '    <h2 class="section-title">الموقع</h2>\n' +
 '    <div class="location-grid">\n' +
 '      <div class="location-map">' + mediaSlot(p.slug, 'location', p.areaAr + ' — ' + p.nameEn, 'خريطة / صورة الموقع', 'fa-map-location-dot', '../') + '</div>\n' +
@@ -655,6 +818,12 @@ amenitiesMarkup(p) + '\n' +
 '    </div>\n' +
 '  </section>\n\n' +
 '  <section class="section section--gray">\n' +
+'    <h2 class="section-title">المميزات والخدمات</h2>\n' +
+'    <div class="grid grid--amenities">\n' +
+amenitiesMarkup(p) + '\n' +
+'    </div>\n' +
+'  </section>\n\n' +
+'  <section class="section" id="faq">\n' +
 '    <h2 class="section-title">الأسئلة الشائعة</h2>\n' +
 '    <div class="faq-list">\n' +
 faqsMarkup(p) + '\n' +
@@ -670,6 +839,7 @@ leadFormMarkup(p, '/thank-you', '/privacy') + '\n' +
 '  </section>\n\n' +
 relatedProjectsMarkup(p, allMerged) +
 footer() + '\n\n' +
+stickyBarMarkup(p) + '\n' +
 '<script src="../assets/js/country-codes.js"></script>\n' +
 '<script src="../assets/js/phone-field.js"></script>\n' +
 '<script src="../assets/js/main.js"></script>\n' +

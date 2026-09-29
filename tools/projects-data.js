@@ -10,6 +10,9 @@
  * inventoryName: the project's name inside inventory.json (null when the
  *   export doesn't include it) — unit-level detail is derived from there.
  * nameAr: Arabic name used in headings and the summary paragraph.
+ * finishingLabel: text of the "التشطيب" fact (and the finishing clause in the
+ *   summary) — set by hand per project; empty string hides both.
+ *   'كور آند شل' also turns on the Core & Shell FAQ and lead-form note.
  *
  * Optional (V5 spec §4) — leave empty and the page simply omits the element:
  *   deliveryYear: 2028                          → "الاستلام" fact
@@ -25,6 +28,7 @@ module.exports = [
     inventoryName: 'Hyde Park Central',
     nameEn: 'Hyde Park Central',
     nameAr: 'هايد بارك سنترال',
+    finishingLabel: 'كور آند شل',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -43,6 +47,7 @@ module.exports = [
     inventoryName: 'Hyde Park New Cairo',
     nameEn: 'Hyde Park New Cairo',
     nameAr: 'هايد بارك نيو كايرو',
+    finishingLabel: 'كور آند شل',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -61,6 +66,7 @@ module.exports = [
     inventoryName: null,
     nameEn: 'Hyde Park Terraces',
     nameAr: 'هايد بارك تراسيس',
+    finishingLabel: 'كور آند شل',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -79,6 +85,7 @@ module.exports = [
     inventoryName: null,
     nameEn: 'Hyde Park Tawny',
     nameAr: 'هايد بارك تاوني',
+    finishingLabel: 'كور آند شل',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -97,6 +104,7 @@ module.exports = [
     inventoryName: 'Garden Lakes',
     nameEn: 'Hyde Park Garden Lake',
     nameAr: 'هايد بارك جاردن ليك',
+    finishingLabel: 'كور آند شل',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -115,6 +123,7 @@ module.exports = [
     inventoryName: 'HP Signature',
     nameEn: 'Hyde Park Signature',
     nameAr: 'هايد بارك سيجنتشر',
+    finishingLabel: 'كور آند شل',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -133,6 +142,7 @@ module.exports = [
     inventoryName: 'Seashore Ras El Hekma',
     nameEn: 'Hyde Park Sea Shore',
     nameAr: 'هايد بارك سي شور',
+    finishingLabel: 'كور آند شل',
     areaAr: 'الساحل الشمالي',
     areaSlug: 'north-coast',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',

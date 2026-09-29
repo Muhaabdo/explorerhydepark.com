@@ -21,6 +21,7 @@
     initNav();
     initFaq();
     initGallery();
+    initSectionNav();
     initCalculator();
     initLeadForms();
     initWhatsappLinks();
@@ -36,7 +37,7 @@
     // Watch the hero's own CTA row (not the whole hero section) so the
     // button reappears as soon as it would no longer cover those buttons,
     // instead of waiting for the entire 100dvh hero to scroll away.
-    var watchTarget = document.querySelector('.hero__ctas') || document.querySelector('.hero');
+    var watchTarget = document.querySelector('.hero__ctas') || document.querySelector('.pp-price-card') || document.querySelector('.hero');
     if (!watchTarget || !('IntersectionObserver' in window)) {
       fab.classList.add('is-visible');
       return;
@@ -56,9 +57,22 @@
     var mobileMenu = document.querySelector('.mobile-menu');
     if (!navbar) return;
 
+    // Project pages: the navbar is transparent over the hero image until the
+    // page scrolls, and the sticky section chips park under it via --navbar-h.
+    var overlay = navbar.classList.contains('navbar--overlay');
+    function measureNavbar() {
+      document.documentElement.style.setProperty('--navbar-h', navbar.offsetHeight + 'px');
+    }
+    if (overlay) {
+      measureNavbar();
+      navbar.classList.toggle('is-scrolled', window.scrollY > 40);
+      window.addEventListener('resize', measureNavbar);
+    }
+
     var lastY = window.scrollY;
     window.addEventListener('scroll', function () {
       var y = window.scrollY;
+      if (overlay) navbar.classList.toggle('is-scrolled', y > 40);
       var goingDown = y > lastY;
       if (goingDown && y > 80) {
         navbar.classList.add('is-hidden');
@@ -108,17 +122,55 @@
     });
   }
 
-  /* ---------------- Gallery scroll buttons ---------------- */
+  /* ---------------- Gallery: thumbnail swaps the main image ---------------- */
   function initGallery() {
-    document.querySelectorAll('.gallery').forEach(function (gallery) {
-      var track = gallery.querySelector('.gallery__track');
-      var prev = gallery.querySelector('[data-gallery-prev]');
-      var next = gallery.querySelector('[data-gallery-next]');
-      if (!track) return;
-      var step = 280;
-      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: step, behavior: 'smooth' }); });
-      if (next) next.addEventListener('click', function () { track.scrollBy({ left: -step, behavior: 'smooth' }); });
+    document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
+      var main = gallery.querySelector('[data-gallery-main]');
+      var count = gallery.querySelector('[data-gallery-count] bdi') || gallery.querySelector('[data-gallery-count]');
+      var thumbs = gallery.querySelectorAll('[data-gallery-thumb]');
+      if (!main) return;
+      thumbs.forEach(function (thumb, i) {
+        thumb.addEventListener('click', function () {
+          main.src = thumb.getAttribute('data-src');
+          main.alt = thumb.getAttribute('data-alt');
+          if (count) count.textContent = (i + 1) + ' / ' + thumbs.length;
+          thumbs.forEach(function (t) { t.setAttribute('aria-pressed', t === thumb ? 'true' : 'false'); });
+        });
+      });
     });
+  }
+
+  /* ---------------- Section chips: highlight the section in view ---------------- */
+  function initSectionNav() {
+    var navEl = document.querySelector('[data-section-nav]');
+    if (!navEl || !('IntersectionObserver' in window)) return;
+    var chips = {};
+    navEl.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      var target = document.getElementById(a.getAttribute('href').slice(1));
+      if (target) chips[target.id] = a;
+    });
+
+    function activate(id) {
+      Object.keys(chips).forEach(function (key) { chips[key].classList.toggle('is-active', key === id); });
+      var chip = chips[id];
+      if (chip) {
+        // Scroll only the chip row horizontally, never the page.
+        var navBox = navEl.getBoundingClientRect();
+        var chipBox = chip.getBoundingClientRect();
+        if (chipBox.left < navBox.left || chipBox.right > navBox.right) {
+          navEl.scrollBy({ left: chipBox.left - navBox.left - (navBox.width - chipBox.width) / 2, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // A section counts as "current" while it crosses a thin band in the upper
+    // third of the viewport (just under the sticky navbar + chips).
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) activate(entry.target.id);
+      });
+    }, { rootMargin: '-30% 0px -65% 0px', threshold: 0 });
+    Object.keys(chips).forEach(function (id) { io.observe(document.getElementById(id)); });
   }
 
   /* ---------------- Related-projects carousel: auto-scrolls, pauses on

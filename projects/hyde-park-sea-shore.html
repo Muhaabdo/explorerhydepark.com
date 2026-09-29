@@ -32,14 +32,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="pp-page">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-  <nav class="navbar">
+  <nav class="navbar navbar--overlay">
     <a href="/" class="navbar__brand">Explorer Hyde Park</a>
     <div class="navbar__links">
         <a href="/">الرئيسية</a>
@@ -58,33 +58,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/contact">تواصل معنا</a>
   </div>
 
-  <section class="hero">
-    <div class="hero__bg"><img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-hero.jpg" alt="Hyde Park Sea Shore" loading="lazy"></div>
-    <div class="hero__overlay"></div>
-    <div class="hero__content">
-      <div class="hero__eyebrow">Explorer Hyde Park</div>
-      <h1 class="hero__title"><bdi class="en">Hyde Park Sea Shore</bdi></h1>
-      <div class="hero__location"><span class="dot"></span><span>الساحل الشمالي</span></div>
-      <div class="hero__price">
-        <span class="hero__price-label">يبدأ من</span>
-        <span class="hero__price-value">8,410,000 <small>جنيه</small></span>
-        <span class="hero__price-label" style="margin-inline-start:8px">· 113 وحدة متاحة</span>
+  <header class="pp-hero">
+    <div class="pp-hero__media">
+      <img class="pp-hero__img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-hero.jpg" alt="Hyde Park Sea Shore — الساحل الشمالي" width="1024" height="1024" fetchpriority="high" decoding="async">
+      <div class="pp-hero__shade"></div>
+      <div class="pp-hero__text">
+        <span class="pp-badge">113 وحدة متاحة</span>
+        <h1 class="pp-hero__title"><bdi class="en">Hyde Park Sea Shore</bdi></h1>
+        <p class="pp-hero__sub">الساحل الشمالي · شقق · شاليه · تاون · توين · فيلا</p>
       </div>
-      <div class="hero__ctas">
-        <a href="#" class="btn btn-whatsapp" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Hyde Park Sea Shore⁩"><i class="fa-brands fa-whatsapp"></i> تواصل واتساب لمعرفة كل التفاصيل</a>
-        <a href="#" class="btn btn-outline" data-phone-link><i class="fa-solid fa-phone"></i> اتصل بنا</a>
+    </div>
+    <div class="pp-price-card">
+      <p class="pp-price-card__price"><span class="pp-price-card__label">يبدأ من</span> <bdi class="en pp-price-card__value">8,410,000</bdi> <span class="pp-price-card__label">جنيه</span></p>
+      <div class="pp-price-card__tiles">
+        <div class="pp-tile"><span class="pp-tile__label">مقدم من</span><bdi class="en pp-tile__value">10%</bdi></div>
+        <div class="pp-tile"><span class="pp-tile__label">تقسيط حتى</span><span class="pp-tile__value">6 سنين</span></div>
+        <a class="pp-tile pp-tile--link" href="#calc"><span class="pp-tile__label">قسطك كام؟</span><span class="pp-tile__value">احسبه ←</span></a>
+      </div>
+      <a class="pp-btn pp-btn--green pp-btn--block" href="#units">شوف الوحدات اللي في ميزانيتك</a>
+    </div>
+  </header>
+
+  <nav class="pp-chips" aria-label="أقسام الصفحة" data-section-nav>
+    <a class="pp-chip" href="#units">الوحدات</a>
+    <a class="pp-chip" href="#calc">احسب قسطك</a>
+    <a class="pp-chip" href="#gallery">الصور</a>
+    <a class="pp-chip" href="#location">الموقع</a>
+    <a class="pp-chip" href="#faq">الأسئلة</a>
+  </nav>
+
+  <section class="pp-section" id="overview">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">هايد بارك سي شور في سطور</h2>
+      <p class="pp-summary">هايد بارك سي شور (<bdi class="en">Hyde Park Sea Shore</bdi>) مشروع ساحلي من هايد بارك للتطوير العقاري في الساحل الشمالي. المتاح حالياً <strong>113 وحدة</strong>: شقق من 63 لـ 138 م²، وشاليه ستاندرد وشاليه شاطئ وتاون هاوس وتوين هاوس وتوين هاوس بروف وفيلا صغيرة وفيلا شاطئ متوسطة. الأسعار بتبدأ من <strong><bdi class="en">8,410,000</bdi> جنيه</strong> بمقدم من 10% وتقسيط لحد 6 سنين، والوحدات بتتسلّم كور آند شل.</p>
+      <p class="pp-byline">محدّث: أغسطس 2026 · من مخزون المطوّر · إعداد فريق <bdi class="en">Explorer Hyde Park</bdi></p>
+      <dl class="pp-facts">
+        <div class="pp-fact"><dt>الموقع</dt><dd>الساحل الشمالي</dd></div>
+        <div class="pp-fact"><dt>المساحات</dt><dd><bdi class="en">63 – 385</bdi> م²</dd></div>
+        <div class="pp-fact"><dt>التشطيب</dt><dd>كور آند شل</dd></div>
+        <div class="pp-fact"><dt>سعر المتر (شقق) من</dt><dd><bdi class="en">105,100</bdi> ج/م²</dd></div>
+        <div class="pp-fact"><dt>المطوّر</dt><dd>هايد بارك للتطوير</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="pp-section pp-section--gray" id="gallery" data-gallery>
+    <div class="pp-wrap">
+      <h2 class="pp-h2">صور المشروع</h2>
+      <div class="pp-gallery__main">
+        <img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-1.jpg" alt="صورة 1 من مشروع Hyde Park Sea Shore في الساحل الشمالي" decoding="async" data-gallery-main>
+        <span class="pp-gallery__count" data-gallery-count><bdi class="en">1 / 6</bdi></span>
+      </div>
+      <div class="pp-gallery__thumbs">
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-1.jpg" data-alt="صورة 1 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 1" aria-pressed="true"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-1.jpg" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-2.jpg" data-alt="صورة 2 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 2" aria-pressed="false"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-2.jpg" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-3.jpg" data-alt="صورة 3 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 3" aria-pressed="false"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-3.jpg" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-4.jpg" data-alt="صورة 4 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 4" aria-pressed="false"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-4.jpg" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-5.jpg" data-alt="صورة 5 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 5" aria-pressed="false"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-5.jpg" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-6.jpg" data-alt="صورة 6 من مشروع Hyde Park Sea Shore في الساحل الشمالي" aria-label="صورة 6" aria-pressed="false"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-6.jpg" alt="" loading="lazy" decoding="async"></button>
       </div>
     </div>
   </section>
 
-
-
-  <section class="section" style="max-width:900px;margin:0 auto;text-align:center;">
-    <h2 class="section-title" style="margin-bottom:18px">نبذة عن المشروع</h2>
-    <p style="font-size:clamp(17px,2vw,20px);line-height:1.7;margin:0">هايد بارك سي شور مشروع ساحلي على الساحل الشمالي يضم شققًا وشاليهات وتاون هاوس وتوين هاوس وفيلات على البحر مباشرة.</p>
-  </section>
-
-  <section class="section">
+  <section class="section" id="units">
     <h2 class="section-title">الوحدات المتاحة</h2>
     <div class="grid grid--units">
         <div class="card">
@@ -210,7 +246,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <section class="section section--gray" data-calculator>
+  <section class="section section--gray" id="calc" data-calculator>
     <h2 class="section-title" style="margin-bottom:8px">احسب قسطك الشهري</h2>
     <p class="section-sub">قدّر القسط الشهري بناءً على المقدم ومدة السداد</p>
     <div class="calc-card">
@@ -244,28 +280,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title" style="margin-bottom:40px">خطة السداد</h2>
-    <div class="stat-row">
-      <div class="stat-card"><span class="stat-card__label">المقدم</span><span class="stat-card__value">10%</span></div>
-      <div class="stat-card"><span class="stat-card__label">مدة التقسيط</span><span class="stat-card__value">6 <small>سنوات</small></span></div>
-    </div>
-  </section>
-
-  <section class="section section--gray" style="padding-inline:0">
-    <h2 class="section-title">معرض الصور</h2>
-    <div class="gallery">
-      <div class="gallery__track">
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-1.jpg" alt="Hyde Park Sea Shore — 1" loading="lazy"></div>
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-2.jpg" alt="Hyde Park Sea Shore — 2" loading="lazy"></div>
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-3.jpg" alt="Hyde Park Sea Shore — 3" loading="lazy"></div>
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-4.jpg" alt="Hyde Park Sea Shore — 4" loading="lazy"></div>
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-5.jpg" alt="Hyde Park Sea Shore — 5" loading="lazy"></div>
-        <div class="gallery__item"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-gallery-6.jpg" alt="Hyde Park Sea Shore — 6" loading="lazy"></div>
-      </div>
-      <div class="gallery__nav">
-        <button data-gallery-prev aria-label="السابق">‹</button>
-        <button data-gallery-next aria-label="التالي">›</button>
+  <section class="section" id="location">
+    <h2 class="section-title">الموقع</h2>
+    <div class="location-grid">
+      <div class="location-map"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-location.jpg" alt="الساحل الشمالي — Hyde Park Sea Shore" loading="lazy"></div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h3 style="font-size:22px">الساحل الشمالي</h3>
+        <p style="margin:0;font-size:17px;line-height:1.7;opacity:.85">يقع هايد بارك سي شور على الساحل الشمالي. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.</p>
+        <a href="#" class="btn btn-blue" style="width:fit-content" data-whatsapp-link data-whatsapp-message="اسأل عن موقع ⁦Hyde Park Sea Shore⁩">اسأل عن الموقع</a>
       </div>
     </div>
   </section>
@@ -296,19 +318,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">الموقع</h2>
-    <div class="location-grid">
-      <div class="location-map"><img class="real-img" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-location.jpg" alt="الساحل الشمالي — Hyde Park Sea Shore" loading="lazy"></div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <h3 style="font-size:22px">الساحل الشمالي</h3>
-        <p style="margin:0;font-size:17px;line-height:1.7;opacity:.85">يقع هايد بارك سي شور على الساحل الشمالي. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.</p>
-        <a href="#" class="btn btn-blue" style="width:fit-content" data-whatsapp-link data-whatsapp-message="اسأل عن موقع ⁦Hyde Park Sea Shore⁩">اسأل عن الموقع</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--gray">
+  <section class="section" id="faq">
     <h2 class="section-title">الأسئلة الشائعة</h2>
     <div class="faq-list">
       <div class="faq-item">
@@ -514,6 +524,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="#" class="float-whatsapp" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل مشاريع هايد بارك" aria-label="تواصل عبر واتساب">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
+
+  <div class="pp-sticky-bar">
+    <a href="#" class="pp-sticky-bar__btn pp-sticky-bar__btn--wa" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Hyde Park Sea Shore⁩" data-cta-location="sticky"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
+    <a href="#" class="pp-sticky-bar__btn pp-sticky-bar__btn--call" data-phone-link>اتصال</a>
+    <a href="#units" class="pp-sticky-bar__btn pp-sticky-bar__btn--units">الوحدات</a>
+  </div>
 
 <script src="../assets/js/country-codes.js"></script>
 <script src="../assets/js/phone-field.js"></script>
