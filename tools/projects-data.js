@@ -6,13 +6,25 @@
  *
  * After editing either file, run `node tools/build-pages.js` to regenerate
  * the static pages in /projects and the project cards on the homepage.
+ *
+ * inventoryName: the project's name inside inventory.json (null when the
+ *   export doesn't include it) — unit-level detail is derived from there.
+ * nameAr: Arabic name used in headings and the summary paragraph.
+ *
+ * Optional (V5 spec §4) — leave empty and the page simply omits the element:
+ *   deliveryYear: 2028                          → "الاستلام" fact
+ *   distances: [{ place: '...', minutes: 10 }]  → location list
+ *   mapsUrl: 'https://maps.google.com/...'      → "افتح على Google Maps" link
+ *   finishingCostNote: '...'                    → sentence in the Core & Shell FAQ
  */
 
 module.exports = [
   {
     slug: 'hyde-park-central',
     pricingKey: 'hyde-central',
+    inventoryName: 'Hyde Park Central',
     nameEn: 'Hyde Park Central',
+    nameAr: 'هايد بارك سنترال',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -20,11 +32,17 @@ module.exports = [
     paymentPlan: { downPct: 5, years: 8 },
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'نادي اجتماعي', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك سنترال في القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-new-cairo',
     pricingKey: 'hyde-new-cairo',
+    inventoryName: 'Hyde Park New Cairo',
     nameEn: 'Hyde Park New Cairo',
+    nameAr: 'هايد بارك نيو كايرو',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -32,11 +50,17 @@ module.exports = [
     paymentPlan: { downPct: 5, years: 8 },
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك نيو كايرو في قلب القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-terraces',
     pricingKey: 'hyde-terraces',
+    inventoryName: null,
     nameEn: 'Hyde Park Terraces',
+    nameAr: 'هايد بارك تراسيس',
     areaAr: 'القاهرة الجديدة',
     areaSlug: 'new-cairo',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -44,11 +68,17 @@ module.exports = [
     paymentPlan: { downPct: 10, years: 8 },
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك تراسيس في القاهرة الجديدة. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-tawny',
     pricingKey: 'tawny',
+    inventoryName: null,
     nameEn: 'Hyde Park Tawny',
+    nameAr: 'هايد بارك تاوني',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -56,11 +86,17 @@ module.exports = [
     paymentPlan: { downPct: 10, years: 7 },
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'نادي اجتماعي', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك تاوني في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-garden-lake',
     pricingKey: 'garden-lakes',
+    inventoryName: 'Garden Lakes',
     nameEn: 'Hyde Park Garden Lake',
+    nameAr: 'هايد بارك جاردن ليك',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -68,11 +104,17 @@ module.exports = [
     paymentPlan: { downPct: 10, years: 8 },
     amenities: ['بحيرة صناعية', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك جاردن ليك في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-signature',
     pricingKey: 'signature',
+    inventoryName: 'HP Signature',
     nameEn: 'Hyde Park Signature',
+    nameAr: 'هايد بارك سيجنتشر',
     areaAr: 'أكتوبر',
     areaSlug: 'october',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -80,11 +122,17 @@ module.exports = [
     paymentPlan: { downPct: 10, years: 8 },
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة 24 ساعة', 'مطاعم وكافيهات', 'جيم وسبا', 'نادي اجتماعي'],
     locationText: 'يقع هايد بارك سيجنتشر في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
   {
     slug: 'hyde-park-sea-shore',
     pricingKey: 'seashore',
+    inventoryName: 'Seashore Ras El Hekma',
     nameEn: 'Hyde Park Sea Shore',
+    nameAr: 'هايد بارك سي شور',
     areaAr: 'الساحل الشمالي',
     areaSlug: 'north-coast',
     heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
@@ -92,5 +140,9 @@ module.exports = [
     paymentPlan: { downPct: 10, years: 6 },
     amenities: ['شاطئ خاص', 'حمامات سباحة', 'أمن وحراسة', 'مطاعم وكافيهات', 'نادي شاطئي'],
     locationText: 'يقع هايد بارك سي شور على الساحل الشمالي. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.',
+    deliveryYear: null,
+    distances: [],
+    mapsUrl: '',
+    finishingCostNote: '',
   },
 ];

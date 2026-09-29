@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const projects = require('./projects-data');
 const pricing = require('./pricing.json');
+const inventory = require('./inventory.json');
 
 const SITE_NAME = 'Explorer Hyde Park';
 const ROOT = path.join(__dirname, '..');
@@ -119,14 +120,110 @@ function formatRooms(bedrooms) {
   return bedrooms.join(' / ') + ' غرف';
 }
 
+/* ---------------- Derived data (V5) ----------------
+ * Everything below is computed from inventory.json / pricing.json at build
+ * time so no price, count or area is ever typed by hand. Every helper must
+ * cope with a project that has no inventory rows (Terraces, Tawny), no
+ * apartments, or availableUnits: null. */
+
+var AR_MONTHS = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+
+/** "2026-08-04" → "أغسطس 2026"; empty string if the date is missing/invalid. */
+function arMonthYear(isoDate) {
+  var m = /^(\d{4})-(\d{2})/.exec(isoDate || '');
+  if (!m) return '';
+  return AR_MONTHS[Number(m[2]) - 1] + ' ' + m[1];
+}
+
+/** Unit-level inventory rows for a project ([] when it isn't in the export). */
+function inventoryFor(p) {
+  if (!p.inventoryName) return [];
+  return inventory.units.filter(function (r) { return r.project === p.inventoryName; });
+}
+
+/** Distinct finishing types, most common first. */
+function finishingTypes(rows) {
+  var counts = {};
+  rows.forEach(function (r) { if (r.finishing) counts[r.finishing] = (counts[r.finishing] || 0) + 1; });
+  return Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+}
+
+/** Summary of a set of rows: count, area range, cheapest price and the area of that cheapest unit. */
+function summarizeRows(rows) {
+  var cheapest = rows.reduce(function (min, r) { return r.price < min.price ? r : min; }, rows[0]);
+  return {
+    count: rows.length,
+    areaMin: Math.min.apply(null, rows.map(function (r) { return r.bua_sqm; })),
+    areaMax: Math.max.apply(null, rows.map(function (r) { return r.bua_sqm; })),
+    minPrice: cheapest.price,
+    cheapestArea: cheapest.bua_sqm,
+  };
+}
+
+/** Rows for one unit type. Apartments → one group per bedroom count (sorted);
+ * any other type → a single group. Falls back to the pricing.json summary
+ * (count may be null, no cheapestArea) when there are no inventory rows. */
+function unitGroups(u, rows) {
+  var typeRows = rows.filter(function (r) { return r.type === u.type; });
+  if (!typeRows.length) {
+    return [{ rooms: null, count: u.count, areaMin: u.areaMin, areaMax: u.areaMax, minPrice: u.minPrice, cheapestArea: null }];
+  }
+  if (u.type !== 'Apartment') return [Object.assign({ rooms: null }, summarizeRows(typeRows))];
+  var byRooms = {};
+  typeRows.forEach(function (r) { (byRooms[r.rooms] = byRooms[r.rooms] || []).push(r); });
+  return Object.keys(byRooms).map(Number).sort(function (a, b) { return a - b; }).map(function (n) {
+    return Object.assign({ rooms: n }, summarizeRows(byRooms[n]));
+  });
+}
+
+/** Lowest apartment price per m², floored to the nearest 50 EGP; null without apartment rows. */
+function minPricePerSqm(rows) {
+  var apts = rows.filter(function (r) { return r.type === 'Apartment' && r.bua_sqm > 0; });
+  if (!apts.length) return null;
+  var min = Math.min.apply(null, apts.map(function (r) { return r.price / r.bua_sqm; }));
+  return Math.floor(min / 50) * 50;
+}
+
+/** Overall area range across every available unit (inventory first, pricing.json fallback). */
+function overallAreaRange(rows, pricingUnits) {
+  if (rows.length) {
+    var s = summarizeRows(rows);
+    return { min: s.areaMin, max: s.areaMax };
+  }
+  return {
+    min: Math.min.apply(null, pricingUnits.map(function (u) { return u.areaMin; })),
+    // areaMax can be null in pricing.json (single known size) — use areaMin then.
+    max: Math.max.apply(null, pricingUnits.map(function (u) { return u.areaMax != null ? u.areaMax : u.areaMin; })),
+  };
+}
+
+/** Consecutive gallery-1..N images that exist on disk (stops at the first gap). */
+function galleryImages(slug) {
+  var out = [];
+  for (var i = 1; i <= 20; i++) {
+    var found = findImage(slug, 'gallery-' + i);
+    if (!found) break;
+    out.push(found);
+  }
+  return out;
+}
+
+/** Up to `limit` other projects sharing this project's areaSlug, in projects-data.js order. */
+function sameAreaProjects(p, allMerged, limit) {
+  return allMerged.filter(function (o) { return o.slug !== p.slug && o.areaSlug === p.areaSlug; }).slice(0, limit || 2);
+}
+
 /** Merge a content entry with its pricing.json record into one render-ready project object. */
 function mergeProject(p) {
   var pr = pricing.projects[p.pricingKey];
   if (!pr) throw new Error('No pricing.json entry for pricingKey "' + p.pricingKey + '" (' + p.slug + ')');
 
+  var invRows = inventoryFor(p);
+
   var units = pr.units.map(function (u) {
+    var key = slugifyType(u.type);
     return {
-      key: slugifyType(u.type),
+      key: key,
       name: u.type,
       nameAr: u.label,
       area: formatArea(u.areaMin, u.areaMax),
@@ -134,6 +231,8 @@ function mergeProject(p) {
       price: u.minPrice,
       count: u.count,
       placeholder: 'صورة ' + u.label,
+      image: findImage(p.slug, key),
+      groups: unitGroups(u, invRows),
     };
   });
 
@@ -163,6 +262,12 @@ function mergeProject(p) {
     availableUnits: pr.availableUnits,
     preliminary: !pr.refreshed,
     faqs: faqs,
+    nameAr: p.nameAr || p.nameEn,
+    finishings: finishingTypes(invRows),
+    pricePerSqm: minPricePerSqm(invRows),
+    areaRange: overallAreaRange(invRows, pr.units),
+    galleryImages: galleryImages(p.slug),
+    lastUpdatedAr: arMonthYear(pricing.meta.lastUpdated),
   });
 }
 
@@ -723,8 +828,35 @@ function updateIndexHtml(merged) {
   console.log('updated index.html #projects section in place');
 }
 
-if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 var merged = projects.map(mergeProject);
+// Second pass: needs every project merged first.
+merged.forEach(function (p) { p.sameArea = sameAreaProjects(p, merged, 2); });
+
+// `node tools/build-pages.js --dump [slug ...]` prints the derived data and
+// exits without writing anything — for checking numbers against the spec.
+var dumpIdx = process.argv.indexOf('--dump');
+if (dumpIdx !== -1) {
+  var wanted = process.argv.slice(dumpIdx + 1);
+  merged.filter(function (p) { return !wanted.length || wanted.indexOf(p.slug) !== -1; }).forEach(function (p) {
+    console.log(JSON.stringify({
+      slug: p.slug,
+      nameAr: p.nameAr,
+      availableUnits: p.availableUnits,
+      startingPrice: p.startingPrice,
+      paymentPlan: p.paymentPlan,
+      finishings: p.finishings,
+      pricePerSqm: p.pricePerSqm,
+      areaRange: p.areaRange,
+      lastUpdatedAr: p.lastUpdatedAr,
+      galleryImages: p.galleryImages.length,
+      sameArea: p.sameArea.map(function (o) { return o.slug; }),
+      units: p.units.map(function (u) { return { type: u.name, image: u.image, groups: u.groups }; }),
+    }, null, 2));
+  });
+  process.exit(0);
+}
+
+if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 merged.forEach(function (p) {
   fs.writeFileSync(path.join(OUT_DIR, p.slug + '.html'), page(p, merged), 'utf8');
   console.log('wrote projects/' + p.slug + '.html' +
