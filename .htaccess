@@ -1,6 +1,14 @@
 Options -MultiViews
 RewriteEngine On
 
+# --- 0. Dev-only files never get served. The whole repo may be uploaded as
+# the docroot, and tools/ holds the full unit-level inventory export, so
+# tools/, docs/, design-reference/, dotfiles/dirs (.git, .claude, .vscode)
+# and markdown files answer 404 instead of their contents.
+RewriteRule ^(tools|docs|design-reference)(/|$) - [R=404,L]
+RewriteRule (^|/)\.(?!well-known/) - [R=404,L]
+RewriteRule \.md$ - [R=404,L]
+
 # --- 1. Old "Taony" slug (typo) -> canonical Tawny URL. Unconditional on
 # host/scheme so a taony request lands on the FULL canonical URL directly,
 # in one hop, instead of first getting host/scheme-fixed here and then

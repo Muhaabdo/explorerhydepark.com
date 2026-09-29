@@ -1,11 +1,13 @@
 /**
  * Static page generator (dev-time only — not shipped/loaded by the live site).
- * Renders /projects/{slug}.html for every entry in projects-data.js, plus a
- * homepage-cards.html snippet (the project cards block pasted into index.html).
+ * Renders /projects/{slug}.html for every entry in projects-data.js and
+ * splices the project cards into index.html (between AUTO:PROJECTS markers),
+ * plus sitemap.xml, robots.txt, OG tags and the image checklist.
  *
  * Content (copy, amenities, location) comes from projects-data.js.
  * Prices/units/available-count come from pricing.json (developer inventory
  * export) and are merged in here by `pricingKey` — edit prices there.
+ * Unit-level detail (bedroom groups, areas, finishing) comes from inventory.json.
  *
  * Why generate instead of hand-writing pages: every page needs the SAME
  * markup/behavior with different content baked in as plain text (not
@@ -1122,7 +1124,7 @@ function injectStaticOgTags(relPath, imageUrl) {
     ? html.replace(blockRegex, block)
     : html.replace(canonicalMatch[0], canonicalMatch[0] + '\n' + block);
 
-  fs.writeFileSync(filePath, updated, 'utf8');
+  writeIfChanged(relPath, updated);
   console.log('updated OG/Twitter tags in ' + relPath);
 }
 
@@ -1256,19 +1258,45 @@ function imageChecklist(merged) {
   return lines.join('\n');
 }
 
+// Files whose content actually changed during this build (relative paths).
+var changedFiles = {};
+
+/** Writes only when the content differs, and records the change — so the
+ * sitemap's <lastmod> moves only for pages that really changed. */
+function writeIfChanged(relPath, content) {
+  var filePath = path.join(ROOT, relPath);
+  var old = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
+  if (old === content) return false;
+  fs.writeFileSync(filePath, content, 'utf8');
+  changedFiles[relPath] = true;
+  return true;
+}
+
+/** Previous <lastmod> per <loc> from the existing sitemap.xml. */
+function previousLastmods() {
+  var out = {};
+  var file = path.join(ROOT, 'sitemap.xml');
+  if (!fs.existsSync(file)) return out;
+  var xml = fs.readFileSync(file, 'utf8');
+  var re = /<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g, m;
+  while ((m = re.exec(xml))) out[m[1]] = m[2];
+  return out;
+}
+
 // thank-you.html is deliberately excluded — it carries <meta name="robots"
 // content="noindex, follow"> so it shouldn't be advertised for indexing.
 function sitemapUrls(merged) {
   var today = new Date().toISOString().slice(0, 10);
+  var prev = previousLastmods();
   var urls = [
-    { loc: SITE_ORIGIN + '/', changefreq: 'weekly', priority: '1.0' },
-    { loc: SITE_ORIGIN + '/contact', changefreq: 'monthly', priority: '0.6' },
-    { loc: SITE_ORIGIN + '/privacy', changefreq: 'yearly', priority: '0.3' },
+    { loc: SITE_ORIGIN + '/', file: 'index.html', changefreq: 'weekly', priority: '1.0' },
+    { loc: SITE_ORIGIN + '/contact', file: 'contact.html', changefreq: 'monthly', priority: '0.6' },
+    { loc: SITE_ORIGIN + '/privacy', file: 'privacy.html', changefreq: 'yearly', priority: '0.3' },
   ];
   merged.forEach(function (p) {
-    urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug, changefreq: 'weekly', priority: '0.9' });
+    urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug, file: 'projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.9' });
   });
-  urls.forEach(function (u) { u.lastmod = today; });
+  urls.forEach(function (u) { u.lastmod = changedFiles[u.file] || !prev[u.loc] ? today : prev[u.loc]; });
   return urls;
 }
 
@@ -1288,8 +1316,8 @@ function writeSitemap(merged) {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     body + '\n' +
     '</urlset>\n';
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml, 'utf8');
-  console.log('wrote sitemap.xml (' + urls.length + ' urls)');
+  writeIfChanged('sitemap.xml', xml);
+  console.log('wrote sitemap.xml (' + urls.length + ' urls; lastmod moves only for changed pages)');
 }
 
 function writeRobotsTxt() {
@@ -1297,7 +1325,7 @@ function writeRobotsTxt() {
     'User-agent: *\n' +
     'Allow: /\n\n' +
     'Sitemap: ' + SITE_ORIGIN + '/sitemap.xml\n';
-  fs.writeFileSync(path.join(ROOT, 'robots.txt'), txt, 'utf8');
+  writeIfChanged('robots.txt', txt);
   console.log('wrote robots.txt');
 }
 
@@ -1311,11 +1339,11 @@ function updateIndexHtml(merged) {
   var startIdx = html.indexOf(start);
   var endIdx = html.indexOf(end);
   if (startIdx === -1 || endIdx === -1) {
-    console.log('  (skipped index.html — markers ' + start + ' / ' + end + ' not found; paste tools/homepage-cards.snippet.html manually)');
+    console.log('  (skipped index.html — markers ' + start + ' / ' + end + ' not found; restore them around the #projects cards)');
     return;
   }
   var updated = html.slice(0, startIdx + start.length) + '\n' + homepageCards(merged) + '  ' + html.slice(endIdx);
-  fs.writeFileSync(indexPath, updated, 'utf8');
+  writeIfChanged('index.html', updated);
   console.log('updated index.html #projects section in place');
 }
 
@@ -1352,18 +1380,17 @@ if (dumpIdx !== -1) {
 
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 merged.forEach(function (p) {
-  fs.writeFileSync(path.join(OUT_DIR, p.slug + '.html'), page(p, merged), 'utf8');
-  console.log('wrote projects/' + p.slug + '.html' +
+  var changed = writeIfChanged('projects/' + p.slug + '.html', page(p, merged));
+  console.log((changed ? 'wrote ' : 'unchanged ') + 'projects/' + p.slug + '.html' +
     ' — starting ' + fmt(p.startingPrice) + ' EGP' +
     (p.preliminary ? '  (⚠ pricing not yet confirmed by developer)' : ''));
 });
-fs.writeFileSync(path.join(__dirname, 'homepage-cards.snippet.html'), homepageCards(merged), 'utf8');
-console.log('wrote tools/homepage-cards.snippet.html');
 updateIndexHtml(merged);
-fs.writeFileSync(path.join(IMG_ROOT, 'README.md'), imageChecklist(merged), 'utf8');
+writeIfChanged('assets/img/projects/README.md', imageChecklist(merged));
 console.log('wrote assets/img/projects/README.md (image checklist)');
-writeSitemap(merged);
-writeRobotsTxt();
 injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('contact.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
+// Last: lastmod depends on which pages changed above.
+writeSitemap(merged);
+writeRobotsTxt();
