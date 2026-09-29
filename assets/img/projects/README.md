@@ -49,47 +49,47 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 
 ## Hyde Park Tawny  (`assets/img/projects/hyde-park-tawny/`)
 
-- [ ] `hyde-park-tawny-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-tawny-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-tawny-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-tawny-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-tawny-gallery-4.jpg` — gallery photo 4
+- [x] `hyde-park-tawny-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-tawny-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-tawny-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `hyde-park-tawny-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `hyde-park-tawny-gallery-4.jpg` ✅ — gallery photo 4
 - [ ] `hyde-park-tawny-gallery-5.jpg` — gallery photo 5
 - [ ] `hyde-park-tawny-gallery-6.jpg` — gallery photo 6
 - [ ] `hyde-park-tawny-location.jpg` — map or location photo
-- [ ] `hyde-park-tawny-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-tawny-twin-house.jpg` — Twin House unit photo
-- [ ] `hyde-park-tawny-standalone.jpg` — Standalone unit photo
+- [x] `hyde-park-tawny-townhouse.jpg` ✅ — Townhouse unit photo
+- [x] `hyde-park-tawny-twin-house.jpg` ✅ — Twin House unit photo
+- [x] `hyde-park-tawny-standalone.jpg` ✅ — Standalone unit photo
 
 ## Hyde Park Garden Lake  (`assets/img/projects/hyde-park-garden-lake/`)
 
-- [ ] `hyde-park-garden-lake-hero.jpg` — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-garden-lake-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-garden-lake-gallery-2.jpg` — gallery photo 2
-- [ ] `hyde-park-garden-lake-gallery-3.jpg` — gallery photo 3
-- [ ] `hyde-park-garden-lake-gallery-4.jpg` — gallery photo 4
-- [ ] `hyde-park-garden-lake-gallery-5.jpg` — gallery photo 5
+- [x] `hyde-park-garden-lake-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [x] `hyde-park-garden-lake-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-garden-lake-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `hyde-park-garden-lake-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `hyde-park-garden-lake-gallery-4.jpg` ✅ — gallery photo 4
+- [x] `hyde-park-garden-lake-gallery-5.jpg` ✅ — gallery photo 5
 - [ ] `hyde-park-garden-lake-gallery-6.jpg` — gallery photo 6
 - [ ] `hyde-park-garden-lake-location.jpg` — map or location photo
-- [ ] `hyde-park-garden-lake-apartment.jpg` — Apartment unit photo
-- [ ] `hyde-park-garden-lake-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-garden-lake-twin-house.jpg` — Twin House unit photo
+- [x] `hyde-park-garden-lake-apartment.jpg` ✅ — Apartment unit photo
+- [x] `hyde-park-garden-lake-townhouse.jpg` ✅ — Townhouse unit photo
+- [x] `hyde-park-garden-lake-twin-house.jpg` ✅ — Twin House unit photo
 - [ ] `hyde-park-garden-lake-standalone.jpg` — Standalone unit photo
 
 ## Hyde Park Signature  (`assets/img/projects/hyde-park-signature/`)
 
 - [x] `hyde-park-signature-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `hyde-park-signature-gallery-1.jpg` — gallery photo 1
-- [ ] `hyde-park-signature-gallery-2.jpg` — gallery photo 2
+- [x] `hyde-park-signature-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `hyde-park-signature-gallery-2.jpg` ✅ — gallery photo 2
 - [ ] `hyde-park-signature-gallery-3.jpg` — gallery photo 3
 - [ ] `hyde-park-signature-gallery-4.jpg` — gallery photo 4
 - [ ] `hyde-park-signature-gallery-5.jpg` — gallery photo 5
 - [ ] `hyde-park-signature-gallery-6.jpg` — gallery photo 6
 - [ ] `hyde-park-signature-location.jpg` — map or location photo
 - [ ] `hyde-park-signature-apartment.jpg` — Apartment unit photo
-- [ ] `hyde-park-signature-townhouse.jpg` — Townhouse unit photo
-- [ ] `hyde-park-signature-twin-house.jpg` — Twin House unit photo
-- [ ] `hyde-park-signature-standalone.jpg` — Standalone unit photo
+- [x] `hyde-park-signature-townhouse.jpg` ✅ — Townhouse unit photo
+- [x] `hyde-park-signature-twin-house.jpg` ✅ — Twin House unit photo
+- [x] `hyde-park-signature-standalone.jpg` ✅ — Standalone unit photo
 
 ## Hyde Park Sea Shore  (`assets/img/projects/hyde-park-sea-shore/`)
 
