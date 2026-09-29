@@ -397,59 +397,454 @@ function footer() {
   );
 }
 
-function unitsMarkup(p) {
-  return p.units.map(function (u) {
-    var roomsTag = u.rooms ? '<span class="tag">' + escapeHtml(u.rooms) + '</span>' : '';
-    var countTag = (u.count != null) ? '<span class="tag">متاح ' + u.count + '</span>' : '';
-    return (
-      '        <div class="card">\n' +
-      '          <div class="card__media">' + mediaSlot(p.slug, u.key, u.name + ' — ' + p.nameEn, u.placeholder, 'fa-image', '../') + '</div>\n' +
-      '          <div class="card__body">\n' +
-      '            <h3 class="card__title"><bdi class="en">' + escapeHtml(u.name) + '</bdi></h3>\n' +
-      '            <div class="card__tags"><span class="tag">' + escapeHtml(u.area) + '</span>' + roomsTag + countTag + '</div>\n' +
-      '            <div class="card__price">\n' +
-      '              <span class="card__price-label">يبدأ من</span>\n' +
-      '              <span class="card__price-value">' + fmt(u.price) + ' جنيه</span>\n' +
-      '            </div>\n' +
-      '            <div class="card__ctas">\n' +
-      '              <a href="#" class="btn btn-whatsapp btn-sm" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ' + iso(u.name) + ' في ' + iso(p.nameEn) + '"><i class="fa-brands fa-whatsapp"></i> تفاصيل أكثر</a>\n' +
-      '              <a href="#" class="btn btn-blue icon-only" data-phone-link><i class="fa-solid fa-phone"></i></a>\n' +
-      '            </div>\n' +
-      '          </div>\n' +
-      '        </div>'
-    );
-  }).join('\n');
+/* ---------------- V5 sections below the gallery ---------------- */
+
+var CORE_SHELL = 'كور آند شل';
+
+function isCoreShell(p) {
+  return p.finishingLabel === CORE_SHELL;
 }
 
-function priceOptionsMarkup(p) {
+/** "وحدة واحدة" / "وحدتين" / "9 وحدات" / "25 وحدة". */
+function unitsCountAr(n) {
+  if (n === 1) return 'وحدة واحدة';
+  if (n === 2) return 'وحدتين';
+  if (n >= 3 && n <= 10) return n + ' وحدات';
+  return n + ' وحدة';
+}
+
+/** Apartment bedroom label: "غرفة" / "غرفتين" / "3 غرف". */
+function roomsAr(n) {
+  if (n === 1) return 'غرفة';
+  if (n === 2) return 'غرفتين';
+  return n + ' غرف';
+}
+
+/** "63 – 93 م²" (LTR-isolated digits) from a min/max pair. */
+function areaHtml(min, max) {
+  var a = Math.round(min), b = Math.round(max != null ? max : min);
+  return '<bdi class="en">' + (a === b ? a : a + ' – ' + b) + '</bdi> م²';
+}
+
+/** Tab label per unit type: the short family label, unless two types in this
+ * project would share it (Sea Shore's two chalets) — then the full label. */
+function unitTabLabels(p) {
+  var shorts = p.units.map(shortTypeAr);
   return p.units.map(function (u, i) {
-    return '            <option value="' + u.key + '" data-price="' + u.price + '"' + (i === 0 ? ' selected' : '') + '>' + iso(escapeHtml(u.name)) + ' — يبدأ من ' + fmt(u.price) + ' جنيه</option>';
-  }).join('\n');
+    return shorts.indexOf(shorts[i]) === shorts.lastIndexOf(shorts[i]) ? shorts[i] : u.nameAr;
+  });
 }
 
-function amenitiesMarkup(p) {
-  return p.amenities.map(function (a) {
-    return (
-      '        <div class="amenity">\n' +
-      '          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>\n' +
-      '          <span class="amenity__label">' + escapeHtml(a) + '</span>\n' +
-      '        </div>'
-    );
-  }).join('\n');
+/** Every priced row on the page: one per apartment bedroom group, one per other type. */
+function unitRows(p) {
+  var rows = [];
+  p.units.forEach(function (u) {
+    u.groups.forEach(function (g) {
+      var isApt = u.name === 'Apartment' && g.rooms != null;
+      rows.push({
+        unit: u,
+        group: g,
+        title: isApt ? roomsAr(g.rooms) : u.nameAr,
+        calcName: isApt ? 'شقة ' + roomsAr(g.rooms) : u.nameAr,
+        interest: isApt ? 'بشقة ' + roomsAr(g.rooms) : 'ب' + u.nameAr,
+        rooms: isApt ? g.rooms : null,
+        price: g.minPrice,
+      });
+    });
+  });
+  return rows;
 }
 
-function faqsMarkup(p) {
-  return p.faqs.map(function (f) {
+function unitsSectionMarkup(p) {
+  var labels = unitTabLabels(p);
+  var tabs = p.units.map(function (u, i) {
     return (
-      '      <div class="faq-item">\n' +
-      '        <button class="faq-item__q">\n' +
-      '          <span>' + escapeHtml(f.q) + '</span>\n' +
-      '          <span class="faq-item__sign">+</span>\n' +
-      '        </button>\n' +
-      '        <div class="faq-item__a">' + escapeHtml(f.a) + '</div>\n' +
-      '      </div>'
+      '        <button type="button" role="tab" class="pp-tab" id="tab-' + u.key + '" aria-controls="panel-' + u.key + '"' +
+      ' aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? '0' : '-1') + '" data-unit-type="' + u.key + '">' +
+      escapeHtml(labels[i]) + '</button>\n'
     );
-  }).join('\n');
+  }).join('');
+
+  var rowsByKey = {};
+  unitRows(p).forEach(function (r) { (rowsByKey[r.unit.key] = rowsByKey[r.unit.key] || []).push(r); });
+
+  var panels = p.units.map(function (u, i) {
+    var media = u.image
+      ? '<img class="real-img" src="../' + u.image + '" alt="' + escapeHtml(u.nameAr + ' في ' + p.nameEn) + '" loading="lazy" decoding="async">'
+      : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(u.placeholder) + '</span></div>';
+    var chip = u.count === 1 ? '<span class="pp-unit__avail">آخر وحدة</span>'
+      : (u.count ? '<span class="pp-unit__avail">متاح <bdi class="en">' + u.count + '</bdi></span>' : '');
+    var rows = rowsByKey[u.key].map(function (r) {
+      var g = r.group;
+      var meta = areaHtml(g.areaMin, g.areaMax) + (g.count ? ' · ' + unitsCountAr(g.count) : '');
+      var dp = r.price * p.paymentPlan.downPct / 100;
+      var msg = 'مهتم ' + r.interest + ' في ' + iso(p.nameEn) + ' — تبدأ من ' + fmt(r.price) + ' ج، مقدم ' + p.paymentPlan.downPct + '%. ابعتلي الوحدات المتاحة.';
+      return (
+        '            <div class="pp-unit-row">\n' +
+        '              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">' + escapeHtml(r.title) + '</h3><span class="pp-unit-row__meta">' + meta + '</span></div>\n' +
+        '              <div class="pp-unit-row__body">\n' +
+        '                <div class="pp-unit-row__prices">\n' +
+        '                  <span>يبدأ من <bdi class="en pp-unit-row__price">' + fmt(r.price) + '</bdi></span>\n' +
+        '                  <span>مقدم <bdi class="en">' + p.paymentPlan.downPct + '%</bdi>: <bdi class="en">' + fmt(dp) + '</bdi></span>\n' +
+        '                </div>\n' +
+        '                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="' + escapeHtml(msg) + '"' +
+        ' data-cta-location="units" data-unit-type="' + u.key + '" data-rooms="' + (r.rooms || '') + '">' +
+        '<i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>\n' +
+        '              </div>\n' +
+        '            </div>\n'
+      );
+    }).join('');
+    return (
+      '      <div class="pp-unit" role="tabpanel" id="panel-' + u.key + '" aria-labelledby="tab-' + u.key + '" tabindex="0"' + (i === 0 ? '' : ' hidden') + '>\n' +
+      '        <div class="pp-unit__media">' + media + chip + '</div>\n' +
+      '        <div class="pp-unit__rows">\n' + rows + '        </div>\n' +
+      '      </div>\n'
+    );
+  }).join('');
+
+  return (
+    '  <section class="pp-section pp-section--gray" id="units">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">الوحدات المتاحة</h2>\n' +
+    '      <div class="pp-tabs" role="tablist" aria-label="أنواع الوحدات" data-unit-tabs>\n' + tabs + '      </div>\n' +
+    panels +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** Round a monthly amount to a "nice" preset: nearest 10,000 (nearest 1,000 under 10k). */
+function roundBudget(v) {
+  var step = v < 10000 ? 1000 : 10000;
+  return Math.max(step, Math.round(v / step) * step);
+}
+
+/** Four monthly-budget presets around the cheapest unit's installment at the
+ * minimum down payment (Central → 50 / 70 / 100 / 150 ألف). */
+function budgetPresets(p) {
+  var months = p.paymentPlan.years * 12;
+  var minMonthly = p.startingPrice * (1 - p.paymentPlan.downPct / 100) / months;
+  return uniq([0.8, 1.1, 1.6, 2.4].map(function (m) { return roundBudget(minMonthly * m); }));
+}
+
+/** Lead-form monthly ranges derived from the presets (Central → <70 / 70–120 / 120–250 / >250 ألف). */
+function budgetRanges(p) {
+  var base = budgetPresets(p)[1];
+  var a = base, b = roundBudget(base * 1.7), c = roundBudget(base * 3.5);
+  var k = function (v) { return fmt(v / 1000); };
+  return ['أقل من ' + k(a) + ' ألف', k(a) + ' – ' + k(b) + ' ألف', k(b) + ' – ' + k(c) + ' ألف', 'أكتر من ' + k(c) + ' ألف'];
+}
+
+/** Spec §3.6 formula — kept identical to the one in main.js (initReverseCalc). */
+function calcResult(price, monthly, plan) {
+  var months = plan.years * 12;
+  var dp = Math.max(price * plan.downPct / 100, price - monthly * months);
+  var pct = Math.round(dp / price * 100);
+  return {
+    fits: pct <= 50,
+    text: pct <= 50
+      ? 'مقدم ' + fmt(dp) + ' (' + pct + '%) · قسط ' + fmt((price - dp) / months)
+      : 'محتاج مقدم ' + pct + '% من السعر',
+  };
+}
+
+function calcWhatsappMessage(p, monthly) {
+  return 'عايز وحدة في ' + iso(p.nameEn) + ' على قد ' + fmt(monthly) + ' جنيه في الشهر. ابعتلي الوحدات المناسبة.';
+}
+
+function calcSectionMarkup(p) {
+  var presets = budgetPresets(p);
+  var def = presets[1] != null ? 1 : 0;
+  var monthly = presets[def];
+  var months = p.paymentPlan.years * 12;
+
+  var chips = presets.map(function (v, i) {
+    return '        <button type="button" class="pp-budget" data-budget="' + v + '" aria-pressed="' + (i === def) + '">' + fmt(v / 1000) + ' ألف</button>\n';
+  }).join('') +
+    '        <button type="button" class="pp-budget" data-budget="custom" aria-pressed="false">مبلغ تاني</button>\n';
+
+  var rows = unitRows(p).map(function (r) {
+    var area = r.group.cheapestArea != null ? r.group.cheapestArea : r.group.areaMin;
+    var res = calcResult(r.price, monthly, p.paymentPlan);
+    return (
+      '        <div class="pp-calc-row" data-price="' + r.price + '">\n' +
+      '          <div class="pp-calc-row__text"><span class="pp-calc-row__name">' + escapeHtml(r.calcName) + ' <span class="pp-calc-row__meta">· ' + areaHtml(area) + '</span></span>' +
+      '<span class="pp-calc-row__detail" data-calc-detail>' + res.text + '</span></div>\n' +
+      '          <span class="pp-fit pp-fit--yes" data-calc-fit' + (res.fits ? '' : ' hidden') + '>مناسبة</span>' +
+      '<span class="pp-fit pp-fit--no" data-calc-nofit' + (res.fits ? ' hidden' : '') + '>مقدم كبير</span>\n' +
+      '        </div>\n'
+    );
+  }).join('');
+
+  return (
+    '  <section class="pp-section" id="calc" data-reverse-calc data-down-pct="' + p.paymentPlan.downPct + '" data-months="' + months + '" data-project="' + escapeHtml(p.nameEn) + '">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">تقدر تدفع كام في الشهر؟</h2>\n' +
+    '      <p class="pp-lede">اختار القسط المريح ليك، وهنقولك محتاج مقدم قد إيه لكل وحدة.</p>\n' +
+    '      <div class="pp-budgets">\n' + chips + '      </div>\n' +
+    '      <label class="pp-custom" data-calc-custom hidden>اكتب القسط الشهري اللي يناسبك\n' +
+    '        <span class="pp-custom__box"><input type="text" inputmode="numeric" autocomplete="off" placeholder="مثلاً 85000" data-calc-input><span>جنيه / شهر</span></span>\n' +
+    '      </label>\n' +
+    '      <div class="pp-calc-rows">\n' + rows + '      </div>\n' +
+    '      <a href="#" class="pp-btn pp-btn--green pp-btn--block pp-calc-cta" data-whatsapp-link data-whatsapp-message="' + escapeHtml(calcWhatsappMessage(p, monthly)) + '" data-cta-location="calc" data-calc-cta>' +
+    '<i class="fa-brands fa-whatsapp"></i> <span data-calc-cta-text>ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر</span></a>\n' +
+    '      <p class="pp-note">حساب تقريبي على أقل سعر متاح و' + months + ' قسط شهري. الخطة النهائية حسب الوحدة وسياسة المطوّر وقت الحجز.</p>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+function locationSectionMarkup(p) {
+  var img = findImage(p.slug, 'location');
+  var hasDistances = p.distances && p.distances.length;
+  var body = hasDistances
+    ? '        <ul class="pp-distances">\n' + p.distances.map(function (d) {
+        return '          <li><span>' + escapeHtml(d.place) + '</span><span class="pp-distances__min"><bdi class="en">' + d.minutes + '</bdi> دقيقة</span></li>\n';
+      }).join('') + '        </ul>\n'
+    : '        <p class="pp-location__text">' + escapeHtml(p.locationText) + '</p>\n';
+  var maps = p.mapsUrl
+    ? '        <a class="pp-link" href="' + escapeHtml(p.mapsUrl) + '" target="_blank" rel="noopener">افتح على Google Maps ←</a>\n'
+    : '';
+  return (
+    '  <section class="pp-section pp-section--gray" id="location">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">' + (hasDistances ? 'الموقع بالدقايق' : 'الموقع') + '</h2>\n' +
+    '      <div class="pp-location' + (img ? '' : ' pp-location--no-img') + '">\n' +
+    (img ? '        <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameEn + ' في ' + p.areaAr) + '" loading="lazy" decoding="async">\n' : '') +
+    '        <div class="pp-location__body">\n' + body + maps + '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+function amenitiesSectionMarkup(p) {
+  if (!p.amenities || !p.amenities.length) return '';
+  return (
+    '  <section class="pp-section">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">المميزات والخدمات</h2>\n' +
+    '      <ul class="pp-chipset">\n' +
+    p.amenities.map(function (a) { return '        <li>' + escapeHtml(a) + '</li>\n'; }).join('') +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** Site-level trust points (not per project). Items 3–4 confirmed by Abdo;
+ * item 4's wording is fixed — don't add claims about other fees. */
+function trustSectionMarkup() {
+  var items = [
+    ['fa-shield-halved', 'وسيط معتمد لمشاريع هايد بارك', 'بنعرض ' + projects.length + ' مشاريع في مكان واحد، فتقارن قبل ما تقرر.'],
+    ['fa-tags', 'أسعار من مخزون المطوّر مباشرة', 'كل سعر على الصفحة من آخر تحديث لمخزون الوحدات المتاحة فعلاً.'],
+    ['fa-earth-africa', 'بتشتري من برا مصر؟', 'متابعة كاملة أونلاين من الحجز لحد التعاقد بتوكيل.'],
+    ['fa-circle-check', 'بدون أي عمولة على المشتري', ''],
+  ];
+  return (
+    '  <section class="pp-section pp-section--gray">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">ليه تشتري من خلالنا؟</h2>\n' +
+    '      <ul class="pp-trust">\n' +
+    items.map(function (t) {
+      return '        <li><i class="fa-solid ' + t[0] + '"></i><div><strong>' + t[1] + '</strong>' + (t[2] ? '<span>' + t[2] + '</span>' : '') + '</div></li>\n';
+    }).join('') +
+    '      </ul>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** Same-area project closest in starting price (for the "what's the difference" FAQ). */
+function nearestSameArea(p) {
+  var list = p.sameAreaAll || [];
+  if (!list.length) return null;
+  return list.reduce(function (best, o) {
+    return Math.abs(o.startingPrice - p.startingPrice) < Math.abs(best.startingPrice - p.startingPrice) ? o : best;
+  }, list[0]);
+}
+
+function projectBriefAr(o) {
+  return iso(o.nameEn) + ' بيبدأ من ' + fmt(o.startingPrice) + ' جنيه وفيه ' + joinAr(o.units.map(function (u) { return u.nameAr; })) +
+    (o.availableUnits ? '، والمتاح حالياً ' + unitsCountAr(o.availableUnits) : '');
+}
+
+/** New V5 questions first (spec order), then the existing generated ones. */
+function projectFaqs(p) {
+  var faqs = [];
+  if (isCoreShell(p)) {
+    faqs.push({
+      q: p.finishingCostNote ? 'يعني إيه كور آند شل؟ والتشطيب بيتكلف كام؟' : 'يعني إيه كور آند شل؟',
+      a: 'كور آند شل يعني الوحدة بتتسلّم هيكل خرساني وواجهات من غير أي تشطيب داخلي، والمشتري بيشطّب على ذوقه.' +
+        (p.finishingCostNote ? ' ' + p.finishingCostNote : ''),
+    });
+  }
+  faqs.push({
+    q: 'لو دفعت مقدم أكبر، القسط هيقل؟',
+    a: 'أيوه. القسط الشهري بيتحسب على الباقي بعد المقدم، فكل ما المقدم يزيد القسط بيقل. في ' + iso(p.nameEn) +
+      ' المقدم بيبدأ من ' + p.paymentPlan.downPct + '% والتقسيط لحد ' + yearsAr(p.paymentPlan.years) +
+      '، وتقدر تجرّب بنفسك في حاسبة "تقدر تدفع كام في الشهر؟" على الصفحة.',
+  });
+  var other = nearestSameArea(p);
+  if (other) {
+    faqs.push({
+      q: 'إيه الفرق بين ' + p.nameAr + ' و' + other.nameAr + '؟',
+      a: projectBriefAr(p) + '. أما ' + projectBriefAr(other) + '.',
+    });
+  }
+  faqs.push({
+    q: 'ينفع أشتري وأنا مقيم برا مصر؟',
+    a: 'أيوه. فريقنا بيتابع معاك أونلاين من الحجز لحد التعاقد، والتعاقد ممكن يتم بتوكيل.',
+  });
+  return faqs.concat(p.faqs);
+}
+
+function faqSectionMarkup(faqs) {
+  return (
+    '  <section class="pp-section" id="faq">\n' +
+    '    <div class="pp-wrap">\n' +
+    '      <h2 class="pp-h2">أسئلة قبل ما تقرر</h2>\n' +
+    '      <div class="pp-faq">\n' +
+    faqs.map(function (f, i) {
+      return (
+        '        <details class="pp-faq__item"' + (i === 0 ? ' open' : '') + '>\n' +
+        '          <summary>' + escapeHtml(f.q) + '</summary>\n' +
+        '          <p>' + escapeHtml(f.a) + '</p>\n' +
+        '        </details>\n'
+      );
+    }).join('') +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** FAQPage JSON-LD — same strings as the visible <details> (spec §3.10). */
+function faqJsonLd(faqs) {
+  var data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(function (f) {
+      return { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } };
+    }),
+  };
+  return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
+}
+
+function optionGroup(name, options, legend) {
+  return (
+    '          <fieldset class="pp-q">\n' +
+    '            <legend>' + legend + '</legend>\n' +
+    '            <div class="pp-options">\n' +
+    options.map(function (o) {
+      return '              <label class="pp-option"><input type="radio" name="' + name + '" value="' + escapeHtml(o) + '"><span>' + escapeHtml(o) + '</span></label>\n';
+    }).join('') +
+    '            </div>\n' +
+    '          </fieldset>\n'
+  );
+}
+
+/** 3-step lead form. Radios (not JS buttons) so the no-JS fallback — every
+ * step visible at once — still carries the answers. Submission goes through
+ * the existing data-lead-form flow in main.js. */
+function leadSectionMarkup(p) {
+  var unitOptions = p.units.map(function (u) { return u.nameAr; }).concat(['لسه مش متأكد']);
+  var note = isCoreShell(p)
+    ? '          <p class="pp-lead__note" data-immediate-note hidden>وحدات ' + iso(p.nameEn) + ' بتتسلّم كور آند شل، فهنرشحلك كمان وحدات جاهزة أو قريبة من التسليم في مشاريع هايد بارك التانية.</p>\n'
+    : '';
+  return (
+    '  <section class="pp-section pp-lead-section" id="lead">\n' +
+    '    <div class="pp-wrap pp-lead-wrap">\n' +
+    '      <h2 class="pp-h2 pp-h2--on-dark">نرشّحلك الوحدات المناسبة</h2>\n' +
+    '      <form class="pp-lead" data-lead-form data-multistep data-project-name="' + escapeHtml(p.nameEn) + '" data-success-url="/thank-you">\n' +
+    '        <div class="pp-progress" aria-hidden="true"><span class="is-done"></span><span></span><span></span></div>\n' +
+    '        <p class="pp-lead__step-label" data-step-label>خطوة 1 من 3</p>\n' +
+    '        <div class="pp-step" data-step="1">\n' +
+    optionGroup('purpose', ['سكن فوري', 'سكن مستقبلي', 'استثمار', 'مقيم خارج مصر'], 'بتشتري ليه؟') +
+    note +
+    optionGroup('budget_range', budgetRanges(p), 'القسط الشهري المريح ليك') +
+    '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--green" data-step-next>التالي</button></div>\n' +
+    '        </div>\n' +
+    '        <div class="pp-step" data-step="2">\n' +
+    optionGroup('unit_type', unitOptions, 'نوع الوحدة') +
+    optionGroup('timing', ['خلال شهر', 'خلال 3 شهور', 'لسه بستكشف'], 'ناوي تشتري إمتى؟') +
+    '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--ghost" data-step-back>رجوع</button><button type="button" class="pp-btn pp-btn--green" data-step-next>التالي</button></div>\n' +
+    '        </div>\n' +
+    '        <div class="pp-step" data-step="3">\n' +
+    '          <div class="field">\n' +
+    '            <label for="lead-name">الاسم</label>\n' +
+    '            <input type="text" id="lead-name" name="name" placeholder="اكتب اسمك" autocomplete="name" required>\n' +
+    '          </div>\n' +
+    '          <div class="field">\n' +
+    '            <label for="lead-phone">رقم الموبايل</label>\n' +
+    '            <div class="form-row">\n' +
+    '              ' + phoneFieldMarkup() + '\n' +
+    '              <input type="tel" id="lead-phone" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" autocomplete="tel-national" required>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--ghost" data-step-back>رجوع</button><button type="submit" class="pp-btn pp-btn--green">ابعت الطلب</button></div>\n' +
+    '        </div>\n' +
+    '        <p class="pp-lead__error" data-step-error hidden>اختار إجابة لكل سؤال عشان نكمل.</p>\n' +
+    '      </form>\n' +
+    '      <p class="form-consent">بإرسال النموذج، إنك موافق على <a href="/privacy">سياسة الخصوصية</a>.</p>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
+}
+
+/** "6.43M" / "23.4M" for the comparison table. */
+function shortMillions(n) {
+  return (Math.round(n / 1e4) / 100).toString() + 'M';
+}
+
+function shortProjectNameAr(o) {
+  return o.nameAr.replace(/^هايد بارك\s+/, '');
+}
+
+function compareSectionMarkup(p, allMerged) {
+  var others = allMerged.filter(function (o) { return o.slug !== p.slug; });
+  var table = '';
+  if (p.sameArea.length) {
+    var cols = [p].concat(p.sameArea);
+    var cell = function (o, html) { return '<td' + (o === p ? ' class="is-current"' : '') + '>' + html + '</td>'; };
+    table =
+      '      <h2 class="pp-h2">مقارنة بمشاريع هايد بارك في ' + escapeHtml(p.areaAr) + '</h2>\n' +
+      '      <div class="pp-compare">\n' +
+      '        <table>\n' +
+      '          <thead><tr><th scope="col"><span class="visually-hidden">البند</span></th>' + cols.map(function (o) {
+        return '<th scope="col"' + (o === p ? ' class="is-current"' : '') + '>' + (o === p ? escapeHtml(shortProjectNameAr(o)) : '<a href="/projects/' + o.slug + '">' + escapeHtml(shortProjectNameAr(o)) + '</a>') + '</th>';
+      }).join('') + '</tr></thead>\n' +
+      '          <tbody>\n' +
+      '            <tr><th scope="row">يبدأ من</th>' + cols.map(function (o) { return cell(o, '<bdi class="en">' + shortMillions(o.startingPrice) + '</bdi>'); }).join('') + '</tr>\n' +
+      '            <tr><th scope="row">الأنواع</th>' + cols.map(function (o) { return cell(o, escapeHtml(uniq(o.units.map(shortTypeAr)).join(' · '))); }).join('') + '</tr>\n' +
+      '            <tr><th scope="row">المتاح</th>' + cols.map(function (o) { return cell(o, o.availableUnits ? '<bdi class="en">' + o.availableUnits + '</bdi>' : '—'); }).join('') + '</tr>\n' +
+      '          </tbody>\n' +
+      '        </table>\n' +
+      '      </div>\n';
+  }
+  var cards = others.map(function (o) {
+    var img = findImage(o.slug, 'hero');
+    var media = img
+      ? '<img src="../' + img + '" alt="' + escapeHtml(o.nameEn) + '" loading="lazy" decoding="async">'
+      : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(o.nameEn) + '</span></div>';
+    return (
+      '        <a class="pp-project-card" href="/projects/' + o.slug + '">\n' +
+      '          <div class="pp-project-card__media">' + media + '</div>\n' +
+      '          <div class="pp-project-card__body"><span class="pp-project-card__area">' + escapeHtml(o.areaAr) + '</span>' +
+      '<bdi class="en pp-project-card__name">' + escapeHtml(o.nameEn) + '</bdi>' +
+      '<span>يبدأ من <bdi class="en pp-project-card__price">' + fmt(o.startingPrice) + '</bdi> ج</span></div>\n' +
+      '        </a>\n'
+    );
+  }).join('');
+  return (
+    '  <section class="pp-section" id="other-projects">\n' +
+    '    <div class="pp-wrap">\n' +
+    table +
+    '      <h2 class="pp-h2' + (table ? ' pp-h2--spaced' : '') + '">مشاريع تانية ممكن تعجبك</h2>\n' +
+    '      <div class="pp-projects">\n' + cards + '      </div>\n' +
+    '    </div>\n' +
+    '  </section>\n'
+  );
 }
 
 /** "8 سنين" / "سنة" / "سنتين" / "12 سنة" — Arabic counted-noun agreement. */
@@ -630,36 +1025,6 @@ function phoneFieldMarkup() {
   );
 }
 
-function leadFormMarkup(p, successUrl, privacyHref) {
-  return (
-    '      <form class="form-card" data-lead-form data-project-name="' + escapeHtml(p.nameEn) + '" data-success-url="' + successUrl + '">\n' +
-    '        <div class="field field-icon">\n' +
-    '          <label>الاسم</label>\n' +
-    '          <i class="fa-solid fa-user"></i>\n' +
-    '          <input type="text" name="name" placeholder="اكتب اسمك" required>\n' +
-    '        </div>\n' +
-    '        <div class="field">\n' +
-    '          <label>رقم الهاتف</label>\n' +
-    '          <div class="form-row">\n' +
-    '            ' + phoneFieldMarkup() + '\n' +
-    '            <input type="tel" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" required>\n' +
-    '          </div>\n' +
-    '        </div>\n' +
-    '        <div class="field field-icon">\n' +
-    '          <label>البريد الإلكتروني <span class="optional-tag">(اختياري)</span></label>\n' +
-    '          <i class="fa-solid fa-envelope"></i>\n' +
-    '          <input type="email" name="email" placeholder="example@email.com">\n' +
-    '        </div>\n' +
-    '        <div class="field">\n' +
-    '          <label>رسالتك <span class="optional-tag">(اختياري)</span></label>\n' +
-    '          <textarea name="message" placeholder="اكتب استفسارك هنا" rows="3"></textarea>\n' +
-    '        </div>\n' +
-    '        <button type="submit" class="btn btn-yellow">إرسال الطلب</button>\n' +
-    '      </form>\n' +
-    '      <p class="form-consent">بإرسال النموذج، إنك موافق على <a href="' + privacyHref + '">سياسة الخصوصية</a>.</p>'
-  );
-}
-
 function preliminaryNotice(p) {
   if (!p.preliminary) return '';
   return (
@@ -740,6 +1105,7 @@ function page(p, allMerged) {
   var title = p.nameEn + ' | ' + SITE_NAME + ' — أسعار ومساحات وخطط السداد';
   var description = p.intro.replace(/\s*\*.*$/, '').slice(0, 155);
   var canonical = 'https://www.explorerhydepark.com/projects/' + p.slug;
+  var faqs = projectFaqs(p);
 
   return '<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
@@ -762,6 +1128,7 @@ ogTagsMarkup({ title: title, description: description, url: canonical, image: og
 '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\n' +
 '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">\n' +
 '<link rel="stylesheet" href="../assets/css/style.css">\n' +
+faqJsonLd(faqs) + '\n' +
 '</head>\n' +
 '<body class="pp-page">\n\n' +
 '<!-- Google Tag Manager (noscript) -->\n' +
@@ -774,70 +1141,14 @@ sectionNavMarkup(p) + '\n' +
 preliminaryNotice(p) +
 overviewMarkup(p) + '\n' +
 galleryMarkup(p) + '\n' +
-'  <section class="section" id="units">\n' +
-'    <h2 class="section-title">الوحدات المتاحة</h2>\n' +
-'    <div class="grid grid--units">\n' +
-unitsMarkup(p) + '\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section section--gray" id="calc" data-calculator>\n' +
-'    <h2 class="section-title" style="margin-bottom:8px">احسب قسطك الشهري</h2>\n' +
-'    <p class="section-sub">قدّر القسط الشهري بناءً على المقدم ومدة السداد</p>\n' +
-'    <div class="calc-card">\n' +
-'      <div class="field">\n' +
-'        <label>نوع الوحدة</label>\n' +
-'        <select data-calc-price>\n' +
-priceOptionsMarkup(p) + '\n' +
-'        </select>\n' +
-'      </div>\n' +
-'      <div class="field">\n' +
-'        <div class="field-row"><span>المقدم</span><span class="value" data-calc-down-label>' + p.paymentPlan.downPct + '%</span></div>\n' +
-'        <input type="range" min="5" max="50" step="5" value="' + p.paymentPlan.downPct + '" data-calc-down>\n' +
-'      </div>\n' +
-'      <div class="field">\n' +
-'        <div class="field-row"><span>مدة التقسيط</span><span class="value" data-calc-years-label>' + p.paymentPlan.years + ' سنوات</span></div>\n' +
-'        <input type="range" min="1" max="10" step="1" value="' + p.paymentPlan.years + '" data-calc-years>\n' +
-'      </div>\n' +
-'      <div class="calc-result">\n' +
-'        <span class="calc-result__label">القسط الشهري التقريبي</span>\n' +
-'        <span class="calc-result__value"><span data-calc-monthly>0</span> جنيه</span>\n' +
-'        <span class="calc-result__note">مقدم <span data-calc-down-amount>0</span> جنيه</span>\n' +
-'      </div>\n' +
-'      <a href="#" class="btn btn-sky btn-block" data-whatsapp-link data-whatsapp-message="اطلب خطة الأسعار كاملة لمشروع ' + iso(p.nameEn) + '"><i class="fa-brands fa-whatsapp"></i> اطلب خطة الأسعار كاملة</a>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section" id="location">\n' +
-'    <h2 class="section-title">الموقع</h2>\n' +
-'    <div class="location-grid">\n' +
-'      <div class="location-map">' + mediaSlot(p.slug, 'location', p.areaAr + ' — ' + p.nameEn, 'خريطة / صورة الموقع', 'fa-map-location-dot', '../') + '</div>\n' +
-'      <div style="display:flex;flex-direction:column;gap:14px">\n' +
-'        <h3 style="font-size:22px">' + escapeHtml(p.areaAr) + '</h3>\n' +
-'        <p style="margin:0;font-size:17px;line-height:1.7;opacity:.85">' + escapeHtml(p.locationText) + '</p>\n' +
-'        <a href="#" class="btn btn-blue" style="width:fit-content" data-whatsapp-link data-whatsapp-message="اسأل عن موقع ' + iso(p.nameEn) + '">اسأل عن الموقع</a>\n' +
-'      </div>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section section--gray">\n' +
-'    <h2 class="section-title">المميزات والخدمات</h2>\n' +
-'    <div class="grid grid--amenities">\n' +
-amenitiesMarkup(p) + '\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section" id="faq">\n' +
-'    <h2 class="section-title">الأسئلة الشائعة</h2>\n' +
-'    <div class="faq-list">\n' +
-faqsMarkup(p) + '\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-'  <section class="section section--navy">\n' +
-'    <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px">\n' +
-'      <h2 class="section-title on-dark">اطلب اتصال بخصوص <bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></h2>\n' +
-'      <p style="margin:0;text-align:center;color:#D8D8D8;font-size:16px">اترك بياناتك وسيتواصل معك فريقنا في أقرب وقت</p>\n' +
-leadFormMarkup(p, '/thank-you', '/privacy') + '\n' +
-'      <p class="form-note">Explorer Hyde Park منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</p>\n' +
-'    </div>\n' +
-'  </section>\n\n' +
-relatedProjectsMarkup(p, allMerged) +
+unitsSectionMarkup(p) + '\n' +
+calcSectionMarkup(p) + '\n' +
+locationSectionMarkup(p) + '\n' +
+amenitiesSectionMarkup(p) + '\n' +
+trustSectionMarkup() + '\n' +
+faqSectionMarkup(faqs) + '\n' +
+leadSectionMarkup(p) + '\n' +
+compareSectionMarkup(p, allMerged) + '\n' +
 footer() + '\n\n' +
 stickyBarMarkup(p) + '\n' +
 '<script src="../assets/js/country-codes.js"></script>\n' +
@@ -847,8 +1158,7 @@ stickyBarMarkup(p) + '\n' +
 '</html>\n';
 }
 
-/** The one project-card partial — used on the homepage grid AND the related-projects
- * carousel on each project page, so both places always show the identical card. */
+/** Homepage project card (project pages use the lighter .pp-project-card in compareSectionMarkup). */
 function projectCardMarkup(p, href, extraClass, imgPrefix) {
   return (
     '    <a href="' + href + '" class="card project-card' + (extraClass ? ' ' + extraClass : '') + '" style="text-decoration:none;color:inherit">\n' +
@@ -883,26 +1193,6 @@ function homepageCards(merged) {
     out += '  </div>\n';
   });
   return out;
-}
-
-/** Auto-advancing "other projects" carousel at the bottom of each project page —
- * same card partial as the homepage, links relative to /projects/ (sibling pages). */
-function relatedProjectsMarkup(p, allMerged) {
-  var others = allMerged.filter(function (o) { return o.slug !== p.slug; });
-  if (!others.length) return '';
-  var cards = others.map(function (o) {
-    return projectCardMarkup(o, '/projects/' + o.slug, 'related-carousel__card', '../');
-  }).join('');
-  return (
-    '  <section class="section section--gray" style="padding-inline:0">\n' +
-    '    <h2 class="section-title">مشاريع تانية ممكن تعجبك</h2>\n' +
-    '    <div class="related-carousel" data-auto-carousel>\n' +
-    '      <div class="related-carousel__track">\n' +
-    cards +
-    '      </div>\n' +
-    '    </div>\n' +
-    '  </section>\n\n'
-  );
 }
 
 /** Live checklist of exactly which image files each project still needs —
@@ -1000,7 +1290,10 @@ function updateIndexHtml(merged) {
 
 var merged = projects.map(mergeProject);
 // Second pass: needs every project merged first.
-merged.forEach(function (p) { p.sameArea = sameAreaProjects(p, merged, 2); });
+merged.forEach(function (p) {
+  p.sameArea = sameAreaProjects(p, merged, 2);
+  p.sameAreaAll = sameAreaProjects(p, merged, Infinity);
+});
 
 // `node tools/build-pages.js --dump [slug ...]` prints the derived data and
 // exits without writing anything — for checking numbers against the spec.

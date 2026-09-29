@@ -19,14 +19,14 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initNav();
-    initFaq();
     initGallery();
     initSectionNav();
-    initCalculator();
+    initUnitTabs();
+    initReverseCalc();
+    initMultiStepForms();
     initLeadForms();
     initWhatsappLinks();
     initFloatWhatsapp();
-    initRelatedCarousel();
     initYear();
   });
 
@@ -102,26 +102,6 @@
     window.addEventListener('resize', syncForWidth);
   }
 
-  /* ---------------- FAQ accordion ---------------- */
-  function initFaq() {
-    document.querySelectorAll('.faq-item__q').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var item = btn.closest('.faq-item');
-        var wasOpen = item.classList.contains('is-open');
-        item.parentElement.querySelectorAll('.faq-item.is-open').forEach(function (open) {
-          open.classList.remove('is-open');
-          var sign = open.querySelector('.faq-item__sign');
-          if (sign) sign.textContent = '+';
-        });
-        if (!wasOpen) {
-          item.classList.add('is-open');
-          var sign = item.querySelector('.faq-item__sign');
-          if (sign) sign.textContent = '−';
-        }
-      });
-    });
-  }
-
   /* ---------------- Gallery: thumbnail swaps the main image ---------------- */
   function initGallery() {
     document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
@@ -173,102 +153,209 @@
     Object.keys(chips).forEach(function (id) { io.observe(document.getElementById(id)); });
   }
 
-  /* ---------------- Related-projects carousel: auto-scrolls, pauses on
-     hover/touch/manual scroll, resumes shortly after; skipped entirely for
-     prefers-reduced-motion (plain manual scroll still works there). ---------------- */
-  function initRelatedCarousel() {
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ---------------- Analytics: new V5 events only ----------------
+     whatsapp_click and generate_lead are GTM triggers already (click on
+     [data-whatsapp-link] / thank-you page view) — never push them here, or
+     they double count. */
+  function track(event, params) {
+    window.dataLayer = window.dataLayer || [];
+    var payload = { event: event };
+    Object.keys(params || {}).forEach(function (k) { payload[k] = params[k]; });
+    window.dataLayer.push(payload);
+  }
 
-    document.querySelectorAll('[data-auto-carousel]').forEach(function (root) {
-      var track = root.querySelector('.related-carousel__track');
-      if (!track || reduceMotion) return;
+  function fmt(n) {
+    return Math.round(n).toLocaleString('en-US');
+  }
 
-      var SPEED = 32; // px/sec
-      var direction = -1; // matches the gallery's "next" direction in this RTL layout
-      var paused = false;
-      var resumeTimer = null;
-      var lastTs = null;
-
-      function maxScroll() { return track.scrollWidth - track.clientWidth; }
-      function atEnd() { return Math.abs(track.scrollLeft) >= maxScroll() - 2; }
-      function atStart() { return Math.abs(track.scrollLeft) <= 2; }
-
-      function frame(ts) {
-        if (lastTs == null) lastTs = ts;
-        // Clamped: a backgrounded tab starves rAF, so the next tick can arrive
-        // with a huge elapsed time — without this, resuming focus would jump
-        // the track by that whole gap in one frame instead of just continuing.
-        var dt = Math.min((ts - lastTs) / 1000, 0.05);
-        lastTs = ts;
-        if (!paused && maxScroll() > 4) {
-          if (direction < 0 && atEnd()) direction = 1;
-          else if (direction > 0 && atStart()) direction = -1;
-          track.scrollLeft += direction * SPEED * dt;
-        }
-        requestAnimationFrame(frame);
+  /* ---------------- Units: accessible tabs (static panels, JS only toggles) ---------------- */
+  function initUnitTabs() {
+    document.querySelectorAll('[data-unit-tabs]').forEach(function (list) {
+      var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+      function select(tab, focus) {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.setAttribute('tabindex', on ? '0' : '-1');
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = !on;
+        });
+        if (focus) tab.focus();
       }
-      requestAnimationFrame(frame);
-
-      function pause() {
-        paused = true;
-        if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
-      }
-      function scheduleResume(delay) {
-        if (resumeTimer) clearTimeout(resumeTimer);
-        resumeTimer = setTimeout(function () { paused = false; lastTs = null; }, delay);
-      }
-
-      root.addEventListener('mouseenter', pause);
-      root.addEventListener('mouseleave', function () { scheduleResume(300); });
-      track.addEventListener('touchstart', pause, { passive: true });
-      track.addEventListener('touchend', function () { scheduleResume(1500); }, { passive: true });
-      track.addEventListener('pointerdown', pause);
-      window.addEventListener('pointerup', function () { scheduleResume(1500); });
-      track.addEventListener('wheel', function () { pause(); scheduleResume(2500); }, { passive: true });
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener('click', function () {
+          if (tab.getAttribute('aria-selected') === 'true') return;
+          select(tab);
+          track('unit_tab_click', { unit_type: tab.getAttribute('data-unit-type') });
+        });
+        tab.addEventListener('keydown', function (e) {
+          // RTL: ArrowLeft moves to the next tab, ArrowRight to the previous one.
+          var next = { ArrowLeft: i + 1, ArrowRight: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+          if (next == null) return;
+          e.preventDefault();
+          var target = tabs[(next + tabs.length) % tabs.length];
+          select(target, true);
+          track('unit_tab_click', { unit_type: target.getAttribute('data-unit-type') });
+        });
+      });
     });
   }
 
-  /* ---------------- Mortgage / installment calculator ---------------- */
-  function initCalculator() {
-    var calc = document.querySelector('[data-calculator]');
-    if (!calc) return;
+  /* ---------------- Reverse calculator: monthly budget → required down payment ----------------
+     Same formula as calcResult() in tools/build-pages.js (which renders the
+     default state into the static HTML). */
+  function initReverseCalc() {
+    var root = document.querySelector('[data-reverse-calc]');
+    if (!root) return;
+    var downPct = Number(root.getAttribute('data-down-pct'));
+    var months = Number(root.getAttribute('data-months'));
+    var project = root.getAttribute('data-project');
+    var chips = root.querySelectorAll('[data-budget]');
+    var customWrap = root.querySelector('[data-calc-custom]');
+    var input = root.querySelector('[data-calc-input]');
+    var rows = root.querySelectorAll('[data-price]');
+    var cta = root.querySelector('[data-calc-cta]');
+    var ctaText = root.querySelector('[data-calc-cta-text]');
+    var tracked = false;
+    var trackTimer = null;
 
-    var priceSelect = calc.querySelector('[data-calc-price]');
-    var downRange = calc.querySelector('[data-calc-down]');
-    var yearsRange = calc.querySelector('[data-calc-years]');
-    var downLabel = calc.querySelector('[data-calc-down-label]');
-    var yearsLabel = calc.querySelector('[data-calc-years-label]');
-    var monthlyOut = calc.querySelector('[data-calc-monthly]');
-    var downAmountOut = calc.querySelector('[data-calc-down-amount]');
-
-    function fmt(n) {
-      return Math.round(n).toLocaleString('en-US');
+    // Accepts "85,000", "85000" and Arabic-Indic digits "٨٥٠٠٠".
+    function parseAmount(v) {
+      var digits = String(v || '').replace(/[٠-٩]/g, function (d) { return String(d.charCodeAt(0) - 0x0660); }).replace(/[^0-9]/g, '');
+      return digits ? Number(digits) : 0;
     }
 
-    function render() {
-      var price = Number(priceSelect.options[priceSelect.selectedIndex].dataset.price || 0);
-      var downPct = Number(downRange.value);
-      var years = Number(yearsRange.value);
-      var downAmount = price * downPct / 100;
-      var monthly = (price - downAmount) / (years * 12);
-
-      downLabel.textContent = downPct + '%';
-      yearsLabel.textContent = years + ' سنوات';
-      monthlyOut.textContent = fmt(monthly);
-      downAmountOut.textContent = fmt(downAmount);
+    function render(monthly) {
+      rows.forEach(function (row) {
+        var price = Number(row.getAttribute('data-price'));
+        var detail = row.querySelector('[data-calc-detail]');
+        var fit = row.querySelector('[data-calc-fit]');
+        var noFit = row.querySelector('[data-calc-nofit]');
+        if (!monthly) {
+          detail.textContent = 'اكتب القسط وهنحسبلك المقدم';
+          fit.hidden = true; noFit.hidden = true;
+          return;
+        }
+        var dp = Math.max(price * downPct / 100, price - monthly * months);
+        var pct = Math.round(dp / price * 100);
+        var fits = pct <= 50;
+        detail.textContent = fits
+          ? 'مقدم ' + fmt(dp) + ' (' + pct + '%) · قسط ' + fmt((price - dp) / months)
+          : 'محتاج مقدم ' + pct + '% من السعر';
+        fit.hidden = !fits; noFit.hidden = fits;
+      });
+      if (monthly) {
+        ctaText.textContent = 'ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر';
+        setWhatsappMessage(cta, 'عايز وحدة في ' + isolate(project, 'ltr') + ' على قد ' + fmt(monthly) + ' جنيه في الشهر. ابعتلي الوحدات المناسبة.');
+      } else {
+        ctaText.textContent = 'اكتب القسط الشهري الأول';
+        setWhatsappMessage(cta, 'عايز أعرف الوحدات المتاحة في ' + isolate(project, 'ltr') + ' وخطط التقسيط.');
+      }
     }
 
-    priceSelect.addEventListener('change', render);
-    downRange.addEventListener('input', render);
-    yearsRange.addEventListener('input', render);
-    render();
+    function trackOnce(monthly) {
+      if (tracked || !monthly) return;
+      tracked = true;
+      track('calculator_used', { monthly_budget: monthly });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+        var v = chip.getAttribute('data-budget');
+        if (v === 'custom') {
+          customWrap.hidden = false;
+          input.focus();
+          render(parseAmount(input.value));
+          return;
+        }
+        customWrap.hidden = true;
+        render(Number(v));
+        trackOnce(Number(v));
+      });
+    });
+
+    input.addEventListener('input', function () {
+      var monthly = parseAmount(input.value);
+      render(monthly);
+      // Wait until they stop typing so "8" on the way to "85000" isn't what gets recorded.
+      clearTimeout(trackTimer);
+      trackTimer = setTimeout(function () { trackOnce(monthly); }, 1200);
+    });
+  }
+
+  /* ---------------- Multi-step lead form (progressive enhancement) ---------------- */
+  function initMultiStepForms() {
+    document.querySelectorAll('[data-multistep]').forEach(function (form) {
+      var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
+      var bars = form.querySelectorAll('.pp-progress span');
+      var label = form.querySelector('[data-step-label]');
+      var error = form.querySelector('[data-step-error]');
+      var note = form.querySelector('[data-immediate-note]');
+      var current = 0;
+
+      function answer(name) {
+        var el = form.querySelector('[name="' + name + '"]:checked');
+        return el ? el.value : '';
+      }
+
+      function show(i) {
+        current = i;
+        steps.forEach(function (s, n) { s.classList.toggle('is-current', n === i); });
+        bars.forEach(function (b, n) { b.classList.toggle('is-done', n <= i); });
+        if (label) label.textContent = 'خطوة ' + (i + 1) + ' من ' + steps.length;
+        if (error) error.hidden = true;
+      }
+
+      function stepComplete(step) {
+        var names = [];
+        step.querySelectorAll('input[type="radio"]').forEach(function (r) {
+          if (names.indexOf(r.name) === -1) names.push(r.name);
+        });
+        return names.every(function (n) { return answer(n); });
+      }
+
+      form.classList.add('is-enhanced');
+      show(0);
+
+      form.querySelectorAll('[data-step-next]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (!stepComplete(steps[current])) {
+            if (error) error.hidden = false;
+            return;
+          }
+          track('lead_form_step', { step: current + 1, purpose: answer('purpose'), budget_range: answer('budget_range') });
+          show(current + 1);
+          form.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+      });
+      form.querySelectorAll('[data-step-back]').forEach(function (btn) {
+        btn.addEventListener('click', function () { show(current - 1); });
+      });
+
+      if (note) {
+        form.querySelectorAll('[name="purpose"]').forEach(function (r) {
+          r.addEventListener('change', function () { note.hidden = answer('purpose') !== 'سكن فوري'; });
+        });
+      }
+    });
   }
 
   /* ---------------- WhatsApp / phone CTA links ---------------- */
+  function whatsappUrl(msg) {
+    return 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg);
+  }
+
+  // For CTAs whose message changes after load (calculator).
+  function setWhatsappMessage(el, msg) {
+    if (!el) return;
+    el.setAttribute('data-whatsapp-message', msg);
+    el.setAttribute('href', whatsappUrl(msg));
+  }
+
   function initWhatsappLinks() {
     document.querySelectorAll('[data-whatsapp-link]').forEach(function (el) {
-      var msg = el.getAttribute('data-whatsapp-message') || 'أرغب بمعرفة التفاصيل';
-      el.setAttribute('href', 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg));
+      el.setAttribute('href', whatsappUrl(el.getAttribute('data-whatsapp-message') || 'أرغب بمعرفة التفاصيل'));
     });
     document.querySelectorAll('[data-phone-link]').forEach(function (el) {
       el.setAttribute('href', 'tel:' + PHONE_NUMBER);
@@ -287,18 +374,44 @@
         var message = (form.querySelector('[name="message"]') || {}).value || '';
         var projectField = form.querySelector('[name="project"]');
         var project = (projectField && projectField.value) || form.getAttribute('data-project-name') || '';
+        // Multi-step project form answers (absent on the contact form).
+        function checked(n) {
+          var el = form.querySelector('[name="' + n + '"]:checked');
+          return el ? el.value : '';
+        }
+        var answers = {
+          purpose: checked('purpose'),
+          budget_range: checked('budget_range'),
+          unit_type: checked('unit_type'),
+          timing: checked('timing'),
+        };
 
         var lines = [];
         if (project) lines.push('مهتم بـ: ' + isolate(project, 'ltr'));
+        if (answers.purpose) lines.push('الغرض: ' + answers.purpose);
+        if (answers.budget_range) lines.push('القسط المريح: ' + answers.budget_range);
+        if (answers.unit_type) lines.push('نوع الوحدة: ' + answers.unit_type);
+        if (answers.timing) lines.push('الشراء: ' + answers.timing);
         if (name) lines.push('الاسم: ' + isolate(name, 'auto'));
         if (phone) lines.push('الهاتف: ' + isolate(code + phone, 'ltr'));
         if (email) lines.push('البريد الإلكتروني: ' + isolate(email, 'ltr'));
         if (message) lines.push('الرسالة: ' + isolate(message, 'auto'));
         if (!lines.length) lines.push('أرغب بمعرفة التفاصيل');
 
-        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
-        window.open(url, '_blank', 'noopener');
-        window.location.href = form.getAttribute('data-success-url') || 'thank-you.html';
+        window.open(whatsappUrl(lines.join('\n')), '_blank', 'noopener');
+
+        // Multi-step form: hand the answers to GTM on the thank-you page as
+        // URL params (generate_lead itself stays a GTM page-view trigger).
+        var successUrl = form.getAttribute('data-success-url') || 'thank-you.html';
+        if (form.hasAttribute('data-multistep')) {
+          var params = [];
+          if (project) params.push('project=' + encodeURIComponent(project));
+          Object.keys(answers).forEach(function (k) {
+            if (answers[k]) params.push(k + '=' + encodeURIComponent(answers[k]));
+          });
+          if (params.length) successUrl += (successUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
+        }
+        window.location.href = successUrl;
       });
     });
   }

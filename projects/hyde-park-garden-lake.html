@@ -31,6 +31,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"يعني إيه كور آند شل؟","acceptedAnswer":{"@type":"Answer","text":"كور آند شل يعني الوحدة بتتسلّم هيكل خرساني وواجهات من غير أي تشطيب داخلي، والمشتري بيشطّب على ذوقه."}},{"@type":"Question","name":"لو دفعت مقدم أكبر، القسط هيقل؟","acceptedAnswer":{"@type":"Answer","text":"أيوه. القسط الشهري بيتحسب على الباقي بعد المقدم، فكل ما المقدم يزيد القسط بيقل. في ⁦Hyde Park Garden Lake⁩ المقدم بيبدأ من 10% والتقسيط لحد 8 سنين، وتقدر تجرّب بنفسك في حاسبة \"تقدر تدفع كام في الشهر؟\" على الصفحة."}},{"@type":"Question","name":"إيه الفرق بين هايد بارك جاردن ليك وهايد بارك سيجنتشر؟","acceptedAnswer":{"@type":"Answer","text":"⁦Hyde Park Garden Lake⁩ بيبدأ من 6,800,000 جنيه وفيه شقق، وتاون هاوس وتوين هاوس وفيلا مستقلة، والمتاح حالياً 42 وحدة. أما ⁦Hyde Park Signature⁩ بيبدأ من 6,590,000 جنيه وفيه شقق، وتاون هاوس وتوين هاوس وفيلا مستقلة، والمتاح حالياً 50 وحدة."}},{"@type":"Question","name":"ينفع أشتري وأنا مقيم برا مصر؟","acceptedAnswer":{"@type":"Answer","text":"أيوه. فريقنا بيتابع معاك أونلاين من الحجز لحد التعاقد، والتعاقد ممكن يتم بتوكيل."}},{"@type":"Question","name":"ما هو سعر الوحدات في ⁦Hyde Park Garden Lake⁩؟","acceptedAnswer":{"@type":"Answer","text":"تبدأ الأسعار من 6,800,000 جنيه لـ⁦Apartment⁩، وتختلف الأسعار حسب نوع الوحدة والمساحة."}},{"@type":"Question","name":"ما هي خطة السداد المتاحة؟","acceptedAnswer":{"@type":"Answer","text":"مقدم يبدأ من 10% من قيمة الوحدة، والباقي بالتقسيط على فترة تصل إلى 8 سنوات."}},{"@type":"Question","name":"أين يقع مشروع ⁦Hyde Park Garden Lake⁩؟","acceptedAnswer":{"@type":"Answer","text":"يقع المشروع في أكتوبر."}},{"@type":"Question","name":"ما هي أنواع الوحدات المتاحة؟","acceptedAnswer":{"@type":"Answer","text":"⁦Apartment⁩ (68 – 154 م²، 1 / 2 / 3 غرف)، ⁦Townhouse⁩ (215 م²)، ⁦Twin House⁩ (242 م²)، ⁦Standalone⁩ (242 م²)."}},{"@type":"Question","name":"هل ⁦Explorer Hyde Park⁩ هي الشركة المطورة؟","acceptedAnswer":{"@type":"Answer","text":"لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري."}}]}</script>
 </head>
 <body class="pp-page">
 
@@ -102,199 +103,282 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
 
-  <section class="section" id="units">
-    <h2 class="section-title">الوحدات المتاحة</h2>
-    <div class="grid grid--units">
-        <div class="card">
-          <div class="card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة شقق</span></div></div>
-          <div class="card__body">
-            <h3 class="card__title"><bdi class="en">Apartment</bdi></h3>
-            <div class="card__tags"><span class="tag">68 – 154 م²</span><span class="tag">1 / 2 / 3 غرف</span><span class="tag">متاح 33</span></div>
-            <div class="card__price">
-              <span class="card__price-label">يبدأ من</span>
-              <span class="card__price-value">6,800,000 جنيه</span>
+  <section class="pp-section pp-section--gray" id="units">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">الوحدات المتاحة</h2>
+      <div class="pp-tabs" role="tablist" aria-label="أنواع الوحدات" data-unit-tabs>
+        <button type="button" role="tab" class="pp-tab" id="tab-apartment" aria-controls="panel-apartment" aria-selected="true" tabindex="0" data-unit-type="apartment">شقق</button>
+        <button type="button" role="tab" class="pp-tab" id="tab-townhouse" aria-controls="panel-townhouse" aria-selected="false" tabindex="-1" data-unit-type="townhouse">تاون</button>
+        <button type="button" role="tab" class="pp-tab" id="tab-twin-house" aria-controls="panel-twin-house" aria-selected="false" tabindex="-1" data-unit-type="twin-house">توين</button>
+        <button type="button" role="tab" class="pp-tab" id="tab-standalone" aria-controls="panel-standalone" aria-selected="false" tabindex="-1" data-unit-type="standalone">فيلا</button>
+      </div>
+      <div class="pp-unit" role="tabpanel" id="panel-apartment" aria-labelledby="tab-apartment" tabindex="0">
+        <div class="pp-unit__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة شقق</span></div><span class="pp-unit__avail">متاح <bdi class="en">33</bdi></span></div>
+        <div class="pp-unit__rows">
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">غرفة</h3><span class="pp-unit-row__meta"><bdi class="en">68 – 74</bdi> م² · 3 وحدات</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">6,800,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">680,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بشقة غرفة في ⁦Hyde Park Garden Lake⁩ — تبدأ من 6,800,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="apartment" data-rooms="1"><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
             </div>
-            <div class="card__ctas">
-              <a href="#" class="btn btn-whatsapp btn-sm" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Apartment⁩ في ⁦Hyde Park Garden Lake⁩"><i class="fa-brands fa-whatsapp"></i> تفاصيل أكثر</a>
-              <a href="#" class="btn btn-blue icon-only" data-phone-link><i class="fa-solid fa-phone"></i></a>
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">غرفتين</h3><span class="pp-unit-row__meta"><bdi class="en">104 – 141</bdi> م² · 12 وحدة</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">10,970,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">1,097,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بشقة غرفتين في ⁦Hyde Park Garden Lake⁩ — تبدأ من 10,970,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="apartment" data-rooms="2"><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
             </div>
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">3 غرف</h3><span class="pp-unit-row__meta"><bdi class="en">145 – 154</bdi> م² · 18 وحدة</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">15,810,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">1,581,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بشقة 3 غرف في ⁦Hyde Park Garden Lake⁩ — تبدأ من 15,810,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="apartment" data-rooms="3"><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="pp-unit" role="tabpanel" id="panel-townhouse" aria-labelledby="tab-townhouse" tabindex="0" hidden>
+        <div class="pp-unit__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة تاون هاوس</span></div><span class="pp-unit__avail">متاح <bdi class="en">4</bdi></span></div>
+        <div class="pp-unit__rows">
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">تاون هاوس</h3><span class="pp-unit-row__meta"><bdi class="en">215</bdi> م² · 4 وحدات</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">24,470,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">2,447,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بتاون هاوس في ⁦Hyde Park Garden Lake⁩ — تبدأ من 24,470,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="townhouse" data-rooms=""><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="pp-unit" role="tabpanel" id="panel-twin-house" aria-labelledby="tab-twin-house" tabindex="0" hidden>
+        <div class="pp-unit__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة توين هاوس</span></div><span class="pp-unit__avail">متاح <bdi class="en">3</bdi></span></div>
+        <div class="pp-unit__rows">
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">توين هاوس</h3><span class="pp-unit-row__meta"><bdi class="en">242</bdi> م² · 3 وحدات</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">29,000,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">2,900,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بتوين هاوس في ⁦Hyde Park Garden Lake⁩ — تبدأ من 29,000,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="twin-house" data-rooms=""><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="pp-unit" role="tabpanel" id="panel-standalone" aria-labelledby="tab-standalone" tabindex="0" hidden>
+        <div class="pp-unit__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة فيلا مستقلة</span></div><span class="pp-unit__avail">متاح <bdi class="en">2</bdi></span></div>
+        <div class="pp-unit__rows">
+            <div class="pp-unit-row">
+              <div class="pp-unit-row__head"><h3 class="pp-unit-row__title">فيلا مستقلة</h3><span class="pp-unit-row__meta"><bdi class="en">242</bdi> م² · وحدتين</span></div>
+              <div class="pp-unit-row__body">
+                <div class="pp-unit-row__prices">
+                  <span>يبدأ من <bdi class="en pp-unit-row__price">37,680,000</bdi></span>
+                  <span>مقدم <bdi class="en">10%</bdi>: <bdi class="en">3,768,000</bdi></span>
+                </div>
+                <a href="#" class="pp-wa-btn" data-whatsapp-link data-whatsapp-message="مهتم بفيلا مستقلة في ⁦Hyde Park Garden Lake⁩ — تبدأ من 37,680,000 ج، مقدم 10%. ابعتلي الوحدات المتاحة." data-cta-location="units" data-unit-type="standalone" data-rooms=""><i class="fa-brands fa-whatsapp"></i> ابعتلي المتاح</a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section" id="calc" data-reverse-calc data-down-pct="10" data-months="96" data-project="Hyde Park Garden Lake">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">تقدر تدفع كام في الشهر؟</h2>
+      <p class="pp-lede">اختار القسط المريح ليك، وهنقولك محتاج مقدم قد إيه لكل وحدة.</p>
+      <div class="pp-budgets">
+        <button type="button" class="pp-budget" data-budget="50000" aria-pressed="false">50 ألف</button>
+        <button type="button" class="pp-budget" data-budget="70000" aria-pressed="true">70 ألف</button>
+        <button type="button" class="pp-budget" data-budget="100000" aria-pressed="false">100 ألف</button>
+        <button type="button" class="pp-budget" data-budget="150000" aria-pressed="false">150 ألف</button>
+        <button type="button" class="pp-budget" data-budget="custom" aria-pressed="false">مبلغ تاني</button>
+      </div>
+      <label class="pp-custom" data-calc-custom hidden>اكتب القسط الشهري اللي يناسبك
+        <span class="pp-custom__box"><input type="text" inputmode="numeric" autocomplete="off" placeholder="مثلاً 85000" data-calc-input><span>جنيه / شهر</span></span>
+      </label>
+      <div class="pp-calc-rows">
+        <div class="pp-calc-row" data-price="6800000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">شقة غرفة <span class="pp-calc-row__meta">· <bdi class="en">71</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>مقدم 680,000 (10%) · قسط 63,750</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit hidden>مقدم كبير</span>
+        </div>
+        <div class="pp-calc-row" data-price="10970000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">شقة غرفتين <span class="pp-calc-row__meta">· <bdi class="en">110</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>مقدم 4,250,000 (39%) · قسط 70,000</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit hidden>مقدم كبير</span>
+        </div>
+        <div class="pp-calc-row" data-price="15810000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">شقة 3 غرف <span class="pp-calc-row__meta">· <bdi class="en">154</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>محتاج مقدم 57% من السعر</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit hidden>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit>مقدم كبير</span>
+        </div>
+        <div class="pp-calc-row" data-price="24470000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">تاون هاوس <span class="pp-calc-row__meta">· <bdi class="en">215</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>محتاج مقدم 73% من السعر</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit hidden>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit>مقدم كبير</span>
+        </div>
+        <div class="pp-calc-row" data-price="29000000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">توين هاوس <span class="pp-calc-row__meta">· <bdi class="en">242</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>محتاج مقدم 77% من السعر</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit hidden>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit>مقدم كبير</span>
+        </div>
+        <div class="pp-calc-row" data-price="37680000">
+          <div class="pp-calc-row__text"><span class="pp-calc-row__name">فيلا مستقلة <span class="pp-calc-row__meta">· <bdi class="en">242</bdi> م²</span></span><span class="pp-calc-row__detail" data-calc-detail>محتاج مقدم 82% من السعر</span></div>
+          <span class="pp-fit pp-fit--yes" data-calc-fit hidden>مناسبة</span><span class="pp-fit pp-fit--no" data-calc-nofit>مقدم كبير</span>
+        </div>
+      </div>
+      <a href="#" class="pp-btn pp-btn--green pp-btn--block pp-calc-cta" data-whatsapp-link data-whatsapp-message="عايز وحدة في ⁦Hyde Park Garden Lake⁩ على قد 70,000 جنيه في الشهر. ابعتلي الوحدات المناسبة." data-cta-location="calc" data-calc-cta><i class="fa-brands fa-whatsapp"></i> <span data-calc-cta-text>ابعتلي الوحدات اللي على قد 70,000 جنيه في الشهر</span></a>
+      <p class="pp-note">حساب تقريبي على أقل سعر متاح و96 قسط شهري. الخطة النهائية حسب الوحدة وسياسة المطوّر وقت الحجز.</p>
+    </div>
+  </section>
+
+  <section class="pp-section pp-section--gray" id="location">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">الموقع</h2>
+      <div class="pp-location pp-location--no-img">
+        <div class="pp-location__body">
+        <p class="pp-location__text">يقع هايد بارك جاردن ليك في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">المميزات والخدمات</h2>
+      <ul class="pp-chipset">
+        <li>بحيرة صناعية</li>
+        <li>مساحات خضراء</li>
+        <li>أمن وحراسة</li>
+        <li>مطاعم وكافيهات</li>
+        <li>جيم</li>
+        <li>مدارس قريبة</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-section pp-section--gray">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">ليه تشتري من خلالنا؟</h2>
+      <ul class="pp-trust">
+        <li><i class="fa-solid fa-shield-halved"></i><div><strong>وسيط معتمد لمشاريع هايد بارك</strong><span>بنعرض 7 مشاريع في مكان واحد، فتقارن قبل ما تقرر.</span></div></li>
+        <li><i class="fa-solid fa-tags"></i><div><strong>أسعار من مخزون المطوّر مباشرة</strong><span>كل سعر على الصفحة من آخر تحديث لمخزون الوحدات المتاحة فعلاً.</span></div></li>
+        <li><i class="fa-solid fa-earth-africa"></i><div><strong>بتشتري من برا مصر؟</strong><span>متابعة كاملة أونلاين من الحجز لحد التعاقد بتوكيل.</span></div></li>
+        <li><i class="fa-solid fa-circle-check"></i><div><strong>بدون أي عمولة على المشتري</strong></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-section" id="faq">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">أسئلة قبل ما تقرر</h2>
+      <div class="pp-faq">
+        <details class="pp-faq__item" open>
+          <summary>يعني إيه كور آند شل؟</summary>
+          <p>كور آند شل يعني الوحدة بتتسلّم هيكل خرساني وواجهات من غير أي تشطيب داخلي، والمشتري بيشطّب على ذوقه.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>لو دفعت مقدم أكبر، القسط هيقل؟</summary>
+          <p>أيوه. القسط الشهري بيتحسب على الباقي بعد المقدم، فكل ما المقدم يزيد القسط بيقل. في ⁦Hyde Park Garden Lake⁩ المقدم بيبدأ من 10% والتقسيط لحد 8 سنين، وتقدر تجرّب بنفسك في حاسبة &quot;تقدر تدفع كام في الشهر؟&quot; على الصفحة.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>إيه الفرق بين هايد بارك جاردن ليك وهايد بارك سيجنتشر؟</summary>
+          <p>⁦Hyde Park Garden Lake⁩ بيبدأ من 6,800,000 جنيه وفيه شقق، وتاون هاوس وتوين هاوس وفيلا مستقلة، والمتاح حالياً 42 وحدة. أما ⁦Hyde Park Signature⁩ بيبدأ من 6,590,000 جنيه وفيه شقق، وتاون هاوس وتوين هاوس وفيلا مستقلة، والمتاح حالياً 50 وحدة.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>ينفع أشتري وأنا مقيم برا مصر؟</summary>
+          <p>أيوه. فريقنا بيتابع معاك أونلاين من الحجز لحد التعاقد، والتعاقد ممكن يتم بتوكيل.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>ما هو سعر الوحدات في ⁦Hyde Park Garden Lake⁩؟</summary>
+          <p>تبدأ الأسعار من 6,800,000 جنيه لـ⁦Apartment⁩، وتختلف الأسعار حسب نوع الوحدة والمساحة.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>ما هي خطة السداد المتاحة؟</summary>
+          <p>مقدم يبدأ من 10% من قيمة الوحدة، والباقي بالتقسيط على فترة تصل إلى 8 سنوات.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>أين يقع مشروع ⁦Hyde Park Garden Lake⁩؟</summary>
+          <p>يقع المشروع في أكتوبر.</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>ما هي أنواع الوحدات المتاحة؟</summary>
+          <p>⁦Apartment⁩ (68 – 154 م²، 1 / 2 / 3 غرف)، ⁦Townhouse⁩ (215 م²)، ⁦Twin House⁩ (242 م²)، ⁦Standalone⁩ (242 م²).</p>
+        </details>
+        <details class="pp-faq__item">
+          <summary>هل ⁦Explorer Hyde Park⁩ هي الشركة المطورة؟</summary>
+          <p>لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-section pp-lead-section" id="lead">
+    <div class="pp-wrap pp-lead-wrap">
+      <h2 class="pp-h2 pp-h2--on-dark">نرشّحلك الوحدات المناسبة</h2>
+      <form class="pp-lead" data-lead-form data-multistep data-project-name="Hyde Park Garden Lake" data-success-url="/thank-you">
+        <div class="pp-progress" aria-hidden="true"><span class="is-done"></span><span></span><span></span></div>
+        <p class="pp-lead__step-label" data-step-label>خطوة 1 من 3</p>
+        <div class="pp-step" data-step="1">
+          <fieldset class="pp-q">
+            <legend>بتشتري ليه؟</legend>
+            <div class="pp-options">
+              <label class="pp-option"><input type="radio" name="purpose" value="سكن فوري"><span>سكن فوري</span></label>
+              <label class="pp-option"><input type="radio" name="purpose" value="سكن مستقبلي"><span>سكن مستقبلي</span></label>
+              <label class="pp-option"><input type="radio" name="purpose" value="استثمار"><span>استثمار</span></label>
+              <label class="pp-option"><input type="radio" name="purpose" value="مقيم خارج مصر"><span>مقيم خارج مصر</span></label>
+            </div>
+          </fieldset>
+          <p class="pp-lead__note" data-immediate-note hidden>وحدات ⁦Hyde Park Garden Lake⁩ بتتسلّم كور آند شل، فهنرشحلك كمان وحدات جاهزة أو قريبة من التسليم في مشاريع هايد بارك التانية.</p>
+          <fieldset class="pp-q">
+            <legend>القسط الشهري المريح ليك</legend>
+            <div class="pp-options">
+              <label class="pp-option"><input type="radio" name="budget_range" value="أقل من 70 ألف"><span>أقل من 70 ألف</span></label>
+              <label class="pp-option"><input type="radio" name="budget_range" value="70 – 120 ألف"><span>70 – 120 ألف</span></label>
+              <label class="pp-option"><input type="radio" name="budget_range" value="120 – 250 ألف"><span>120 – 250 ألف</span></label>
+              <label class="pp-option"><input type="radio" name="budget_range" value="أكتر من 250 ألف"><span>أكتر من 250 ألف</span></label>
+            </div>
+          </fieldset>
+          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--green" data-step-next>التالي</button></div>
+        </div>
+        <div class="pp-step" data-step="2">
+          <fieldset class="pp-q">
+            <legend>نوع الوحدة</legend>
+            <div class="pp-options">
+              <label class="pp-option"><input type="radio" name="unit_type" value="شقق"><span>شقق</span></label>
+              <label class="pp-option"><input type="radio" name="unit_type" value="تاون هاوس"><span>تاون هاوس</span></label>
+              <label class="pp-option"><input type="radio" name="unit_type" value="توين هاوس"><span>توين هاوس</span></label>
+              <label class="pp-option"><input type="radio" name="unit_type" value="فيلا مستقلة"><span>فيلا مستقلة</span></label>
+              <label class="pp-option"><input type="radio" name="unit_type" value="لسه مش متأكد"><span>لسه مش متأكد</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="pp-q">
+            <legend>ناوي تشتري إمتى؟</legend>
+            <div class="pp-options">
+              <label class="pp-option"><input type="radio" name="timing" value="خلال شهر"><span>خلال شهر</span></label>
+              <label class="pp-option"><input type="radio" name="timing" value="خلال 3 شهور"><span>خلال 3 شهور</span></label>
+              <label class="pp-option"><input type="radio" name="timing" value="لسه بستكشف"><span>لسه بستكشف</span></label>
+            </div>
+          </fieldset>
+          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--ghost" data-step-back>رجوع</button><button type="button" class="pp-btn pp-btn--green" data-step-next>التالي</button></div>
+        </div>
+        <div class="pp-step" data-step="3">
+          <div class="field">
+            <label for="lead-name">الاسم</label>
+            <input type="text" id="lead-name" name="name" placeholder="اكتب اسمك" autocomplete="name" required>
           </div>
-        </div>
-        <div class="card">
-          <div class="card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة تاون هاوس</span></div></div>
-          <div class="card__body">
-            <h3 class="card__title"><bdi class="en">Townhouse</bdi></h3>
-            <div class="card__tags"><span class="tag">215 م²</span><span class="tag">متاح 4</span></div>
-            <div class="card__price">
-              <span class="card__price-label">يبدأ من</span>
-              <span class="card__price-value">24,470,000 جنيه</span>
-            </div>
-            <div class="card__ctas">
-              <a href="#" class="btn btn-whatsapp btn-sm" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Townhouse⁩ في ⁦Hyde Park Garden Lake⁩"><i class="fa-brands fa-whatsapp"></i> تفاصيل أكثر</a>
-              <a href="#" class="btn btn-blue icon-only" data-phone-link><i class="fa-solid fa-phone"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة توين هاوس</span></div></div>
-          <div class="card__body">
-            <h3 class="card__title"><bdi class="en">Twin House</bdi></h3>
-            <div class="card__tags"><span class="tag">242 م²</span><span class="tag">متاح 3</span></div>
-            <div class="card__price">
-              <span class="card__price-label">يبدأ من</span>
-              <span class="card__price-value">29,000,000 جنيه</span>
-            </div>
-            <div class="card__ctas">
-              <a href="#" class="btn btn-whatsapp btn-sm" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Twin House⁩ في ⁦Hyde Park Garden Lake⁩"><i class="fa-brands fa-whatsapp"></i> تفاصيل أكثر</a>
-              <a href="#" class="btn btn-blue icon-only" data-phone-link><i class="fa-solid fa-phone"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>صورة فيلا مستقلة</span></div></div>
-          <div class="card__body">
-            <h3 class="card__title"><bdi class="en">Standalone</bdi></h3>
-            <div class="card__tags"><span class="tag">242 م²</span><span class="tag">متاح 2</span></div>
-            <div class="card__price">
-              <span class="card__price-label">يبدأ من</span>
-              <span class="card__price-value">37,680,000 جنيه</span>
-            </div>
-            <div class="card__ctas">
-              <a href="#" class="btn btn-whatsapp btn-sm" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ⁦Standalone⁩ في ⁦Hyde Park Garden Lake⁩"><i class="fa-brands fa-whatsapp"></i> تفاصيل أكثر</a>
-              <a href="#" class="btn btn-blue icon-only" data-phone-link><i class="fa-solid fa-phone"></i></a>
-            </div>
-          </div>
-        </div>
-    </div>
-  </section>
-
-  <section class="section section--gray" id="calc" data-calculator>
-    <h2 class="section-title" style="margin-bottom:8px">احسب قسطك الشهري</h2>
-    <p class="section-sub">قدّر القسط الشهري بناءً على المقدم ومدة السداد</p>
-    <div class="calc-card">
-      <div class="field">
-        <label>نوع الوحدة</label>
-        <select data-calc-price>
-            <option value="apartment" data-price="6800000" selected>⁦Apartment⁩ — يبدأ من 6,800,000 جنيه</option>
-            <option value="townhouse" data-price="24470000">⁦Townhouse⁩ — يبدأ من 24,470,000 جنيه</option>
-            <option value="twin-house" data-price="29000000">⁦Twin House⁩ — يبدأ من 29,000,000 جنيه</option>
-            <option value="standalone" data-price="37680000">⁦Standalone⁩ — يبدأ من 37,680,000 جنيه</option>
-        </select>
-      </div>
-      <div class="field">
-        <div class="field-row"><span>المقدم</span><span class="value" data-calc-down-label>10%</span></div>
-        <input type="range" min="5" max="50" step="5" value="10" data-calc-down>
-      </div>
-      <div class="field">
-        <div class="field-row"><span>مدة التقسيط</span><span class="value" data-calc-years-label>8 سنوات</span></div>
-        <input type="range" min="1" max="10" step="1" value="8" data-calc-years>
-      </div>
-      <div class="calc-result">
-        <span class="calc-result__label">القسط الشهري التقريبي</span>
-        <span class="calc-result__value"><span data-calc-monthly>0</span> جنيه</span>
-        <span class="calc-result__note">مقدم <span data-calc-down-amount>0</span> جنيه</span>
-      </div>
-      <a href="#" class="btn btn-sky btn-block" data-whatsapp-link data-whatsapp-message="اطلب خطة الأسعار كاملة لمشروع ⁦Hyde Park Garden Lake⁩"><i class="fa-brands fa-whatsapp"></i> اطلب خطة الأسعار كاملة</a>
-    </div>
-  </section>
-
-  <section class="section" id="location">
-    <h2 class="section-title">الموقع</h2>
-    <div class="location-grid">
-      <div class="location-map"><div class="img-slot"><i class="fa-solid fa-map-location-dot"></i><span>خريطة / صورة الموقع</span></div></div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <h3 style="font-size:22px">أكتوبر</h3>
-        <p style="margin:0;font-size:17px;line-height:1.7;opacity:.85">يقع هايد بارك جاردن ليك في مدينة 6 أكتوبر. للاستفسار عن أقرب المعالم والخدمات المحيطة بالمشروع، تواصل معنا مباشرة.</p>
-        <a href="#" class="btn btn-blue" style="width:fit-content" data-whatsapp-link data-whatsapp-message="اسأل عن موقع ⁦Hyde Park Garden Lake⁩">اسأل عن الموقع</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--gray">
-    <h2 class="section-title">المميزات والخدمات</h2>
-    <div class="grid grid--amenities">
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">بحيرة صناعية</span>
-        </div>
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">مساحات خضراء</span>
-        </div>
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">أمن وحراسة</span>
-        </div>
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">مطاعم وكافيهات</span>
-        </div>
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">جيم</span>
-        </div>
-        <div class="amenity">
-          <div class="amenity__icon"><i class="fa-solid fa-check"></i></div>
-          <span class="amenity__label">مدارس قريبة</span>
-        </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq">
-    <h2 class="section-title">الأسئلة الشائعة</h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-item__q">
-          <span>ما هو سعر الوحدات في ⁦Hyde Park Garden Lake⁩؟</span>
-          <span class="faq-item__sign">+</span>
-        </button>
-        <div class="faq-item__a">تبدأ الأسعار من 6,800,000 جنيه لـ⁦Apartment⁩، وتختلف الأسعار حسب نوع الوحدة والمساحة.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-item__q">
-          <span>ما هي خطة السداد المتاحة؟</span>
-          <span class="faq-item__sign">+</span>
-        </button>
-        <div class="faq-item__a">مقدم يبدأ من 10% من قيمة الوحدة، والباقي بالتقسيط على فترة تصل إلى 8 سنوات.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-item__q">
-          <span>أين يقع مشروع ⁦Hyde Park Garden Lake⁩؟</span>
-          <span class="faq-item__sign">+</span>
-        </button>
-        <div class="faq-item__a">يقع المشروع في أكتوبر.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-item__q">
-          <span>ما هي أنواع الوحدات المتاحة؟</span>
-          <span class="faq-item__sign">+</span>
-        </button>
-        <div class="faq-item__a">⁦Apartment⁩ (68 – 154 م²، 1 / 2 / 3 غرف)، ⁦Townhouse⁩ (215 م²)، ⁦Twin House⁩ (242 م²)، ⁦Standalone⁩ (242 م²).</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-item__q">
-          <span>هل ⁦Explorer Hyde Park⁩ هي الشركة المطورة؟</span>
-          <span class="faq-item__sign">+</span>
-        </button>
-        <div class="faq-item__a">لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--navy">
-    <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px">
-      <h2 class="section-title on-dark">اطلب اتصال بخصوص <bdi class="en">Hyde Park Garden Lake</bdi></h2>
-      <p style="margin:0;text-align:center;color:#D8D8D8;font-size:16px">اترك بياناتك وسيتواصل معك فريقنا في أقرب وقت</p>
-      <form class="form-card" data-lead-form data-project-name="Hyde Park Garden Lake" data-success-url="/thank-you">
-        <div class="field field-icon">
-          <label>الاسم</label>
-          <i class="fa-solid fa-user"></i>
-          <input type="text" name="name" placeholder="اكتب اسمك" required>
-        </div>
-        <div class="field">
-          <label>رقم الهاتف</label>
-          <div class="form-row">
-            <div class="phone-field" data-phone-field data-default="EG">
+          <div class="field">
+            <label for="lead-phone">رقم الموبايل</label>
+            <div class="form-row">
+              <div class="phone-field" data-phone-field data-default="EG">
             <button type="button" class="phone-field__toggle" aria-haspopup="listbox" aria-expanded="false">
               <span class="flag"></span><span class="dial"></span><i class="fa-solid fa-chevron-down"></i>
             </button>
@@ -304,107 +388,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <div class="phone-field__list" role="listbox"></div>
             </div>
           </div>
-            <input type="tel" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" required>
+              <input type="tel" id="lead-phone" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" autocomplete="tel-national" required>
+            </div>
           </div>
+          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--ghost" data-step-back>رجوع</button><button type="submit" class="pp-btn pp-btn--green">ابعت الطلب</button></div>
         </div>
-        <div class="field field-icon">
-          <label>البريد الإلكتروني <span class="optional-tag">(اختياري)</span></label>
-          <i class="fa-solid fa-envelope"></i>
-          <input type="email" name="email" placeholder="example@email.com">
-        </div>
-        <div class="field">
-          <label>رسالتك <span class="optional-tag">(اختياري)</span></label>
-          <textarea name="message" placeholder="اكتب استفسارك هنا" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-yellow">إرسال الطلب</button>
+        <p class="pp-lead__error" data-step-error hidden>اختار إجابة لكل سؤال عشان نكمل.</p>
       </form>
       <p class="form-consent">بإرسال النموذج، إنك موافق على <a href="/privacy">سياسة الخصوصية</a>.</p>
-      <p class="form-note">Explorer Hyde Park منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</p>
     </div>
   </section>
 
-  <section class="section section--gray" style="padding-inline:0">
-    <h2 class="section-title">مشاريع تانية ممكن تعجبك</h2>
-    <div class="related-carousel" data-auto-carousel>
-      <div class="related-carousel__track">
-    <a href="/projects/hyde-park-central" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">القاهرة الجديدة</span>
-        <img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-central/hyde-park-central-hero.jpg" alt="Hyde Park Central" loading="lazy">
+  <section class="pp-section" id="other-projects">
+    <div class="pp-wrap">
+      <h2 class="pp-h2">مقارنة بمشاريع هايد بارك في أكتوبر</h2>
+      <div class="pp-compare">
+        <table>
+          <thead><tr><th scope="col"><span class="visually-hidden">البند</span></th><th scope="col" class="is-current">جاردن ليك</th><th scope="col"><a href="/projects/hyde-park-tawny">تاوني</a></th><th scope="col"><a href="/projects/hyde-park-signature">سيجنتشر</a></th></tr></thead>
+          <tbody>
+            <tr><th scope="row">يبدأ من</th><td class="is-current"><bdi class="en">6.8M</bdi></td><td><bdi class="en">15.3M</bdi></td><td><bdi class="en">6.59M</bdi></td></tr>
+            <tr><th scope="row">الأنواع</th><td class="is-current">شقق · تاون · توين · فيلا</td><td>تاون · توين · فيلا</td><td>شقق · تاون · توين · فيلا</td></tr>
+            <tr><th scope="row">المتاح</th><td class="is-current"><bdi class="en">42</bdi></td><td>—</td><td><bdi class="en">50</bdi></td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park Central</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">6,430,000 جنيه</span>
-        </div>
-      </div>
-    </a>
-    <a href="/projects/hyde-park-new-cairo" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">القاهرة الجديدة</span>
-        <img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-new-cairo/Hyde-park-new-cairo-hero.jpg" alt="Hyde Park New Cairo" loading="lazy">
-      </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park New Cairo</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">7,220,000 جنيه</span>
-        </div>
-      </div>
-    </a>
-    <a href="/projects/hyde-park-terraces" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">القاهرة الجديدة</span>
-        <img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-terraces/hyde-park-terraces-hero.jpg" alt="Hyde Park Terraces" loading="lazy">
-      </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park Terraces</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">23,400,000 جنيه</span>
-        </div>
-      </div>
-    </a>
-    <a href="/projects/hyde-park-tawny" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">أكتوبر</span>
-        <div class="img-slot" style="position:absolute;inset:0"><i class="fa-solid fa-image"></i><span>صورة المشروع (خارجية / رندر)</span></div>
-      </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park Tawny</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">15,300,000 جنيه</span>
-        </div>
-      </div>
-    </a>
-    <a href="/projects/hyde-park-signature" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">أكتوبر</span>
-        <img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-signature/hyde-park-signature-hero.jpg" alt="Hyde Park Signature" loading="lazy">
-      </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park Signature</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">6,590,000 جنيه</span>
-        </div>
-      </div>
-    </a>
-    <a href="/projects/hyde-park-sea-shore" class="card project-card related-carousel__card" style="text-decoration:none;color:inherit">
-      <div class="card__media project-card__media">
-        <span class="badge-area">الساحل الشمالي</span>
-        <img class="real-img" style="position:absolute;inset:0" src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-hero.jpg" alt="Hyde Park Sea Shore" loading="lazy">
-      </div>
-      <div class="card__body project-card__body">
-        <span class="project-card__name"><bdi class="en">Hyde Park Sea Shore</bdi></span>
-        <div class="card__price">
-          <span class="card__price-label">يبدأ من</span>
-          <span class="card__price-value">8,410,000 جنيه</span>
-        </div>
-      </div>
-    </a>
+      <h2 class="pp-h2 pp-h2--spaced">مشاريع تانية ممكن تعجبك</h2>
+      <div class="pp-projects">
+        <a class="pp-project-card" href="/projects/hyde-park-central">
+          <div class="pp-project-card__media"><img src="../assets/img/projects/hyde-park-central/hyde-park-central-hero.jpg" alt="Hyde Park Central" loading="lazy" decoding="async"></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">القاهرة الجديدة</span><bdi class="en pp-project-card__name">Hyde Park Central</bdi><span>يبدأ من <bdi class="en pp-project-card__price">6,430,000</bdi> ج</span></div>
+        </a>
+        <a class="pp-project-card" href="/projects/hyde-park-new-cairo">
+          <div class="pp-project-card__media"><img src="../assets/img/projects/hyde-park-new-cairo/Hyde-park-new-cairo-hero.jpg" alt="Hyde Park New Cairo" loading="lazy" decoding="async"></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">القاهرة الجديدة</span><bdi class="en pp-project-card__name">Hyde Park New Cairo</bdi><span>يبدأ من <bdi class="en pp-project-card__price">7,220,000</bdi> ج</span></div>
+        </a>
+        <a class="pp-project-card" href="/projects/hyde-park-terraces">
+          <div class="pp-project-card__media"><img src="../assets/img/projects/hyde-park-terraces/hyde-park-terraces-hero.jpg" alt="Hyde Park Terraces" loading="lazy" decoding="async"></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">القاهرة الجديدة</span><bdi class="en pp-project-card__name">Hyde Park Terraces</bdi><span>يبدأ من <bdi class="en pp-project-card__price">23,400,000</bdi> ج</span></div>
+        </a>
+        <a class="pp-project-card" href="/projects/hyde-park-tawny">
+          <div class="pp-project-card__media"><div class="img-slot"><i class="fa-solid fa-image"></i><span>Hyde Park Tawny</span></div></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">أكتوبر</span><bdi class="en pp-project-card__name">Hyde Park Tawny</bdi><span>يبدأ من <bdi class="en pp-project-card__price">15,300,000</bdi> ج</span></div>
+        </a>
+        <a class="pp-project-card" href="/projects/hyde-park-signature">
+          <div class="pp-project-card__media"><img src="../assets/img/projects/hyde-park-signature/hyde-park-signature-hero.jpg" alt="Hyde Park Signature" loading="lazy" decoding="async"></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">أكتوبر</span><bdi class="en pp-project-card__name">Hyde Park Signature</bdi><span>يبدأ من <bdi class="en pp-project-card__price">6,590,000</bdi> ج</span></div>
+        </a>
+        <a class="pp-project-card" href="/projects/hyde-park-sea-shore">
+          <div class="pp-project-card__media"><img src="../assets/img/projects/hyde-park-sea-shore/hyde-park-sea-shore-hero.jpg" alt="Hyde Park Sea Shore" loading="lazy" decoding="async"></div>
+          <div class="pp-project-card__body"><span class="pp-project-card__area">الساحل الشمالي</span><bdi class="en pp-project-card__name">Hyde Park Sea Shore</bdi><span>يبدأ من <bdi class="en pp-project-card__price">8,410,000</bdi> ج</span></div>
+        </a>
       </div>
     </div>
   </section>
