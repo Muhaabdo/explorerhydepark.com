@@ -1154,7 +1154,7 @@ ogTagsMarkup({ title: title, description: description, url: canonical, image: og
 '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
 '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\n' +
 '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">\n' +
-'<link rel="stylesheet" href="../assets/css/style.css">\n' +
+'<link rel="stylesheet" href="' + assetUrl('../', 'assets/css/style.css') + '">\n' +
 faqJsonLd(faqs) + '\n' +
 '</head>\n' +
 '<body class="pp-page">\n\n' +
@@ -1184,9 +1184,9 @@ leadSectionMarkup(p) +
 compareSectionMarkup(p, allMerged) + '\n' +
 footer() + '\n\n' +
 stickyBarMarkup(p) + '\n' +
-'<script src="../assets/js/country-codes.js"></script>\n' +
-'<script src="../assets/js/phone-field.js"></script>\n' +
-'<script src="../assets/js/main.js"></script>\n' +
+'<script src="' + assetUrl('../', 'assets/js/country-codes.js') + '"></script>\n' +
+'<script src="' + assetUrl('../', 'assets/js/phone-field.js') + '"></script>\n' +
+'<script src="' + assetUrl('../', 'assets/js/main.js') + '"></script>\n' +
 '</body>\n' +
 '</html>\n';
 }
@@ -1256,6 +1256,33 @@ function imageChecklist(merged) {
     lines.push('');
   });
   return lines.join('\n');
+}
+
+/* ---------------- Cache busting ----------------
+ * The host (Hostinger CDN) serves CSS/JS with max-age=7 days, so returning
+ * visitors would keep an old style.css/main.js next to new HTML. Every
+ * reference gets ?v=<content hash>, which changes only when the file does. */
+var assetHashCache = {};
+function assetVersion(rel) {
+  if (!(rel in assetHashCache)) {
+    var buf = fs.readFileSync(path.join(ROOT, rel));
+    assetHashCache[rel] = require('crypto').createHash('sha1').update(buf).digest('hex').slice(0, 10);
+  }
+  return assetHashCache[rel];
+}
+
+/** "assets/css/style.css" → "assets/css/style.css?v=1a2b3c4d5e" (prefix kept as given). */
+function assetUrl(prefix, rel) {
+  return prefix + rel + '?v=' + assetVersion(rel);
+}
+
+/** Re-versions every local CSS/JS reference in a hand-written page. */
+function versionStaticAssets(relPath) {
+  var html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+  var updated = html.replace(/(["'])((?:\.\.\/)?)(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?:\?v=\w+)?\1/g, function (m, q, prefix, rel) {
+    return q + assetUrl(prefix, rel) + q;
+  });
+  writeIfChanged(relPath, updated);
 }
 
 // Files whose content actually changed during this build (relative paths).
@@ -1391,6 +1418,7 @@ console.log('wrote assets/img/projects/README.md (image checklist)');
 injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('contact.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
+['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(versionStaticAssets);
 // Last: lastmod depends on which pages changed above.
 writeSitemap(merged);
 writeRobotsTxt();

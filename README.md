@@ -38,6 +38,10 @@ node tools/dev-server.js
 The build only rewrites files whose content changed, and `sitemap.xml`
 `<lastmod>` moves only for those pages.
 
+**Always run the build after editing `style.css` or any JS file**, even if no
+data changed: the host caches CSS/JS for 7 days, and the build stamps every
+page's CSS/JS links with `?v=<content hash>` so visitors get the new files.
+
 ## Still to fill in
 
 - `assets/js/main.js`: real `WHATSAPP_NUMBER` and `PHONE_NUMBER` (placeholders now).
