@@ -1,0 +1,378 @@
+<!doctype html>
+<!-- Desktop (1440px) design reference for docs/project-page-v5-spec.md. Same content and order as project-page-v5.dc.html (mobile); sections pair into two columns. Mockup only: /_blob/ image URLs map to repo images (spec §9); [bracketed] text is placeholder data that must never ship. -->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Hyde Park Central — V5 ديسكتوب</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;family=Manrope:wght@600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F5F7FA}
+a{color:#0D4088}a:hover{color:#040E33}
+.en{font-family:Manrope,system-ui,sans-serif}
+</style>
+</helmet>
+<div dir="rtl" style="width: 1440px; height: 5300px; box-sizing: border-box; display: flex; flex-direction: column; font-family: Cairo, system-ui, sans-serif; color: #040E33; background: #FFFFFF; overflow: hidden; position: relative">
+
+<!-- ===== SITE NAV ===== -->
+<header style="flex-shrink: 0; height: 72px; box-sizing: border-box; padding: 0 120px; display: flex; align-items: center; justify-content: space-between; background: #040E33; color: #FFFFFF">
+<span class="en" style="font-weight: 800; font-size: 20px">Explorer Hyde Park</span>
+<nav aria-label="القائمة الرئيسية" style="display: flex; gap: 32px; font-size: 15px; font-weight: 600">
+<a href="#" style="color: #FFFFFF; text-decoration: none">الرئيسية</a>
+<a href="#" style="color: #FFFFFF; text-decoration: none">المشاريع</a>
+<a href="#" style="color: #FFFFFF; text-decoration: none">من نحن</a>
+<a href="#" style="color: #FFFFFF; text-decoration: none">تواصل معنا</a>
+</nav>
+<a href="#" data-phone-link="" style="display: flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 10px; color: #FFFFFF; font-weight: 700; font-size: 14px; text-decoration: none">اتصل بنا</a>
+</header>
+
+<!-- ===== 1. HERO ===== -->
+<section style="flex-shrink: 0; position: relative; height: 600px">
+<img src="/_blob/17c89cee6564b6daf446ef08ccb91490" alt="Hyde Park Central" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<div style="position: absolute; inset: 0; background: linear-gradient(270deg, rgba(4,14,51,0.88) 0%, rgba(4,14,51,0.55) 38%, rgba(4,14,51,0) 70%)"></div>
+<div style="position: relative; height: 100%; box-sizing: border-box; padding: 0 120px; display: flex; align-items: center">
+<div style="width: 500px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
+<span style="align-self: flex-start; font-size: 13px; font-weight: 700; background: #00D7A0; color: #040E33; padding: 4px 14px; border-radius: 99px">110 وحدة متاحة</span>
+<h1 class="en" style="margin: 0; font-size: 52px; line-height: 1.1; font-weight: 800">Hyde Park Central</h1>
+<span style="font-size: 17px; font-weight: 600">القاهرة الجديدة · شقق · تاون · كواد · فيلا</span>
+</div>
+<div style="background: #FFFFFF; border-radius: 20px; box-shadow: 0 16px 40px rgba(4,14,51,0.25); padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-size: 15px; color: #4A5270">يبدأ من</span>
+<span class="en" style="font-size: 36px; font-weight: 800">6,430,000</span>
+<span style="font-size: 15px; color: #4A5270">جنيه</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="background: #F5F7FA; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; text-align: center"><span style="font-size: 12px; color: #4A5270">مقدم من</span><span class="en" style="font-size: 18px; font-weight: 800">5%</span></div>
+<div style="background: #F5F7FA; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; text-align: center"><span style="font-size: 12px; color: #4A5270">تقسيط حتى</span><span style="font-size: 18px; font-weight: 800">8 سنين</span></div>
+<a href="#calc" style="background: #E6EEF9; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; text-align: center; text-decoration: none; color: #0D4088"><span style="font-size: 12px">قسطك كام؟</span><span style="font-size: 17px; font-weight: 800">احسبه ←</span></a>
+</div>
+<div style="display: grid; grid-template-columns: 3fr 2fr; gap: 10px">
+<a href="#units" style="display: flex; align-items: center; justify-content: center; min-height: 52px; background: #00D7A0; color: #040E33; font-weight: 800; font-size: 16px; border-radius: 12px; text-decoration: none">شوف الوحدات اللي في ميزانيتك</a>
+<a href="#" data-whatsapp-link="" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; border: 1.5px solid #040E33; color: #040E33; font-weight: 700; font-size: 15px; border-radius: 12px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.6L4 20z"></path></svg>واتساب</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== 2. IN-PAGE NAV ===== -->
+<nav aria-label="أقسام الصفحة" style="flex-shrink: 0; background: #FFFFFF; border-bottom: 1px solid #E6E8EE; box-shadow: 0 4px 12px rgba(4,14,51,0.05); padding: 12px 120px; display: flex; gap: 10px">
+<a href="#units" style="font-size: 14px; font-weight: 700; padding: 8px 18px; border-radius: 99px; background: #040E33; color: #FFFFFF; text-decoration: none">الوحدات</a>
+<a href="#calc" style="font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 99px; background: #F5F7FA; color: #040E33; text-decoration: none">احسب قسطك</a>
+<a href="#gallery" style="font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 99px; background: #F5F7FA; color: #040E33; text-decoration: none">الصور</a>
+<a href="#location" style="font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 99px; background: #F5F7FA; color: #040E33; text-decoration: none">الموقع</a>
+<a href="#faq" style="font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 99px; background: #F5F7FA; color: #040E33; text-decoration: none">الأسئلة</a>
+</nav>
+
+<!-- ===== 3. OVERVIEW: summary | facts ===== -->
+<section style="flex-shrink: 0; padding: 64px 120px; display: grid; grid-template-columns: 5fr 6fr; gap: 56px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">هايد بارك سنترال في سطور</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.9; color: #1D2545">هايد بارك سنترال (Hyde Park Central) مشروع سكني من هايد بارك للتطوير العقاري في القاهرة الجديدة. المتاح حالياً <strong>110 وحدة</strong>: شقق من 63 لـ 156 م²، وتاون هاوس وكواد وفيلا مستقلة. الأسعار بتبدأ من <strong>6,430,000 جنيه</strong> بمقدم من 5% وتقسيط لحد 8 سنين، وكل الوحدات بتتسلّم كور آند شل.</p>
+<span style="font-size: 13px; color: #4A5270">محدّث: أغسطس 2026 · من مخزون المطوّر · إعداد فريق Explorer Hyde Park</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">الموقع</span><span style="font-size: 16px; font-weight: 700">القاهرة الجديدة</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">المساحات</span><span style="font-size: 16px; font-weight: 700"><span class="en">63 – 265</span> م²</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">التشطيب</span><span style="font-size: 16px; font-weight: 700">كور آند شل</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">الاستلام</span><span style="font-size: 16px; font-weight: 700">[سنة الاستلام]</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">سعر المتر (شقق) من</span><span style="font-size: 16px; font-weight: 700"><span class="en">78,650</span> ج/م²</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #4A5270">المطوّر</span><span style="font-size: 16px; font-weight: 700">هايد بارك للتطوير</span></div>
+</div>
+</section>
+
+<!-- ===== 4. GALLERY ===== -->
+<section id="gallery" style="flex-shrink: 0; padding: 56px 120px; background: #F5F7FA; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">صور المشروع</h2>
+<div style="display: grid; grid-template-columns: 4fr 1fr; gap: 14px">
+<div style="position: relative; height: 480px; border-radius: 20px; overflow: hidden; background: #D8D8D8">
+<img src="{{mainImg}}" alt="صورة من مشروع Hyde Park Central" style="width: 100%; height: 100%; object-fit: cover">
+<span style="position: absolute; bottom: 14px; left: 14px; font-size: 13px; font-weight: 700; color: #FFFFFF; background: rgba(4,14,51,0.65); padding: 4px 12px; border-radius: 99px"><span class="en">{{galleryPos}}</span></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 9px; align-content: start">
+<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{t.pick}}" aria-label="{{t.label}}" style="{{t.ring}}"><img src="{{t.src}}" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- ===== 5. UNITS: image | rows ===== -->
+<section id="units" style="flex-shrink: 0; padding: 64px 120px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">الوحدات المتاحة</h2>
+<div role="tablist" style="display: flex; gap: 6px; background: #F5F7FA; padding: 5px; border-radius: 12px">
+<sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4">
+<button type="button" role="tab" onClick="{{tb.pick}}" style="{{tb.style}}">{{tb.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 5fr 7fr; gap: 28px; align-items: stretch">
+<div style="position: relative; min-height: 380px; border-radius: 20px; overflow: hidden">
+<img src="{{tab.img}}" alt="{{tab.name}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+<span style="position: absolute; top: 14px; right: 14px; font-size: 13px; font-weight: 700; background: #FFFFFF; color: #0D4088; padding: 4px 12px; border-radius: 99px">{{tab.count}}</span>
+</div>
+<div style="display: flex; flex-direction: column; border: 1px solid #E6E8EE; border-radius: 20px; padding: 8px 24px">
+<sc-for list="{{tab.rows}}" as="r" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 2fr 2fr auto; gap: 16px; align-items: center; padding: 20px 0; border-bottom: 1px solid #E6E8EE">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 19px; font-weight: 800">{{r.title}}</span><span style="font-size: 14px; color: #4A5270">{{r.meta}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; color: #4A5270">يبدأ من <span class="en" style="font-size: 19px; font-weight: 800; color: #040E33">{{r.price}}</span></span><span style="font-size: 13px; color: #4A5270">مقدم 5%: <span class="en">{{r.dp}}</span></span></div>
+<a href="#" data-whatsapp-link="" style="display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; background: #00D7A0; color: #040E33; font-weight: 800; font-size: 14px; border-radius: 12px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.6L4 20z"></path></svg>ابعتلي المتاح</a>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- ===== 6. CALCULATOR: inputs | results ===== -->
+<section id="calc" style="flex-shrink: 0; padding: 64px 120px; background: #F5F7FA; display: grid; grid-template-columns: 5fr 7fr; gap: 40px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">تقدر تدفع كام في الشهر؟</h2>
+<span style="font-size: 16px; color: #4A5270; line-height: 1.7">اختار القسط المريح ليك، وهنقولك محتاج مقدم قد إيه لكل وحدة.</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{budgets}}" as="b" hint-placeholder-count="5">
+<button type="button" onClick="{{b.pick}}" style="{{b.style}}">{{b.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{customOn}}" hint-placeholder-val="{{false}}">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700">اكتب القسط الشهري اللي يناسبك
+<div style="display: flex; align-items: center; border: 1.5px solid #040E33; border-radius: 10px; padding: 0 14px; min-height: 52px; gap: 8px; background: #FFFFFF">
+<input type="text" inputmode="numeric" value="{{customVal}}" onInput="{{onCustom}}" placeholder="مثلاً 85000" style="flex-grow: 1; border: none; outline: none; font-family: Manrope, system-ui, sans-serif; font-size: 20px; font-weight: 700; color: #040E33; background: transparent; min-width: 0">
+<span style="font-size: 14px; color: #4A5270">جنيه / شهر</span>
+</div>
+</label>
+</sc-if>
+<span style="font-size: 13px; color: #4A5270; line-height: 1.7">حساب تقريبي على أقل سعر متاح و96 قسط شهري. الخطة النهائية حسب الوحدة وسياسة المطوّر وقت الحجز.</span>
+</div>
+<div style="background: #FFFFFF; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{results}}" as="x" hint-placeholder-count="4">
+<div style="border: 1px solid #E6E8EE; border-radius: 14px; padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 16px; font-weight: 800">{{x.name}} <span style="font-size: 13px; font-weight: 500; color: #4A5270">· {{x.meta}}</span></span>
+<span style="font-size: 14px; color: #4A5270">{{x.detail}}</span>
+</div>
+<sc-if value="{{x.fits}}" hint-placeholder-val="{{true}}"><span style="flex-shrink: 0; font-size: 13px; font-weight: 700; color: #04684F; background: #D9F8EE; padding: 5px 12px; border-radius: 99px">مناسبة</span></sc-if>
+<sc-if value="{{x.noFit}}" hint-placeholder-val="{{false}}"><span style="flex-shrink: 0; font-size: 13px; font-weight: 700; color: #4A5270; background: #EEF0F4; padding: 5px 12px; border-radius: 99px">مقدم كبير</span></sc-if>
+</div>
+</sc-for>
+<a href="#" data-whatsapp-link="" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; background: #00D7A0; color: #040E33; font-weight: 800; font-size: 16px; border-radius: 12px; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.6L4 20z"></path></svg>{{ctaText}}</a>
+</div>
+</section>
+
+<!-- ===== 7. LOCATION: map | distances ===== -->
+<section id="location" style="flex-shrink: 0; padding: 64px 120px; display: grid; grid-template-columns: 7fr 5fr; gap: 40px; align-items: center">
+<img src="/_blob/1be8c79a05e1f937b5dc8483cf207456" alt="موقع Hyde Park Central" style="width: 100%; height: 320px; object-fit: cover; border-radius: 20px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">الموقع بالدقايق</h2>
+<div style="display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #E6E8EE; font-size: 16px"><span>التسعين الشمالي</span><span style="font-weight: 700">[X] دقيقة</span></div>
+<div style="display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #E6E8EE; font-size: 16px"><span>الجامعة الأمريكية</span><span style="font-weight: 700">[X] دقيقة</span></div>
+<div style="display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #E6E8EE; font-size: 16px"><span>محور محمد بن زايد</span><span style="font-weight: 700">[X] دقيقة</span></div>
+<div style="display: flex; justify-content: space-between; padding: 14px 0; font-size: 16px"><span>مطار القاهرة</span><span style="font-weight: 700">[X] دقيقة</span></div>
+</div>
+</div>
+</section>
+
+<!-- ===== 8+9. AMENITIES | TRUST ===== -->
+<section style="flex-shrink: 0; padding: 64px 120px; background: #F5F7FA; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">المميزات والخدمات</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">حمامات سباحة</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">مساحات خضراء</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">أمن وحراسة</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">مطاعم وكافيهات</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">جيم</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">نادي اجتماعي</span>
+<span style="font-size: 15px; background: #FFFFFF; padding: 8px 16px; border-radius: 99px">مدارس قريبة</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">ليه تشتري من خلالنا؟</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+<div style="background: #FFFFFF; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700; font-size: 16px">وسيط معتمد لمشاريع هايد بارك</span><span style="font-size: 14px; color: #4A5270; line-height: 1.6">بنعرض 7 مشاريع في مكان واحد، فتقارن قبل ما تقرر.</span></div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700; font-size: 16px">أسعار من مخزون المطوّر</span><span style="font-size: 14px; color: #4A5270; line-height: 1.6">كل سعر من آخر تحديث للوحدات المتاحة فعلاً.</span></div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700; font-size: 16px">بتشتري من برا مصر؟</span><span style="font-size: 14px; color: #4A5270; line-height: 1.6">متابعة كاملة أونلاين من الحجز لحد التعاقد.</span></div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-weight: 700; font-size: 16px">بدون أي عمولة على المشتري</span><span style="font-size: 14px; color: #4A5270; line-height: 1.6">نفس سعر المطوّر.</span></div>
+</div>
+</div>
+</section>
+
+<!-- ===== 10+11. FAQ | FORM ===== -->
+<section style="flex-shrink: 0; padding: 64px 120px; display: grid; grid-template-columns: 7fr 5fr; gap: 40px; align-items: start">
+<div id="faq" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0 0 6px; font-size: 28px; font-weight: 800; color: #0D4088">أسئلة قبل ما تقرر</h2>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 700; font-size: 16px">يعني إيه كور آند شل؟ والتشطيب بيتكلف كام؟</span><span style="font-weight: 800; color: #0D4088">−</span></div><span style="font-size: 15px; color: #4A5270; line-height: 1.8">كور آند شل يعني الوحدة بتتسلّم هيكل خرساني وواجهات من غير أي تشطيب داخلي، والمشتري بيشطّب على ذوقه.</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 18px; display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 700; font-size: 16px">إيه الفرق بين هايد بارك سنترال وهايد بارك نيو كايرو؟</span><span style="font-weight: 800; color: #0D4088">+</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 18px; display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 700; font-size: 16px">لو دفعت مقدم أكبر، القسط هيقل؟</span><span style="font-weight: 800; color: #0D4088">+</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 18px; display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 700; font-size: 16px">ينفع أشتري وأنا مقيم برا مصر؟</span><span style="font-weight: 800; color: #0D4088">+</span></div>
+<div style="background: #F5F7FA; border-radius: 14px; padding: 18px; display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 700; font-size: 16px">هل Explorer Hyde Park هي المطوّر؟</span><span style="font-weight: 800; color: #0D4088">+</span></div>
+</div>
+<div id="lead" style="background: #040E33; color: #FFFFFF; border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 24px; font-weight: 800">نرشّحلك الوحدات المناسبة</h2>
+<div style="display: flex; gap: 6px"><div style="flex-grow: 1; height: 5px; border-radius: 99px; background: #00D7A0"></div><div style="flex-grow: 1; height: 5px; border-radius: 99px; background: rgba(255,255,255,0.2)"></div><div style="flex-grow: 1; height: 5px; border-radius: 99px; background: rgba(255,255,255,0.2)"></div></div>
+<span style="font-size: 13px; opacity: 0.75">خطوة 1 من 3</span>
+<span style="font-size: 16px; font-weight: 700">بتشتري ليه؟</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{purposes}}" as="pp" hint-placeholder-count="4">
+<button type="button" onClick="{{pp.pick}}" style="{{pp.style}}">{{pp.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{immediate}}" hint-placeholder-val="{{false}}">
+<div style="background: rgba(247,219,50,0.14); border: 1px solid #F7DB32; border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.7">وحدات سنترال بتتسلّم كور آند شل، فهنرشحلك كمان وحدات جاهزة أو قريبة من التسليم في مشاريع هايد بارك التانية.</div>
+</sc-if>
+<span style="font-size: 16px; font-weight: 700">القسط الشهري المريح ليك</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button type="button" style="font-family: inherit; font-size: 14px; font-weight: 600; min-height: 46px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.3); background: transparent; color: #FFFFFF">أقل من 70 ألف</button>
+<button type="button" style="font-family: inherit; font-size: 14px; font-weight: 700; min-height: 46px; border-radius: 10px; border: 1.5px solid #00D7A0; background: rgba(0,215,160,0.14); color: #FFFFFF">70 – 120 ألف</button>
+<button type="button" style="font-family: inherit; font-size: 14px; font-weight: 600; min-height: 46px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.3); background: transparent; color: #FFFFFF">120 – 250 ألف</button>
+<button type="button" style="font-family: inherit; font-size: 14px; font-weight: 600; min-height: 46px; border-radius: 10px; border: 1.5px solid rgba(255,255,255,0.3); background: transparent; color: #FFFFFF">أكتر من 250</button>
+</div>
+<button type="button" style="font-family: inherit; font-size: 16px; font-weight: 800; min-height: 52px; border-radius: 12px; border: none; background: #00D7A0; color: #040E33">التالي</button>
+</div>
+</section>
+
+<!-- ===== 12. COMPARE | OTHER PROJECTS ===== -->
+<section id="other-projects" style="flex-shrink: 0; padding: 64px 120px; background: #F5F7FA; display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; color: #0D4088">مقارنة بمشاريع هايد بارك في القاهرة الجديدة</h2>
+<div style="background: #FFFFFF; border-radius: 18px; overflow: hidden">
+<table style="width: 100%; border-collapse: collapse; font-size: 16px">
+<thead><tr style="background: #E6EEF9; text-align: right"><th style="padding: 14px 20px; color: #4A5270; font-weight: 700; width: 20%"></th><th style="padding: 14px 20px; font-weight: 800">Hyde Park Central</th><th style="padding: 14px 20px; font-weight: 700">Hyde Park New Cairo</th><th style="padding: 14px 20px; font-weight: 700">Hyde Park Terraces</th></tr></thead>
+<tbody>
+<tr style="border-top: 1px solid #E6E8EE"><td style="padding: 14px 20px; color: #4A5270">يبدأ من</td><td class="en" style="padding: 14px 20px; font-weight: 800">6,430,000</td><td class="en" style="padding: 14px 20px">7,220,000</td><td class="en" style="padding: 14px 20px">23,400,000</td></tr>
+<tr style="border-top: 1px solid #E6E8EE"><td style="padding: 14px 20px; color: #4A5270">الأنواع</td><td style="padding: 14px 20px; font-weight: 700">شقق · تاون · كواد · فيلا</td><td style="padding: 14px 20px">شقق · فيلا</td><td style="padding: 14px 20px">تاون · فيلا</td></tr>
+<tr style="border-top: 1px solid #E6E8EE"><td style="padding: 14px 20px; color: #4A5270">المتاح</td><td class="en" style="padding: 14px 20px; font-weight: 800">110</td><td class="en" style="padding: 14px 20px">43</td><td class="en" style="padding: 14px 20px">7</td></tr>
+</tbody>
+</table>
+</div>
+<h2 style="margin: 16px 0 0; font-size: 24px; font-weight: 800; color: #0D4088">مشاريع تانية ممكن تعجبك</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+<sc-for list="{{projects}}" as="pj" hint-placeholder-count="6">
+<a href="#" style="background: #FFFFFF; border-radius: 18px; overflow: hidden; text-decoration: none; color: #040E33; display: flex; flex-direction: column">
+<sc-if value="{{pj.hasImg}}" hint-placeholder-val="{{true}}"><img src="{{pj.img}}" alt="{{pj.name}}" style="width: 100%; height: 190px; object-fit: cover; display: block"></sc-if>
+<sc-if value="{{pj.noImg}}" hint-placeholder-val="{{false}}"><div style="height: 190px; background: #E6EEF9; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #0D4088">[صورة المشروع]</div></sc-if>
+<div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; color: #4A5270">{{pj.loc}}</span>
+<span class="en" style="font-size: 18px; font-weight: 800">{{pj.name}}</span>
+<span style="font-size: 15px">يبدأ من <span class="en" style="font-weight: 800">{{pj.price}}</span> ج</span>
+</div>
+</a>
+</sc-for>
+</div>
+</section>
+
+<footer style="flex-grow: 1; background: #040E33; color: #FFFFFF; padding: 40px 120px; display: flex; flex-direction: column; gap: 10px">
+<span class="en" style="font-weight: 800; font-size: 18px">Explorer Hyde Park</span>
+<span style="font-size: 14px; opacity: 0.75; line-height: 1.7">Explorer Hyde Park منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.</span>
+</footer>
+
+<!-- floating WhatsApp (desktop) -->
+<a href="#" data-whatsapp-link="" aria-label="واتساب" style="position: absolute; left: 32px; top: 740px; width: 60px; height: 60px; border-radius: 99px; background: #00D7A0; color: #040E33; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(4,14,51,0.25)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.6L4 20z"></path></svg></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"showMarkers":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":5300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { img: 0, tab: 0, budget: 1, custom: '', purpose: 1 };
+  }
+  renderVals() {
+    const fmt = (n) => Math.round(n).toLocaleString('en-US');
+    const imgs = [
+      '/_blob/a75635f719d45178245d243807dc2f69', '/_blob/610611fc5670aff742a5106e8780d4cb',
+      '/_blob/88aaf29ee6f3a61f879d20e6f51feba7', '/_blob/edbd354f4e38830a7932538e79c7abe5',
+      '/_blob/6945e21dba3dfd54973709dc2b1bc09e', '/_blob/94d0f76e87184057c313487866f998fe'
+    ];
+    const thumbBase = 'padding: 0; height: 72px; border-radius: 10px; overflow: hidden; cursor: pointer; background: #D8D8D8; ';
+    const thumbs = imgs.map((src, i) => ({
+      src, label: 'صورة ' + (i + 1),
+      ring: thumbBase + (i === this.state.img ? 'border: 2.5px solid #0D4088;' : 'border: 2.5px solid transparent; opacity: 0.75;'),
+      pick: () => this.setState({ img: i })
+    }));
+
+    const types = [
+      { label: 'شقق', name: 'شقق', img: '/_blob/6479872fe774fa18bdae5c50769c54c8', count: 'متاح 87', rows: [
+        { title: 'غرفة', meta: 'من 70 م² · 25 وحدة', price: '6,430,000', dp: '321,500' },
+        { title: 'غرفتين', meta: 'من 101 م² · 33 وحدة', price: '9,500,000', dp: '475,000' },
+        { title: '3 غرف', meta: 'من 136 م² · 29 وحدة', price: '11,430,000', dp: '571,500' } ] },
+      { label: 'تاون', name: 'تاون هاوس', img: '/_blob/efdc2a4e12f76dcb9157aa9a1ddcddc1', count: 'متاح 9', rows: [
+        { title: 'تاون هاوس', meta: '212 م² · 9 وحدات', price: '25,520,000', dp: '1,276,000' } ] },
+      { label: 'كواد', name: 'كواد', img: '/_blob/1cac60da543af344c55b4d3e6833fee7', count: 'متاح 13', rows: [
+        { title: 'كواد', meta: '217 م² · 13 وحدة', price: '25,540,000', dp: '1,277,000' } ] },
+      { label: 'فيلا', name: 'فيلا مستقلة', img: '/_blob/e626da0b7e298c749fc1c98ffa7f893a', count: 'آخر وحدة', rows: [
+        { title: 'فيلا مستقلة', meta: '265 م² · وحدة واحدة', price: '50,140,000', dp: '2,507,000' } ] }
+    ];
+    const tabBase = 'font-family: inherit; font-size: 15px; min-height: 46px; border-radius: 10px; padding: 0 22px; border: none; cursor: pointer; ';
+    const tabs = types.map((t, i) => ({
+      label: t.label,
+      style: tabBase + (i === this.state.tab ? 'background: #040E33; color: #FFFFFF; font-weight: 800;' : 'background: transparent; color: #040E33; font-weight: 600;'),
+      pick: () => this.setState({ tab: i })
+    }));
+
+    const budgetVals = [50000, 70000, 100000, 150000];
+    const bBase = 'font-family: inherit; font-size: 13px; min-height: 44px; border-radius: 10px; cursor: pointer; ';
+    const budgets = budgetVals.concat(['custom']).map((v, i) => ({
+      label: v === 'custom' ? 'مبلغ تاني' : (v / 1000) + ' ألف',
+      style: bBase + (i === this.state.budget ? 'border: 1.5px solid #040E33; background: #040E33; color: #FFFFFF; font-weight: 800;' : 'border: 1.5px solid #D8D8D8; background: #FFFFFF; color: #040E33; font-weight: 600;'),
+      pick: () => this.setState({ budget: i })
+    }));
+    const customOn = this.state.budget === 4;
+    const customNum = parseInt(String(this.state.custom).replace(/[^0-9]/g, ''), 10) || 0;
+    const monthly = customOn ? customNum : budgetVals[this.state.budget];
+    const calcUnits = [
+      { name: 'شقة غرفة', meta: '70 م²', price: 6430000 },
+      { name: 'شقة غرفتين', meta: '101 م²', price: 9500000 },
+      { name: 'شقة 3 غرف', meta: '136 م²', price: 11430000 },
+      { name: 'تاون هاوس', meta: '212 م²', price: 25520000 }
+    ];
+    const pBase = 'font-family: inherit; font-size: 14px; min-height: 46px; border-radius: 10px; color: #FFFFFF; cursor: pointer; ';
+    const purposes = ['سكن فوري', 'سكن مستقبلي', 'استثمار', 'مقيم خارج مصر'].map((label, i) => ({
+      label,
+      style: pBase + (i === this.state.purpose ? 'font-weight: 700; border: 1.5px solid #00D7A0; background: rgba(0,215,160,0.14);' : 'font-weight: 600; border: 1.5px solid rgba(255,255,255,0.3); background: transparent;'),
+      pick: () => this.setState({ purpose: i })
+    }));
+    let fitCount = 0;
+    const results = calcUnits.map((u) => {
+      const dp = Math.max(u.price * 0.05, u.price - monthly * 96);
+      if (monthly <= 0) return { name: u.name, meta: u.meta, fits: false, noFit: false, detail: 'اكتب القسط وهنحسبلك المقدم' };
+      const pct = Math.round((dp / u.price) * 100);
+      const fits = pct <= 50;
+      if (fits) fitCount++;
+      const inst = (u.price - dp) / 96;
+      return {
+        name: u.name, meta: u.meta, fits, noFit: !fits,
+        detail: fits ? ('مقدم ' + fmt(dp) + ' (' + pct + '%) · قسط ' + fmt(inst)) : ('محتاج مقدم ' + pct + '% من السعر')
+      };
+    });
+
+    return {
+      showMarkers: this.props.showMarkers ?? false,
+      mainImg: imgs[this.state.img],
+      galleryPos: (this.state.img + 1) + ' / 6',
+      thumbs, tabs, tab: types[this.state.tab], budgets, results,
+      ctaText: monthly > 0 ? ('ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر') : 'اكتب القسط الشهري الأول',
+      customOn, customVal: this.state.custom,
+      onCustom: (e) => this.setState({ custom: e.target.value }),
+      purposes, immediate: this.state.purpose === 0,
+      projects: [
+        { name: 'Hyde Park New Cairo', loc: 'القاهرة الجديدة', price: '7,220,000', img: '/_blob/715e2bce5898239f6c2e3ff300fcf39f', hasImg: true, noImg: false },
+        { name: 'Hyde Park Terraces', loc: 'القاهرة الجديدة', price: '23,400,000', img: '/_blob/98144f13fc5b3c1259ce8fae60d97462', hasImg: true, noImg: false },
+        { name: 'Hyde Park Signature', loc: 'أكتوبر', price: '6,590,000', img: '/_blob/93d3cd151b37f3ee0b08eff7135bd1c0', hasImg: true, noImg: false },
+        { name: 'Hyde Park Garden Lake', loc: 'أكتوبر', price: '6,800,000', img: '', hasImg: false, noImg: true },
+        { name: 'Hyde Park Tawny', loc: 'أكتوبر', price: '15,300,000', img: '', hasImg: false, noImg: true },
+        { name: 'Hyde Park Sea Shore', loc: 'الساحل الشمالي', price: '8,410,000', img: '/_blob/ab4436e882c0c1517949b2f9c7c85313', hasImg: true, noImg: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
+

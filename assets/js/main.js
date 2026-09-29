@@ -24,6 +24,7 @@
     initUnitTabs();
     initReverseCalc();
     initMultiStepForms();
+    initProjectsSlider();
     initLeadForms();
     initWhatsappLinks();
     initFloatWhatsapp();
@@ -338,6 +339,54 @@
           r.addEventListener('change', function () { note.hidden = answer('purpose') !== 'سكن فوري'; });
         });
       }
+    });
+  }
+
+  /* ---------------- Other-projects slider ----------------
+     Glides one card forward every few seconds and loops back at the end.
+     Pauses while hovered, touched or focused; off for prefers-reduced-motion
+     (the row still scrolls by hand). */
+  function initProjectsSlider() {
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('[data-projects-slider]').forEach(function (track) {
+      if (reduceMotion) return;
+      var INTERVAL = 4500; // ms between moves — slow on purpose
+      var paused = false;
+      var resumeTimer = null;
+
+      function step() {
+        var card = track.querySelector('.pp-project-card');
+        if (!card) return 0;
+        return card.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
+      }
+
+      setInterval(function () {
+        if (paused || document.hidden) return;
+        var max = track.scrollWidth - track.clientWidth;
+        if (max <= 2) return; // everything already fits
+        // RTL: scrollLeft runs 0 → -max, so "next" is a negative scroll.
+        if (Math.abs(track.scrollLeft) >= max - 2) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: -step(), behavior: 'smooth' });
+        }
+      }, INTERVAL);
+
+      function pause() {
+        paused = true;
+        clearTimeout(resumeTimer);
+      }
+      function resumeLater(delay) {
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () { paused = false; }, delay);
+      }
+
+      track.addEventListener('mouseenter', pause);
+      track.addEventListener('mouseleave', function () { resumeLater(600); });
+      track.addEventListener('touchstart', pause, { passive: true });
+      track.addEventListener('touchend', function () { resumeLater(3000); }, { passive: true });
+      track.addEventListener('focusin', pause);
+      track.addEventListener('focusout', function () { resumeLater(600); });
     });
   }
 

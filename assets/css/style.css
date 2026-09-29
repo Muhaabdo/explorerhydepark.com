@@ -717,7 +717,20 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 .pp-sticky-bar__btn--call { border: 1.5px solid var(--blue); color: var(--blue); }
 .pp-sticky-bar__btn--units { background: var(--navy); color: var(--white); }
 
-@media (max-width: 767px) {
+/* ---------- Structural wrappers (mobile: they don't change the layout) ---------- */
+.navbar__call { display: none; }
+.pp-desktop-only { display: none; }
+/* Calculator: inputs/results wrappers only matter on desktop; on mobile the
+   children flow as one column with the note last. */
+.pp-calc { display: flex; flex-direction: column; }
+.pp-calc__inputs, .pp-calc__results { display: contents; }
+.pp-calc .pp-note { order: 1; }
+/* Location: the h2 lives in the text column; on mobile it goes back on top. */
+.pp-location__body { display: contents; }
+.pp-location .pp-h2 { order: -1; margin: 0; }
+
+/* Mobile + tablet (< 1024px): sticky bottom bar replaces the floating button. */
+@media (max-width: 1023px) {
   body.pp-page { padding-bottom: 64px; }
   .pp-page .float-whatsapp { display: none; }
   .pp-sticky-bar {
@@ -728,101 +741,192 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
   }
 }
 
-@media (min-width: 768px) {
-  .pp-section { padding: 56px clamp(20px, 6vw, 80px); }
-  .pp-wrap { max-width: 1100px; }
-  .pp-h2 { font-size: clamp(24px, 3.2vw, 32px); margin-bottom: 18px; }
-  .pp-price-card { max-width: 560px; margin-inline: auto; }
-  .pp-summary { font-size: 17px; max-width: 860px; }
-  .pp-byline { font-size: 13px; }
-  .pp-facts { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
-  .pp-fact { padding: 16px; }
-  .pp-fact dt { font-size: 13px; }
-  .pp-fact dd { font-size: 16px; }
-  .pp-chips { justify-content: center; gap: 10px; }
-  .pp-chip { font-size: 14px; padding: 6px 18px; }
-  .pp-gallery__main { height: clamp(360px, 48vw, 560px); border-radius: 20px; }
-  .pp-gallery__thumbs { gap: 10px; margin-top: 10px; }
-  .pp-gallery__thumb { height: clamp(64px, 8vw, 110px); border-radius: 12px; }
-
-  .pp-lede { font-size: 15px; }
-  .pp-tabs { width: fit-content; max-width: 100%; }
-  .pp-tab { flex: 0 0 auto; min-width: 110px; font-size: 15px; }
-  /* Unit panel: image beside the rows */
-  .pp-unit:not([hidden]) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
-  .pp-unit__media { height: auto; min-height: 300px; }
-  .pp-unit__rows { padding: 10px 24px; align-self: center; }
-  .pp-unit-row { padding: 16px 0; }
-  .pp-unit-row__title { font-size: 17px; }
-  .pp-unit-row__meta, .pp-unit-row__prices { font-size: 13px; }
-  .pp-unit-row__price { font-size: 18px; }
-
-  .pp-budgets { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-  .pp-budget { min-height: 52px; font-size: 15px; }
-  .pp-custom { max-width: 420px; }
-  .pp-calc-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
-  .pp-calc-row { padding: 16px; }
-  .pp-calc-row__name { font-size: 15px; }
-  .pp-calc-row__detail { font-size: 13px; }
-  .pp-calc-cta { max-width: 520px; margin-inline: auto; }
-  .pp-note { text-align: center; }
-
-  .pp-location:not(.pp-location--no-img) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; }
-  .pp-location__img { height: 300px; }
-  .pp-location__text { font-size: 17px; }
-
-  .pp-chipset { gap: 10px; }
-  .pp-chipset li { font-size: 15px; padding: 8px 16px; }
-
-  .pp-trust { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .pp-trust li { padding: 20px; border-radius: 16px; background: var(--white); }
-  .pp-trust strong { font-size: 16px; }
-
-  .pp-faq { max-width: 860px; }
-  .pp-faq__item summary { padding: 18px 20px; font-size: 16px; }
-  .pp-faq__item p { padding: 0 20px 18px; font-size: 15px; }
-
-  .pp-lead-section .pp-h2 { text-align: center; }
-  .pp-option span { min-height: 52px; font-size: 15px; }
-
-  .pp-compare { max-width: 860px; }
-  .pp-compare table { font-size: 15px; }
-  .pp-compare th, .pp-compare td { padding: 14px 16px; }
-  .pp-projects {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;
-    overflow: visible; margin-inline: 0; padding: 0;
-  }
-  .pp-project-card__media { height: 160px; }
-  .pp-project-card__body { padding: 16px; font-size: 14px; }
-  .pp-project-card__name { font-size: 17px; }
-}
-
-/* Desktop hero: taller image, name on the start side and the price card
-   floating on the end side, both sitting on the image's bottom edge. */
+/* ==========================================================================
+   Project page — desktop (≥ 1024px). Spec: docs/project-page-v5-desktop-spec.md
+   Reference: design-reference/project-page-v5-desktop.dc.html (1440px).
+   Content column is 1200px wide (120px side gutters at 1440). RTL: the first
+   grid column in the HTML is on the right.
+   ========================================================================== */
 @media (min-width: 1024px) {
-  .pp-hero { padding-bottom: 0; }
-  .pp-hero__media { height: clamp(460px, 72vh, 680px); }
+  html:has(body.pp-page) { scroll-padding-top: 80px; }
+  .pp-desktop-only { display: revert; }
+  .pp-btn.pp-desktop-only { display: flex; }
+  .pp-mobile-only { display: none; }
+
+  /* Site navbar: solid navy bar in the page flow (not over the hero). */
+  .pp-page .navbar,
+  .pp-page .navbar--overlay:not(.is-scrolled) {
+    position: relative; height: 72px; padding: 0 max(24px, calc((100% - 1200px) / 2));
+    background: var(--navy); backdrop-filter: none;
+  }
+  .pp-page .navbar.is-hidden { transform: none; }
+  .pp-page .navbar__brand { font-size: 20px; }
+  .pp-page .navbar__links { gap: 32px; }
+  .pp-page .navbar__links a { font-size: 15px; font-weight: 600; }
+  .pp-page .navbar__call {
+    display: flex; align-items: center; min-height: 44px; padding: 0 18px;
+    border: 1.5px solid rgba(255,255,255,.5); border-radius: 10px;
+    color: var(--white); font-size: 14px; font-weight: 700; text-decoration: none;
+  }
+
+  .pp-section { padding: 64px max(24px, calc((100% - 1200px) / 2)); }
+  .pp-wrap { max-width: none; }
+  .pp-h2 { font-size: 28px; margin: 0 0 16px; }
+
+  /* 1. Hero: text + price card in a 500px column on the right, vertically
+     centred; the image shows through on the left. */
+  .pp-hero {
+    height: 600px; padding: 0 max(24px, calc((100% - 1200px) / 2));
+    display: grid; grid-template-columns: 500px; align-content: center; gap: 18px;
+    background: var(--navy);
+  }
+  .pp-hero__media { display: contents; }
   .pp-hero__shade {
-    background: linear-gradient(180deg, rgba(4,14,51,.55) 0%, rgba(4,14,51,0) 25%, rgba(4,14,51,0) 40%, rgba(4,14,51,.85) 100%);
+    background: linear-gradient(270deg, rgba(4,14,51,.88) 0%, rgba(4,14,51,.55) 38%, rgba(4,14,51,0) 70%);
   }
-  .pp-hero__text {
-    bottom: 56px; gap: 8px;
-    inset-inline-start: max(40px, calc((100% - 1200px) / 2));
-    inset-inline-end: calc(max(40px, calc((100% - 1200px) / 2)) + 440px);
-  }
-  .pp-badge { font-size: 13px; padding: 3px 12px; }
-  .pp-hero__title { font-size: clamp(40px, 4.4vw, 60px); }
+  .pp-hero__text { position: relative; z-index: 1; inset: auto; gap: 8px; }
+  .pp-badge { font-size: 13px; padding: 4px 14px; }
+  .pp-hero__title { font-size: 52px; line-height: 1.1; }
   .pp-hero__sub { font-size: 17px; }
   .pp-price-card {
-    position: absolute; bottom: 40px; width: 400px; max-width: none; margin: 0; padding: 20px; gap: 14px;
-    inset-inline-end: max(40px, calc((100% - 1200px) / 2));
+    margin: 0; padding: 22px; gap: 14px; border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(4,14,51,.25);
   }
-  .pp-price-card__value { font-size: 32px; }
-  .pp-price-card__label { font-size: 14px; }
-  .pp-tile { padding: 10px 6px; }
+  .pp-price-card__price { gap: 8px; }
+  .pp-price-card__label { font-size: 15px; }
+  .pp-price-card__value { font-size: 36px; }
+  .pp-price-card__tiles { gap: 8px; }
+  .pp-tile { padding: 10px; border-radius: 12px; }
   .pp-tile__label { font-size: 12px; }
-  .pp-tile__value { font-size: 17px; }
-  .pp-btn { min-height: 52px; font-size: 16px; }
+  .pp-tile__value { font-size: 18px; }
+  .pp-tile--link .pp-tile__value { font-size: 17px; }
+  .pp-price-card__ctas { display: grid; grid-template-columns: 3fr 2fr; gap: 10px; }
+  .pp-price-card__ctas .pp-btn { min-height: 52px; font-size: 16px; }
+  .pp-btn--outline { border: 1.5px solid var(--navy); color: var(--navy); background: transparent; font-weight: 700; }
+  .pp-price-card__ctas .pp-btn--outline { font-size: 15px; }
+
+  /* 2. Section chips: one row, right-aligned, sticky at the very top. */
+  .pp-chips {
+    padding: 12px max(24px, calc((100% - 1200px) / 2)); gap: 10px;
+    border-top: none; box-shadow: 0 4px 12px rgba(4,14,51,.05);
+  }
+  .pp-page .navbar ~ .pp-chips { top: 0; }
+  .pp-chip { font-size: 14px; padding: 8px 18px; }
+
+  /* 3. Overview: summary (5fr) | facts 3×2 (6fr). */
+  .pp-overview { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: start; }
+  .pp-overview__text { display: flex; flex-direction: column; gap: 16px; }
+  .pp-overview__text .pp-h2 { margin: 0; }
+  .pp-summary { margin: 0; font-size: 17px; line-height: 1.9; }
+  .pp-byline { margin: 0; font-size: 13px; }
+  .pp-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .pp-fact { padding: 16px; border-radius: 14px; gap: 4px; }
+  .pp-fact dt { font-size: 13px; }
+  .pp-fact dd { font-size: 16px; }
+
+  /* 4. Gallery: main image (4fr) | thumbnails stacked (1fr). */
+  #gallery.pp-section { padding-top: 56px; padding-bottom: 56px; }
+  .pp-gallery__body { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 1fr); gap: 14px; }
+  .pp-gallery__main { height: 480px; border-radius: 20px; }
+  .pp-gallery__count { bottom: 14px; left: 14px; font-size: 13px; padding: 4px 12px; }
+  .pp-gallery__thumbs { margin: 0; grid-template-columns: minmax(0, 1fr); gap: 9px; align-content: start; }
+  .pp-gallery__thumb { height: 72px; border-radius: 10px; }
+
+  /* 5. Units (white): h2 | tabs in one row; image (5fr) | rows card (7fr). */
+  .pp-units-section { background: var(--white); }
+  .pp-units__head { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 20px; }
+  .pp-units__head .pp-h2 { margin: 0; }
+  .pp-tabs { margin: 0; padding: 5px; background: var(--gray-bg); border-radius: 12px; flex: 0 1 auto; }
+  .pp-tab { flex: 0 0 auto; min-width: 0; min-height: 46px; padding: 0 22px; border-radius: 10px; font-size: 15px; }
+  .pp-unit { background: transparent; border-radius: 0; overflow: visible; }
+  .pp-unit:not([hidden]) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; align-items: stretch; }
+  .pp-unit__media { height: auto; min-height: 380px; border-radius: 20px; overflow: hidden; }
+  .pp-unit__avail { top: 14px; right: 14px; font-size: 13px; padding: 4px 12px; }
+  .pp-unit__rows { padding: 8px 24px; border: 1px solid var(--line); border-radius: 20px; }
+  .pp-unit-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 2fr) auto; gap: 16px; align-items: center; padding: 20px 0; }
+  .pp-unit-row__head { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .pp-unit-row__title { font-size: 19px; }
+  .pp-unit-row__meta { font-size: 14px; }
+  .pp-unit-row__body { display: contents; }
+  .pp-unit-row__prices { font-size: 14px; gap: 2px; }
+  .pp-unit-row__prices span + span { font-size: 13px; }
+  .pp-unit-row__price { font-size: 19px; }
+  .pp-wa-btn { min-height: 48px; padding: 0 20px; border-radius: 12px; font-size: 14px; gap: 8px; }
+
+  /* 6. Calculator (gray): inputs (5fr) | white results card (7fr). */
+  .pp-calc-section { background: var(--gray-bg); }
+  .pp-calc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: start; }
+  .pp-calc__inputs { display: flex; flex-direction: column; gap: 14px; }
+  .pp-calc__inputs .pp-h2, .pp-lede, .pp-note, .pp-custom { margin: 0; }
+  .pp-lede { font-size: 16px; line-height: 1.7; }
+  .pp-note { font-size: 13px; line-height: 1.7; order: 0; }
+  .pp-budgets { gap: 8px; }
+  .pp-custom { font-size: 14px; }
+  .pp-custom__box { min-height: 52px; padding: 0 14px; background: var(--white); }
+  .pp-custom__box input { font-size: 20px; }
+  .pp-custom__box span { font-size: 14px; }
+  .pp-calc__results { display: flex; flex-direction: column; gap: 10px; padding: 20px; background: var(--white); border-radius: 20px; }
+  .pp-calc-rows { margin: 0; gap: 10px; }
+  .pp-calc-row { padding: 16px; border-color: var(--line); border-radius: 14px; gap: 12px; }
+  .pp-calc-row__name { font-size: 16px; }
+  .pp-calc-row__meta { font-size: 13px; }
+  .pp-calc-row__detail { font-size: 14px; }
+  .pp-fit { font-size: 13px; padding: 5px 12px; }
+  .pp-calc-cta { min-height: 54px; font-size: 16px; }
+
+  /* 7. Location (white): map (7fr) | h2 + distances (5fr). */
+  .pp-location-section { background: var(--white); }
+  .pp-location { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: center; }
+  .pp-location--no-img { grid-template-columns: minmax(0, 1fr); }
+  .pp-location__body { display: flex; flex-direction: column; gap: 14px; }
+  .pp-location__img { height: 320px; border-radius: 20px; }
+  .pp-location__text { font-size: 17px; }
+  .pp-distances { padding: 0; background: transparent; border-radius: 0; }
+  .pp-distances li { padding: 14px 0; font-size: 16px; }
+
+  /* Two sections side by side on one full-bleed background. */
+  .pp-pair { display: grid; gap: 48px; align-items: start; padding: 64px max(24px, calc((100% - 1200px) / 2)); }
+  .pp-pair > .pp-section { padding: 0; background: transparent; }
+
+  /* 8+9. Amenities | trust (gray, 1fr | 1fr). */
+  .pp-pair--amenities { grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--gray-bg); }
+  .pp-chipset { gap: 10px; }
+  .pp-chipset li { font-size: 15px; padding: 8px 16px; background: var(--white); }
+  .pp-trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .pp-trust li { padding: 16px; border-radius: 14px; background: var(--white); }
+  .pp-trust strong { font-size: 16px; }
+  .pp-trust span { font-size: 14px; }
+
+  /* 10+11. FAQ (7fr) | sticky navy form card (5fr), white. */
+  .pp-pair--faq { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; background: var(--white); }
+  .pp-faq { gap: 10px; }
+  .pp-faq__item { border-radius: 14px; }
+  .pp-faq__item summary { padding: 18px; font-size: 16px; }
+  .pp-faq__item p { padding: 0 18px 18px; font-size: 15px; }
+  .pp-pair--faq > .pp-lead-section {
+    position: sticky; top: 96px; padding: 28px; border-radius: 22px; background: var(--navy);
+  }
+  .pp-wrap.pp-lead-wrap { max-width: none; }
+  .pp-lead-section .pp-h2 { font-size: 24px; }
+  .pp-lead { gap: 14px; }
+  .pp-lead__step-label { font-size: 13px; }
+  .pp-q legend { font-size: 16px; }
+
+  /* 12. Comparison + other projects (gray). */
+  .pp-compare-section { background: var(--gray-bg); }
+  .pp-compare { border: none; border-radius: 18px; background: var(--white); overflow: hidden; }
+  .pp-compare table { font-size: 16px; }
+  .pp-compare th, .pp-compare td { padding: 14px 20px; }
+  .pp-compare thead th { background: var(--blue-soft); }
+  .pp-compare tbody th { width: 20%; }
+  .pp-h2--spaced { margin-top: 40px; font-size: 24px; }
+  /* Slider: exactly 3 cards in view (main.js auto-advances one card at a time). */
+  .pp-projects { gap: 20px; margin-inline: 0; padding: 0; }
+  .pp-project-card { flex-basis: calc((100% - 40px) / 3); border: none; border-radius: 18px; }
+  .pp-project-card__media { height: 190px; }
+  .pp-project-card__body { padding: 16px 18px; font-size: 15px; }
+  .pp-project-card__area { font-size: 13px; }
+  .pp-project-card__name { font-size: 18px; }
 }
 
 /* ---------- Utility ---------- */

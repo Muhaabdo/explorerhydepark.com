@@ -353,6 +353,8 @@ function nav(overlay) {
     '    <button class="navbar__toggle" aria-label="فتح القائمة" data-nav-toggle>\n' +
     '      <span></span><span></span><span></span>\n' +
     '    </button>\n' +
+    // Desktop-only call button on project pages (hidden by CSS below 1024px).
+    (overlay ? '    <a href="#" class="navbar__call" data-phone-link>اتصل بنا</a>\n' : '') +
     '  </nav>\n' +
     '  <div class="mobile-menu">\n' +
     '      ' + mobile + '\n' +
@@ -503,10 +505,12 @@ function unitsSectionMarkup(p) {
   }).join('');
 
   return (
-    '  <section class="pp-section pp-section--gray" id="units">\n' +
+    '  <section class="pp-section pp-section--gray pp-units-section" id="units">\n' +
     '    <div class="pp-wrap">\n' +
-    '      <h2 class="pp-h2">الوحدات المتاحة</h2>\n' +
-    '      <div class="pp-tabs" role="tablist" aria-label="أنواع الوحدات" data-unit-tabs>\n' + tabs + '      </div>\n' +
+    '      <div class="pp-units__head">\n' +
+    '        <h2 class="pp-h2">الوحدات المتاحة</h2>\n' +
+    '        <div class="pp-tabs" role="tablist" aria-label="أنواع الوحدات" data-unit-tabs>\n' + tabs + '        </div>\n' +
+    '      </div>\n' +
     panels +
     '    </div>\n' +
     '  </section>\n'
@@ -577,18 +581,24 @@ function calcSectionMarkup(p) {
   }).join('');
 
   return (
-    '  <section class="pp-section" id="calc" data-reverse-calc data-down-pct="' + p.paymentPlan.downPct + '" data-months="' + months + '" data-project="' + escapeHtml(p.nameEn) + '">\n' +
-    '    <div class="pp-wrap">\n' +
-    '      <h2 class="pp-h2">تقدر تدفع كام في الشهر؟</h2>\n' +
-    '      <p class="pp-lede">اختار القسط المريح ليك، وهنقولك محتاج مقدم قد إيه لكل وحدة.</p>\n' +
-    '      <div class="pp-budgets">\n' + chips + '      </div>\n' +
-    '      <label class="pp-custom" data-calc-custom hidden>اكتب القسط الشهري اللي يناسبك\n' +
-    '        <span class="pp-custom__box"><input type="text" inputmode="numeric" autocomplete="off" placeholder="مثلاً 85000" data-calc-input><span>جنيه / شهر</span></span>\n' +
-    '      </label>\n' +
-    '      <div class="pp-calc-rows">\n' + rows + '      </div>\n' +
-    '      <a href="#" class="pp-btn pp-btn--green pp-btn--block pp-calc-cta" data-whatsapp-link data-whatsapp-message="' + escapeHtml(calcWhatsappMessage(p, monthly)) + '" data-cta-location="calc" data-calc-cta>' +
+    '  <section class="pp-section pp-calc-section" id="calc" data-reverse-calc data-down-pct="' + p.paymentPlan.downPct + '" data-months="' + months + '" data-project="' + escapeHtml(p.nameEn) + '">\n' +
+    // Two wrappers so desktop can split inputs | results; on mobile they are
+    // display: contents and the note is ordered last (same as before).
+    '    <div class="pp-wrap pp-calc">\n' +
+    '      <div class="pp-calc__inputs">\n' +
+    '        <h2 class="pp-h2">تقدر تدفع كام في الشهر؟</h2>\n' +
+    '        <p class="pp-lede">اختار القسط المريح ليك، وهنقولك محتاج مقدم قد إيه لكل وحدة.</p>\n' +
+    '        <div class="pp-budgets">\n' + chips + '        </div>\n' +
+    '        <label class="pp-custom" data-calc-custom hidden>اكتب القسط الشهري اللي يناسبك\n' +
+    '          <span class="pp-custom__box"><input type="text" inputmode="numeric" autocomplete="off" placeholder="مثلاً 85000" data-calc-input><span>جنيه / شهر</span></span>\n' +
+    '        </label>\n' +
+    '        <p class="pp-note">حساب تقريبي على أقل سعر متاح و' + months + ' قسط شهري. الخطة النهائية حسب الوحدة وسياسة المطوّر وقت الحجز.</p>\n' +
+    '      </div>\n' +
+    '      <div class="pp-calc__results">\n' +
+    '        <div class="pp-calc-rows">\n' + rows + '        </div>\n' +
+    '        <a href="#" class="pp-btn pp-btn--green pp-btn--block pp-calc-cta" data-whatsapp-link data-whatsapp-message="' + escapeHtml(calcWhatsappMessage(p, monthly)) + '" data-cta-location="calc" data-calc-cta>' +
     '<i class="fa-brands fa-whatsapp"></i> <span data-calc-cta-text>ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر</span></a>\n' +
-    '      <p class="pp-note">حساب تقريبي على أقل سعر متاح و' + months + ' قسط شهري. الخطة النهائية حسب الوحدة وسياسة المطوّر وقت الحجز.</p>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '  </section>\n'
   );
@@ -606,12 +616,14 @@ function locationSectionMarkup(p) {
     ? '        <a class="pp-link" href="' + escapeHtml(p.mapsUrl) + '" target="_blank" rel="noopener">افتح على Google Maps ←</a>\n'
     : '';
   return (
-    '  <section class="pp-section pp-section--gray" id="location">\n' +
-    '    <div class="pp-wrap">\n' +
-    '      <h2 class="pp-h2">' + (hasDistances ? 'الموقع بالدقايق' : 'الموقع') + '</h2>\n' +
-    '      <div class="pp-location' + (img ? '' : ' pp-location--no-img') + '">\n' +
-    (img ? '        <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameEn + ' في ' + p.areaAr) + '" loading="lazy" decoding="async">\n' : '') +
-    '        <div class="pp-location__body">\n' + body + maps + '        </div>\n' +
+    '  <section class="pp-section pp-section--gray pp-location-section" id="location">\n' +
+    // h2 sits in the text column (desktop); on mobile the body is
+    // display: contents and the h2 is ordered first, above the image.
+    '    <div class="pp-wrap pp-location' + (img ? '' : ' pp-location--no-img') + '">\n' +
+    (img ? '      <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameEn + ' في ' + p.areaAr) + '" loading="lazy" decoding="async">\n' : '') +
+    '      <div class="pp-location__body">\n' +
+    '        <h2 class="pp-h2">' + (hasDistances ? 'الموقع بالدقايق' : 'الموقع') + '</h2>\n' +
+    body + maps +
     '      </div>\n' +
     '    </div>\n' +
     '  </section>\n'
@@ -811,11 +823,16 @@ function compareSectionMarkup(p, allMerged) {
       '      <h2 class="pp-h2">مقارنة بمشاريع هايد بارك في ' + escapeHtml(p.areaAr) + '</h2>\n' +
       '      <div class="pp-compare">\n' +
       '        <table>\n' +
+      // Mobile shows the short Arabic name and "6.43M"; desktop (≥1024px) the
+      // English name and the full price — both variants live in the HTML.
       '          <thead><tr><th scope="col"><span class="visually-hidden">البند</span></th>' + cols.map(function (o) {
-        return '<th scope="col"' + (o === p ? ' class="is-current"' : '') + '>' + (o === p ? escapeHtml(shortProjectNameAr(o)) : '<a href="/projects/' + o.slug + '">' + escapeHtml(shortProjectNameAr(o)) + '</a>') + '</th>';
+        var label = '<span class="pp-mobile-only">' + escapeHtml(shortProjectNameAr(o)) + '</span><bdi class="en pp-desktop-only">' + escapeHtml(o.nameEn) + '</bdi>';
+        return '<th scope="col"' + (o === p ? ' class="is-current"' : '') + '>' + (o === p ? label : '<a href="/projects/' + o.slug + '">' + label + '</a>') + '</th>';
       }).join('') + '</tr></thead>\n' +
       '          <tbody>\n' +
-      '            <tr><th scope="row">يبدأ من</th>' + cols.map(function (o) { return cell(o, '<bdi class="en">' + shortMillions(o.startingPrice) + '</bdi>'); }).join('') + '</tr>\n' +
+      '            <tr><th scope="row">يبدأ من</th>' + cols.map(function (o) {
+        return cell(o, '<bdi class="en pp-mobile-only">' + shortMillions(o.startingPrice) + '</bdi><bdi class="en pp-desktop-only">' + fmt(o.startingPrice) + '</bdi>');
+      }).join('') + '</tr>\n' +
       '            <tr><th scope="row">الأنواع</th>' + cols.map(function (o) { return cell(o, escapeHtml(uniq(o.units.map(shortTypeAr)).join(' · '))); }).join('') + '</tr>\n' +
       '            <tr><th scope="row">المتاح</th>' + cols.map(function (o) { return cell(o, o.availableUnits ? '<bdi class="en">' + o.availableUnits + '</bdi>' : '—'); }).join('') + '</tr>\n' +
       '          </tbody>\n' +
@@ -837,11 +854,11 @@ function compareSectionMarkup(p, allMerged) {
     );
   }).join('');
   return (
-    '  <section class="pp-section" id="other-projects">\n' +
+    '  <section class="pp-section pp-compare-section" id="other-projects">\n' +
     '    <div class="pp-wrap">\n' +
     table +
     '      <h2 class="pp-h2' + (table ? ' pp-h2--spaced' : '') + '">مشاريع تانية ممكن تعجبك</h2>\n' +
-    '      <div class="pp-projects">\n' + cards + '      </div>\n' +
+    '      <div class="pp-projects" data-projects-slider aria-label="مشاريع تانية" tabindex="0">\n' + cards + '      </div>\n' +
     '    </div>\n' +
     '  </section>\n'
   );
@@ -901,7 +918,11 @@ function heroMarkup(p) {
     '        <div class="pp-tile"><span class="pp-tile__label">تقسيط حتى</span><span class="pp-tile__value">' + yearsAr(p.paymentPlan.years) + '</span></div>\n' +
     '        <a class="pp-tile pp-tile--link" href="#calc"><span class="pp-tile__label">قسطك كام؟</span><span class="pp-tile__value">احسبه ←</span></a>\n' +
     '      </div>\n' +
-    '      <a class="pp-btn pp-btn--green pp-btn--block" href="#units">شوف الوحدات اللي في ميزانيتك</a>\n' +
+    '      <div class="pp-price-card__ctas">\n' +
+    '        <a class="pp-btn pp-btn--green pp-btn--block" href="#units">شوف الوحدات اللي في ميزانيتك</a>\n' +
+    // Desktop only — on mobile WhatsApp lives in the sticky bottom bar.
+    '        <a href="#" class="pp-btn pp-btn--outline pp-desktop-only" data-whatsapp-link data-whatsapp-message="أرغب بمعرفة تفاصيل ' + iso(p.nameEn) + '" data-cta-location="hero"><i class="fa-brands fa-whatsapp"></i> واتساب</a>\n' +
+    '      </div>\n' +
     '    </div>\n' +
     '  </header>\n'
   );
@@ -957,10 +978,12 @@ function overviewMarkup(p) {
 
   return (
     '  <section class="pp-section" id="overview">\n' +
-    '    <div class="pp-wrap">\n' +
-    '      <h2 class="pp-h2">' + escapeHtml(p.nameAr) + ' في سطور</h2>\n' +
-    '      <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
-    '      <p class="pp-byline">' + byline + '</p>\n' +
+    '    <div class="pp-wrap pp-overview">\n' +
+    '      <div class="pp-overview__text">\n' +
+    '        <h2 class="pp-h2">' + escapeHtml(p.nameAr) + ' في سطور</h2>\n' +
+    '        <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
+    '        <p class="pp-byline">' + byline + '</p>\n' +
+    '      </div>\n' +
     '      <dl class="pp-facts">\n' +
     facts.map(function (f) {
       return '        <div class="pp-fact"><dt>' + f[0] + '</dt><dd>' + f[1] + '</dd></div>\n';
@@ -987,12 +1010,14 @@ function galleryMarkup(p) {
     '  <section class="pp-section pp-section--gray" id="gallery" data-gallery>\n' +
     '    <div class="pp-wrap">\n' +
     '      <h2 class="pp-h2">صور المشروع</h2>\n' +
-    '      <div class="pp-gallery__main">\n' +
-    '        <img src="../' + imgs[0] + '" alt="' + escapeHtml(alt(1)) + '" decoding="async" data-gallery-main>\n' +
-    '        <span class="pp-gallery__count" data-gallery-count><bdi class="en">1 / ' + imgs.length + '</bdi></span>\n' +
-    '      </div>\n' +
-    '      <div class="pp-gallery__thumbs">\n' +
+    '      <div class="pp-gallery__body">\n' +
+    '        <div class="pp-gallery__main">\n' +
+    '          <img src="../' + imgs[0] + '" alt="' + escapeHtml(alt(1)) + '" decoding="async" data-gallery-main>\n' +
+    '          <span class="pp-gallery__count" data-gallery-count><bdi class="en">1 / ' + imgs.length + '</bdi></span>\n' +
+    '        </div>\n' +
+    '        <div class="pp-gallery__thumbs">\n' +
     thumbs +
+    '        </div>\n' +
     '      </div>\n' +
     '    </div>\n' +
     '  </section>\n'
@@ -1144,10 +1169,16 @@ galleryMarkup(p) + '\n' +
 unitsSectionMarkup(p) + '\n' +
 calcSectionMarkup(p) + '\n' +
 locationSectionMarkup(p) + '\n' +
-amenitiesSectionMarkup(p) + '\n' +
-trustSectionMarkup() + '\n' +
-faqSectionMarkup(faqs) + '\n' +
-leadSectionMarkup(p) + '\n' +
+// .pp-pair: on mobile a plain wrapper (each section keeps its own full-bleed
+// background); on desktop the two sections become side-by-side columns.
+'  <div class="pp-pair pp-pair--amenities">\n' +
+amenitiesSectionMarkup(p) +
+trustSectionMarkup() +
+'  </div>\n\n' +
+'  <div class="pp-pair pp-pair--faq">\n' +
+faqSectionMarkup(faqs) +
+leadSectionMarkup(p) +
+'  </div>\n\n' +
 compareSectionMarkup(p, allMerged) + '\n' +
 footer() + '\n\n' +
 stickyBarMarkup(p) + '\n' +
