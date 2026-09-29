@@ -2,8 +2,10 @@
 (function () {
   'use strict';
 
-  var WHATSAPP_NUMBER = '201000000000'; // TODO: replace with the real WhatsApp business number
-  var PHONE_NUMBER = '01000000000'; // TODO: replace with the real phone number
+  // Contact number (010 6909 0021). Used only inside wa.me / tel: links set
+  // below — never render it as visible text on the pages.
+  var WHATSAPP_NUMBER = '201069090021'; // wa.me format: country code, no + or leading 0
+  var PHONE_NUMBER = '+201069090021'; // international so the call works from abroad too
 
   // WhatsApp messages are plain text (no HTML, so no <bdi>) — Unicode isolate
   // marks are the plain-text equivalent, keeping an embedded run's direction

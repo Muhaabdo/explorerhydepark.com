@@ -44,5 +44,4 @@ page's CSS/JS links with `?v=<content hash>` so visitors get the new files.
 
 ## Still to fill in
 
-- `assets/js/main.js`: real `WHATSAPP_NUMBER` and `PHONE_NUMBER` (placeholders now).
 - `tools/projects-data.js`: `deliveryYear`, `distances`, `mapsUrl`, `finishingCostNote` per project (optional — each shows up on the page once filled).
