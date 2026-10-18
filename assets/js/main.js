@@ -40,6 +40,7 @@
     initWhatsappLinks();
     initFloatWhatsapp();
     initYear();
+    initReturnLink();
   });
 
   /* ---------------- Floating WhatsApp: hidden over the hero, shown after it ---------------- */
@@ -551,9 +552,26 @@
           });
           if (params.length) successUrl += (successUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
         }
+        // Lets the thank-you page send the visitor back to the page they were on.
+        successUrl += (successUrl.indexOf('?') === -1 ? '?' : '&') + 'from=' + encodeURIComponent(location.pathname);
         window.location.href = successUrl;
       });
     });
+  }
+
+  /* Thank-you page: "back" button returns to the page the form was sent from
+     (?from=/projects/…), falling back to the homepage. Only same-site paths. */
+  function initReturnLink() {
+    var link = document.querySelector('[data-return-link]');
+    if (!link) return;
+    var m = /[?&]from=([^&]*)/.exec(location.search);
+    var from = m ? decodeURIComponent(m[1]) : '';
+    if (!/^\/(?!\/)[\w\-\/]*$/.test(from) || from === '/' || /thank-you/.test(from)) return;
+    link.setAttribute('href', from);
+    var label = link.querySelector('[data-return-label]');
+    if (label) label.textContent = from.indexOf('/projects/') === 0 ? 'ارجع لصفحة المشروع' : 'ارجع للصفحة اللي كنت فيها';
+    var icon = link.querySelector('i');
+    if (icon) icon.className = 'fa-solid fa-arrow-right';
   }
 
   function initYear() {
