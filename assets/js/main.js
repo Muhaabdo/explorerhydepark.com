@@ -171,8 +171,8 @@
      Events pushed here are forwarded to GA4 by one GTM tag ("GA4 - Site
      Events", Custom Event trigger on these names): unit_tab_click,
      calculator_used, lead_form_step, phone_click, generate_lead.
-     whatsapp_click stays a GTM click trigger on [data-whatsapp-link] — never
-     push it here, or it double counts. generate_lead is pushed on form
+     whatsapp_click is pushed here too (initPhoneTracking), so GTM needs no
+     click trigger for it — keep it that way or it double counts. generate_lead is pushed on form
      submit (not on the thank-you page view, which refreshes re-counted). */
   function track(event, params, done) {
     window.dataLayer = window.dataLayer || [];
@@ -599,7 +599,20 @@
     document.addEventListener('click', function (e) {
       var el = e.target.closest && e.target.closest('[data-phone-link]');
       if (el) track('phone_click', { cta_location: el.getAttribute('data-cta-location') || '' });
+      var wa = e.target.closest && e.target.closest('[data-whatsapp-link]');
+      if (wa) track('whatsapp_click', { cta_location: waLocation(wa) });
     });
+  }
+
+  // Where a WhatsApp button sits, for the cta_location report.
+  function waLocation(el) {
+    if (el.getAttribute('data-cta-location')) return el.getAttribute('data-cta-location');
+    if (el.classList.contains('float-whatsapp')) return 'float';
+    if (el.classList.contains('pp-wa-btn')) return 'unit';
+    if (el.closest('footer')) return 'footer';
+    if (el.closest('header, nav')) return 'header';
+    if (el.closest('form')) return 'form';
+    return 'other';
   }
 
   function initYear() {
