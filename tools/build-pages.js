@@ -1575,6 +1575,61 @@ function p0LastUpdated() {
   return arMonthYear(pricing.meta.lastUpdated);
 }
 
+/* ---------------- 404 page ----------------
+ * Served by Apache for any missing URL (ErrorDocument in .htaccess), so it
+ * can appear at any depth: every link and asset is root-absolute. noindex. */
+function notFoundPage(merged) {
+  var cards = merged.map(function (o) { return projectCardMarkup(o, '/projects/' + o.slug, '', '/'); }).join('');
+  var hubs = Object.keys(AREAS).filter(function (slug) { return areaUrl(slug); }).map(function (slug) {
+    return '<a class="pp-btn pp-btn--outline" href="' + areaUrl(slug) + '">مشاريع هايد بارك في ' + escapeHtml(AREAS[slug].nameAr) + '</a>';
+  }).join('\n        ');
+  return bakeContactLinks('<!DOCTYPE html>\n' +
+'<html lang="ar" dir="rtl">\n' +
+'<head>\n' +
+'<!-- Google Tag Manager -->\n' +
+'<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
+'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
+'j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=\n' +
+'\'https://www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);\n' +
+'})(window,document,\'script\',\'dataLayer\',\'GTM-5FD83KJ7\');</script>\n' +
+'<!-- End Google Tag Manager -->\n' +
+'<meta charset="UTF-8">\n' +
+'<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+'<title>الصفحة مش موجودة | Explorer Hyde Park</title>\n' +
+'<meta name="robots" content="noindex, follow">\n' +
+'<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+'<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
+'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\n' +
+'<link rel="stylesheet" href="' + assetUrl('/', 'assets/css/style.css') + '">\n' +
+'</head>\n' +
+'<body class="pp-page pp-404-page">\n\n' +
+'<!-- Google Tag Manager (noscript) -->\n' +
+'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
+'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
+'<!-- End Google Tag Manager (noscript) -->\n\n' +
+nav(false) + '\n\n' +
+'  <header class="pp-section pp-404">\n' +
+'    <div class="pp-wrap pp-404__inner">\n' +
+'      <p class="pp-404__code"><bdi class="en">404</bdi></p>\n' +
+'      <h1 class="pp-area-title">الصفحة دي مش موجودة</h1>\n' +
+'      <p class="pp-summary">ممكن اللينك اتغيّر أو فيه حرف ناقص. كل مشاريع هايد بارك بأسعارها المحدّثة موجودة تحت، أو كلّمنا واتساب ونوصلك للي بتدوّر عليه.</p>\n' +
+'      <div class="pp-404__ctas">\n' +
+'        <a href="#" class="pp-btn pp-btn--green" data-whatsapp-link data-whatsapp-message="كنت بدوّر على صفحة في الموقع ومالقيتهاش، محتاج مساعدة" data-cta-location="404"><i class="fa-brands fa-whatsapp"></i> كلّمنا واتساب</a>\n' +
+'        <a class="pp-btn pp-btn--outline" href="/">الصفحة الرئيسية</a>\n' +
+'        ' + hubs + '\n' +
+'      </div>\n' +
+'    </div>\n' +
+'  </header>\n\n' +
+'  <section class="section section--gray">\n' +
+'    <h2 class="section-title">مشاريع هايد بارك</h2>\n' +
+'    <div class="grid grid--projects">\n' + cards + '    </div>\n' +
+'  </section>\n\n' +
+footer() + '\n\n' +
+'<script src="' + assetUrl('/', 'assets/js/main.js') + '"></script>\n' +
+'</body>\n' +
+'</html>\n');
+}
+
 /** Homepage project card (project pages use the lighter .pp-project-card in compareSectionMarkup). */
 function projectCardMarkup(p, href, extraClass, imgPrefix) {
   return (
@@ -1833,6 +1888,8 @@ Object.keys(AREAS).forEach(function (slug) {
   var changed = writeIfChanged('areas/' + slug + '.html', areaPage(slug, merged));
   console.log((changed ? 'wrote ' : 'unchanged ') + 'areas/' + slug + '.html');
 });
+writeIfChanged('404.html', notFoundPage(merged));
+console.log('wrote 404.html');
 updateIndexHtml(merged);
 writeIfChanged('assets/img/projects/README.md', imageChecklist(merged));
 console.log('wrote assets/img/projects/README.md (image checklist)');

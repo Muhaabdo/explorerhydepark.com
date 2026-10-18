@@ -481,6 +481,13 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 .pp-area-cta p { margin: 0; }
 .pp-area-link { margin: 10px 0 0; font-size: 14px; }
 
+/* 404 page */
+.pp-404 { padding-top: 110px; text-align: center; }
+.pp-404__inner { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.pp-404__code { margin: 0; font-family: var(--font-en); font-size: clamp(56px, 14vw, 96px); font-weight: 800; line-height: 1; color: var(--sky); }
+.pp-404__ctas .pp-btn--outline { border: 1.5px solid var(--blue); color: var(--blue); background: var(--white); }
+.pp-404__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+
 /* SEO additions (Oct 2026): breadcrumb, about paragraph, project phases */
 .pp-breadcrumb ol { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--muted); }
 .pp-breadcrumb li + li::before { content: "‹"; margin-inline-end: 4px; opacity: .6; }
