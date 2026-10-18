@@ -10,7 +10,7 @@
   // Google Apps Script Web app URL (ends in /exec) that appends each lead to
   // the leads Google Sheet — see tools/google-apps-script-leads.gs.
   // Empty = forms only open WhatsApp, as before.
-  var LEADS_ENDPOINT = '';
+  var LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzeMZVImHlYsm0fUty82f8U9Z2TH1-W9JihQjQ0irsSsqDm2AjCucIAywJASUaWmDPP-Q/exec';
   // sessionStorage key for the visit's source (set before captureAttribution runs).
   var ATTR_KEY = 'ehp_attr';
 
