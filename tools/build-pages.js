@@ -822,6 +822,7 @@ function leadSectionMarkup(p) {
     '              <input type="tel" id="lead-phone" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" autocomplete="tel-national" required>\n' +
     '            </div>\n' +
     '          </div>\n' +
+    '          <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">\n' +
     '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--ghost" data-step-back>رجوع</button><button type="submit" class="pp-btn pp-btn--green">ابعت الطلب</button></div>\n' +
     '        </div>\n' +
     '        <p class="pp-lead__error" data-step-error hidden>اختار إجابة لكل سؤال عشان نكمل.</p>\n' +

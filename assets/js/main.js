@@ -7,6 +7,13 @@
   var WHATSAPP_NUMBER = '201069090021'; // wa.me format: country code, no + or leading 0
   var PHONE_NUMBER = '+201069090021'; // international so the call works from abroad too
 
+  // Google Apps Script Web app URL (ends in /exec) that appends each lead to
+  // the leads Google Sheet — see tools/google-apps-script-leads.gs.
+  // Empty = forms only open WhatsApp, as before.
+  var LEADS_ENDPOINT = '';
+  // sessionStorage key for the visit's source (set before captureAttribution runs).
+  var ATTR_KEY = 'ehp_attr';
+
   // WhatsApp messages are plain text (no HTML, so no <bdi>) — Unicode isolate
   // marks are the plain-text equivalent, keeping an embedded run's direction
   // from bleeding into the surrounding Arabic sentence.
@@ -18,6 +25,8 @@
     var open = mode === 'auto' ? '⁨' /* FSI */ : '⁦' /* LRI */;
     return open + s + '⁩' /* PDI */;
   }
+
+  captureAttribution();
 
   document.addEventListener('DOMContentLoaded', function () {
     initNav();
@@ -413,7 +422,70 @@
     });
   }
 
-  /* ---------------- Lead forms: submit via WhatsApp, then go to thank-you ---------------- */
+  /* ---------------- Lead attribution (where this visit came from) ----------------
+     Stored once per browser session on the first page seen, so a form sent
+     three pages later still knows the visit came from Google Ads / organic. */
+
+  function readAttribution() {
+    try { return JSON.parse(sessionStorage.getItem(ATTR_KEY) || 'null'); } catch (e) { return null; }
+  }
+
+  function captureAttribution() {
+    if (readAttribution()) return;
+    var q = {};
+    location.search.replace(/^\?/, '').split('&').forEach(function (pair) {
+      if (!pair) return;
+      var i = pair.indexOf('=');
+      var k = decodeURIComponent(i === -1 ? pair : pair.slice(0, i));
+      var v = i === -1 ? '' : decodeURIComponent(pair.slice(i + 1).replace(/\+/g, ' '));
+      q[k] = v;
+    });
+    var ref = document.referrer || '';
+    var refHost = '';
+    try { refHost = ref ? new URL(ref).hostname.replace(/^www\./, '') : ''; } catch (e) { refHost = ''; }
+    if (refHost === location.hostname.replace(/^www\./, '')) { refHost = ''; ref = ''; }
+
+    var source = q.utm_source || '';
+    var medium = q.utm_medium || '';
+    if (!source) {
+      if (q.gclid || q.gbraid || q.wbraid) { source = 'google'; medium = 'cpc'; }
+      else if (/(^|\.)google\./.test(refHost)) { source = 'google'; medium = 'organic'; }
+      else if (/(^|\.)bing\.com$/.test(refHost)) { source = 'bing'; medium = 'organic'; }
+      else if (/(^|\.)(facebook\.com|instagram\.com|fb\.me|t\.co|x\.com|linkedin\.com)$/.test(refHost)) { source = refHost; medium = 'social'; }
+      else if (/(chatgpt\.com|openai\.com|perplexity\.ai|gemini\.google\.com|copilot\.microsoft\.com)/.test(refHost)) { source = refHost; medium = 'ai'; }
+      else if (refHost) { source = refHost; medium = 'referral'; }
+      else { source = '(direct)'; medium = '(none)'; }
+    }
+    var attr = {
+      source: source,
+      medium: medium,
+      campaign: q.utm_campaign || '',
+      term: q.utm_term || '',
+      content: q.utm_content || '',
+      gclid: q.gclid || q.gbraid || q.wbraid || '',
+      landing_page: location.pathname,
+      referrer: ref,
+    };
+    try { sessionStorage.setItem(ATTR_KEY, JSON.stringify(attr)); } catch (e) { /* private mode: skip */ }
+  }
+
+  /** Fire-and-forget POST to the Sheet. Never blocks or breaks the WhatsApp flow. */
+  function sendLead(data) {
+    if (!LEADS_ENDPOINT) return;
+    var attr = readAttribution() || {};
+    Object.keys(attr).forEach(function (k) { if (!(k in data)) data[k] = attr[k]; });
+    data.page = location.pathname;
+    // text/plain avoids a CORS preflight, which Apps Script can't answer.
+    var body = JSON.stringify(data);
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(LEADS_ENDPOINT, new Blob([body], { type: 'text/plain;charset=UTF-8' }))) return;
+    } catch (e) { /* fall through to fetch */ }
+    try {
+      fetch(LEADS_ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body });
+    } catch (e) { /* offline or blocked — WhatsApp still opens */ }
+  }
+
+  /* ---------------- Lead forms: save to Sheet, open WhatsApp, then go to thank-you ---------------- */
   function initLeadForms() {
     document.querySelectorAll('[data-lead-form]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
@@ -448,6 +520,23 @@
         if (email) lines.push('البريد الإلكتروني: ' + isolate(email, 'ltr'));
         if (message) lines.push('الرسالة: ' + isolate(message, 'auto'));
         if (!lines.length) lines.push('أرغب بمعرفة التفاصيل');
+
+        // Honeypot filled = bot: skip the Sheet (the rest behaves the same).
+        var honeypot = (form.querySelector('[name="website"]') || {}).value || '';
+        if (!honeypot) {
+          sendLead({
+            form: form.hasAttribute('data-multistep') ? 'project' : 'contact',
+            project: project,
+            name: name,
+            phone: (code + ' ' + phone).trim(),
+            email: email,
+            message: message,
+            purpose: answers.purpose,
+            budget_range: answers.budget_range,
+            unit_type: answers.unit_type,
+            timing: answers.timing,
+          });
+        }
 
         window.open(whatsappUrl(lines.join('\n')), '_blank', 'noopener');
 
