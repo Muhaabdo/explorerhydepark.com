@@ -484,9 +484,14 @@ function unitsSectionMarkup(p) {
   unitRows(p).forEach(function (r) { (rowsByKey[r.unit.key] = rowsByKey[r.unit.key] || []).push(r); });
 
   var panels = p.units.map(function (u, i) {
+    // No photo for this unit type yet → the project's own hero/gallery photo,
+    // never an empty "صورة …" placeholder box on the live page.
+    var fallbackImg = findImage(p.slug, 'hero') || p.galleryImages[0];
     var media = u.image
-      ? '<img class="real-img" src="../' + u.image + '" alt="' + escapeHtml(u.nameAr + ' في ' + p.nameEn) + '" loading="lazy" decoding="async">'
-      : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(u.placeholder) + '</span></div>';
+      ? '<img class="real-img" src="../' + u.image + '" alt="' + escapeHtml(u.nameAr + ' في ' + p.nameAr) + '" loading="lazy" decoding="async">'
+      : fallbackImg
+        ? '<img class="real-img" src="../' + fallbackImg + '" alt="' + escapeHtml(p.nameAr + ' — ' + u.nameAr) + '" loading="lazy" decoding="async">'
+        : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(u.placeholder) + '</span></div>';
     var chip = u.count === 1 ? '<span class="pp-unit__avail">آخر وحدة</span>'
       : (u.count ? '<span class="pp-unit__avail">متاح <bdi class="en">' + u.count + '</bdi></span>' : '');
     var rows = rowsByKey[u.key].map(function (r) {
@@ -1023,12 +1028,27 @@ function phasesMarkup(p) {
   );
 }
 
+/** srcset from assets/img/projects/<slug>/responsive/<slug>-hero-<w>.webp
+ * (made by tools/make-responsive.py) plus the original at its own width. */
+function heroSrcset(p, img, size) {
+  var dir = path.join(IMG_ROOT, p.slug, 'responsive');
+  if (!fs.existsSync(dir)) return '';
+  var re = new RegExp('^' + p.slug + '-hero-(\\d+)\\.webp$', 'i');
+  var list = fs.readdirSync(dir).map(function (f) {
+    var m = re.exec(f);
+    return m ? { w: Number(m[1]), src: '../assets/img/projects/' + p.slug + '/responsive/' + f } : null;
+  }).filter(Boolean).sort(function (a, b) { return a.w - b.w; });
+  if (!list.length || !size) return '';
+  list.push({ w: size.width, src: '../' + img });
+  return ' srcset="' + list.map(function (x) { return x.src + ' ' + x.w + 'w'; }).join(', ') + '" sizes="100vw"';
+}
+
 function heroMarkup(p) {
   var img = findImage(p.slug, 'hero');
   var media;
   if (img) {
     var size = imageSize(img);
-    media = '<img class="pp-hero__img" src="../' + img + '" alt="' + escapeHtml(p.nameAr + ' — ' + areaLabel(p)) + '"' +
+    media = '<img class="pp-hero__img" src="../' + img + '"' + heroSrcset(p, img, size) + ' alt="' + escapeHtml(p.nameAr + ' — ' + areaLabel(p)) + '"' +
       (size ? ' width="' + size.width + '" height="' + size.height + '"' : '') + ' fetchpriority="high" decoding="async">';
   } else {
     media = '<div class="img-slot pp-hero__img"><i class="fa-solid fa-image"></i><span>' + escapeHtml(p.heroPlaceholder) + '</span></div>';
@@ -1417,6 +1437,30 @@ function assetUrl(prefix, rel) {
 }
 
 /** Re-versions every local CSS/JS reference in a hand-written page. */
+/** Hand-written pages share the footer project list (and the contact form's
+ * project <select>) with the data — regenerate both so names never drift. */
+function syncStaticProjectLists(relPath) {
+  var filePath = path.join(ROOT, relPath);
+  var html = fs.readFileSync(filePath, 'utf8');
+  var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  var updated = html.replace(
+    /(<span class="footer__heading">المشاريع<\/span>)[\s\S]*?(\r?\n\s*<\/div>)/,
+    function (m, head, tail) {
+      return head + nl + projects.map(function (p) {
+        return '        <a href="/projects/' + p.slug + '">' + p.nameAr + '</a>';
+      }).join(nl) + tail;
+    }
+  ).replace(
+    /(<select name="project">\s*<option value="">[^<]*<\/option>)[\s\S]*?(\r?\n\s*<\/select>)/,
+    function (m, head, tail) {
+      return head + nl + projects.map(function (p) {
+        return '              <option value="' + escapeHtml(p.nameEn) + '">' + escapeHtml(p.nameAr) + '</option>';
+      }).join(nl) + tail;
+    }
+  );
+  writeIfChanged(relPath, updated);
+}
+
 function versionStaticAssets(relPath) {
   var html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
   var updated = html.replace(/(["'])((?:\.\.\/)?)(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?:\?v=\w+)?\1/g, function (m, q, prefix, rel) {
@@ -1558,6 +1602,7 @@ console.log('wrote assets/img/projects/README.md (image checklist)');
 injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('contact.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
+['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(syncStaticProjectLists);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(versionStaticAssets);
 // Last: lastmod depends on which pages changed above.
 writeSitemap(merged);
