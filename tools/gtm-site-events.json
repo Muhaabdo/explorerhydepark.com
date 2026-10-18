@@ -1,0 +1,572 @@
+{
+ "exportFormatVersion": 2,
+ "exportTime": "2026-10-18 13:40:00",
+ "containerVersion": {
+  "path": "accounts/6373651683/containers/262432095/versions/0",
+  "accountId": "6373651683",
+  "containerId": "262432095",
+  "containerVersionId": "0",
+  "container": {
+   "path": "accounts/6373651683/containers/262432095",
+   "accountId": "6373651683",
+   "containerId": "262432095",
+   "name": "explorerhydepark",
+   "publicId": "GTM-5FD83KJ7",
+   "usageContext": [
+    "WEB"
+   ]
+  },
+  "tag": [
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "tagId": "9201",
+    "name": "GA4 - Site Events",
+    "type": "gaawe",
+    "parameter": [
+     {
+      "type": "BOOLEAN",
+      "key": "sendEcommerceData",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "eventName",
+      "value": "{{Event}}"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "measurementIdOverride",
+      "value": "G-L0SYPRFLPN"
+     },
+     {
+      "type": "LIST",
+      "key": "eventSettingsTable",
+      "list": [
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "form_type"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - form_type}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "project_name"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - project_name}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "purpose"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - purpose}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "budget_range"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - budget_range}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "unit_type"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - unit_type}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "timing"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - timing}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "step"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - step}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "monthly_budget"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - monthly_budget}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "cta_location"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - cta_location}}"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "firingTriggerId": [
+     "9001"
+    ],
+    "tagFiringOption": "ONCE_PER_EVENT",
+    "monitoringMetadata": {
+     "type": "MAP"
+    },
+    "consentSettings": {
+     "consentStatus": "NOT_SET"
+    }
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "tagId": "9202",
+    "name": "Ga-4",
+    "type": "googtag",
+    "parameter": [
+     {
+      "type": "TEMPLATE",
+      "key": "tagId",
+      "value": "G-L0SYPRFLPN"
+     },
+     {
+      "type": "LIST",
+      "key": "configSettingsTable",
+      "list": [
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "page_type"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - page_type}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "project_name"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - project_name}}"
+         }
+        ]
+       },
+       {
+        "type": "MAP",
+        "map": [
+         {
+          "type": "TEMPLATE",
+          "key": "parameter",
+          "value": "area"
+         },
+         {
+          "type": "TEMPLATE",
+          "key": "parameterValue",
+          "value": "{{DLV - area}}"
+         }
+        ]
+       }
+      ]
+     }
+    ],
+    "firingTriggerId": [
+     "2147479573"
+    ],
+    "tagFiringOption": "ONCE_PER_EVENT",
+    "monitoringMetadata": {
+     "type": "MAP"
+    },
+    "consentSettings": {
+     "consentStatus": "NOT_SET"
+    }
+   }
+  ],
+  "trigger": [
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "triggerId": "9001",
+    "name": "CE - Site Events",
+    "type": "CUSTOM_EVENT",
+    "customEventFilter": [
+     {
+      "type": "MATCH_REGEX",
+      "parameter": [
+       {
+        "type": "TEMPLATE",
+        "key": "arg0",
+        "value": "{{_event}}"
+       },
+       {
+        "type": "TEMPLATE",
+        "key": "arg1",
+        "value": "^(unit_tab_click|calculator_used|lead_form_step|phone_click|generate_lead)$"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "variable": [
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9101",
+    "name": "DLV - page_type",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "page_type"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9102",
+    "name": "DLV - project_name",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "project_name"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9103",
+    "name": "DLV - area",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "area"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9104",
+    "name": "DLV - form_type",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "form_type"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9105",
+    "name": "DLV - purpose",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "purpose"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9106",
+    "name": "DLV - budget_range",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "budget_range"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9107",
+    "name": "DLV - unit_type",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "unit_type"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9108",
+    "name": "DLV - timing",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "timing"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9109",
+    "name": "DLV - step",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "step"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9110",
+    "name": "DLV - monthly_budget",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "monthly_budget"
+     }
+    ]
+   },
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "variableId": "9111",
+    "name": "DLV - cta_location",
+    "type": "v",
+    "parameter": [
+     {
+      "type": "INTEGER",
+      "key": "dataLayerVersion",
+      "value": "2"
+     },
+     {
+      "type": "BOOLEAN",
+      "key": "setDefaultValue",
+      "value": "false"
+     },
+     {
+      "type": "TEMPLATE",
+      "key": "name",
+      "value": "cta_location"
+     }
+    ]
+   }
+  ],
+  "builtInVariable": [
+   {
+    "accountId": "6373651683",
+    "containerId": "262432095",
+    "type": "EVENT",
+    "name": "Event"
+   }
+  ]
+ }
+}

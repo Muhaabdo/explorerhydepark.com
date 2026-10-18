@@ -33,6 +33,15 @@ http.createServer(function (req, res) {
   fs.readFile(filePath, function (err, data) {
     if (err) { res.writeHead(404); res.end('Not found: ' + urlPath); return; }
     var ext = path.extname(filePath);
+    // Local visits must not reach Google Analytics (they were showing up as
+    // localhost page views). The GTM loader gets an empty script instead;
+    // dataLayer pushes still happen, so you can inspect them in the console.
+    // To test GTM itself (Preview mode): GTM=1 node tools/dev-server.js
+    if (ext === '.html' && !process.env.GTM) {
+      data = Buffer.from(String(data).replace(
+        /https:\/\/www\.googletagmanager\.com\/gtm\.js\?id=/g,
+        'data:text/javascript,//gtm-off-locally?id='));
+    }
     res.writeHead(200, { 'Content-Type': TYPES[ext] || 'application/octet-stream' });
     res.end(data);
   });
