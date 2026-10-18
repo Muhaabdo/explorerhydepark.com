@@ -10,6 +10,8 @@
     return '<span class="fi fi-' + String(iso2).toLowerCase() + '"></span>';
   }
 
+  var EN = document.documentElement.lang === 'en';
+
   function initPhoneField(root) {
     var countries = window.HP_COUNTRIES || [];
     var toggle = root.querySelector('.phone-field__toggle');
@@ -49,7 +51,7 @@
       if (!matches.length) {
         var empty = document.createElement('div');
         empty.className = 'phone-field__empty';
-        empty.textContent = 'مفيش نتائج';
+        empty.textContent = EN ? 'No results' : 'مفيش نتائج';
         list.appendChild(empty);
         return;
       }
@@ -60,7 +62,7 @@
         btn.setAttribute('role', 'option');
         btn.innerHTML =
           '<span class="flag">' + flagIcon(c.iso2) + '</span>' +
-          '<span class="name">' + (c.nameAr || c.name) + '</span>' +
+          '<span class="name">' + (EN ? c.name : (c.nameAr || c.name)) + '</span>' +
           '<span class="dial">+' + c.dial + '</span>';
         btn.addEventListener('click', function () { select(c); });
         list.appendChild(btn);

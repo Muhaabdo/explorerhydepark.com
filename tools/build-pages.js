@@ -342,8 +342,9 @@ function mergeProject(p) {
   });
 }
 
-/** overlay: transparent over a hero image until the page scrolls (project pages). */
-function nav(overlay) {
+/** overlay: transparent over a hero image until the page scrolls (project pages).
+ * enHref: the English twin of this page — adds an "English" switch when given. */
+function nav(overlay, enHref) {
   var links = [
     { href: '/', label: 'الرئيسية' },
     { href: '/#projects', label: 'المشاريع' },
@@ -356,12 +357,14 @@ function nav(overlay) {
   var mobile = links.map(function (l) {
     return '<a href="' + l.href + '">' + l.label + '</a>';
   }).join('\n      ');
+  var lang = enHref ? '<a href="' + enHref + '" class="navbar__lang" lang="en" hreflang="en">English</a>' : '';
 
   return (
     '  <nav class="navbar' + (overlay ? ' navbar--overlay' : '') + '">\n' +
     '    <a href="/" class="navbar__brand">Explorer Hyde Park</a>\n' +
     '    <div class="navbar__links">\n' +
     '        ' + desktop + '\n' +
+    (lang ? '        ' + lang + '\n' : '') +
     '    </div>\n' +
     '    <button class="navbar__toggle" aria-label="فتح القائمة" data-nav-toggle>\n' +
     '      <span></span><span></span><span></span>\n' +
@@ -371,6 +374,7 @@ function nav(overlay) {
     '  </nav>\n' +
     '  <div class="mobile-menu">\n' +
     '      ' + mobile + '\n' +
+    (lang ? '      ' + lang + '\n' : '') +
     '  </div>'
   );
 }
@@ -1299,6 +1303,15 @@ function injectStaticOgTags(relPath, imageUrl) {
   console.log('updated OG/Twitter tags in ' + relPath);
 }
 
+/** Arabic page ↔ English twin (x-default = Arabic, the site's main language). */
+function hreflangLinks(arPath, enPath) {
+  return (
+    '<link rel="alternate" hreflang="ar" href="' + SITE_ORIGIN + arPath + '">\n' +
+    '<link rel="alternate" hreflang="en" href="' + SITE_ORIGIN + enPath + '">\n' +
+    '<link rel="alternate" hreflang="x-default" href="' + SITE_ORIGIN + arPath + '">\n'
+  );
+}
+
 function page(p, allMerged) {
   var title = seoTitle(p);
   var description = seoDescription(p);
@@ -1321,6 +1334,7 @@ pageContextScript({ page_type: 'project', project_name: p.nameEn, area: p.areaSl
 '<title>' + escapeHtml(title) + '</title>\n' +
 '<meta name="description" content="' + escapeHtml(description) + '">\n' +
 '<link rel="canonical" href="' + canonical + '">\n' +
+hreflangLinks('/projects/' + p.slug, '/en/projects/' + p.slug) +
 ogTagsMarkup({ title: title, description: description, url: canonical, image: ogImageUrl(p.slug) }) + '\n' +
 '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
@@ -1335,7 +1349,7 @@ pageJsonLd(p, canonical) + '\n' +
 '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
 'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
 '<!-- End Google Tag Manager (noscript) -->\n\n' +
-nav(true) + '\n\n' +
+nav(true, '/en/projects/' + p.slug) + '\n\n' +
 heroMarkup(p) + '\n' +
 sectionNavMarkup(p) + '\n' +
 preliminaryNotice(p) +
@@ -1805,7 +1819,7 @@ function previousLastmods() {
 
 // thank-you.html is deliberately excluded — it carries <meta name="robots"
 // content="noindex, follow"> so it shouldn't be advertised for indexing.
-function sitemapUrls(merged) {
+function sitemapUrls(merged, extra) {
   var today = new Date().toISOString().slice(0, 10);
   var prev = previousLastmods();
   var urls = [
@@ -1819,12 +1833,13 @@ function sitemapUrls(merged) {
   Object.keys(AREAS).forEach(function (slug) {
     if (areaUrl(slug)) urls.push({ loc: SITE_ORIGIN + areaUrl(slug), file: 'areas/' + slug + '.html', changefreq: 'weekly', priority: '0.8' });
   });
+  urls = urls.concat(extra || []);
   urls.forEach(function (u) { u.lastmod = changedFiles[u.file] || !prev[u.loc] ? today : prev[u.loc]; });
   return urls;
 }
 
-function writeSitemap(merged) {
-  var urls = sitemapUrls(merged);
+function writeSitemap(merged, extra) {
+  var urls = sitemapUrls(merged, extra);
   var body = urls.map(function (u) {
     return (
       '  <url>\n' +
@@ -1926,6 +1941,15 @@ injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(syncStaticProjectLists);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(injectStaticPageContext);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(versionStaticAssets);
+// English pages (/en/...): same data, English wording — see tools/build-en.js.
+var englishUrls = require('./build-en')({
+  merged: merged, pricing: pricing, ROOT: ROOT, IMG_ROOT: IMG_ROOT, SITE_ORIGIN: SITE_ORIGIN, SITE_NAME: SITE_NAME,
+  PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
+  fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
+  groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
+  pageContextScript: pageContextScript, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
+  bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged,
+});
 // Last: lastmod depends on which pages changed above.
-writeSitemap(merged);
+writeSitemap(merged, englishUrls);
 writeRobotsTxt();

@@ -26,6 +26,10 @@
     return open + s + '⁩' /* PDI */;
   }
 
+  // English pages (/en/...) are <html lang="en">; every visible string or
+  // WhatsApp message built here picks its language from that.
+  var EN = document.documentElement.lang === 'en';
+
   captureAttribution();
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -257,21 +261,30 @@
         var fit = row.querySelector('[data-calc-fit]');
         var noFit = row.querySelector('[data-calc-nofit]');
         if (!monthly) {
-          detail.textContent = 'اكتب القسط وهنحسبلك المقدم';
+          detail.textContent = EN ? 'Enter an installment to see the down payment' : 'اكتب القسط وهنحسبلك المقدم';
           fit.hidden = true; noFit.hidden = true;
           return;
         }
         var dp = Math.max(price * downPct / 100, price - monthly * months);
         var pct = Math.round(dp / price * 100);
         var fits = pct <= 50;
-        detail.textContent = fits
-          ? 'مقدم ' + fmt(dp) + ' (' + pct + '%) · قسط ' + fmt((price - dp) / months)
-          : 'محتاج مقدم ' + pct + '% من السعر';
+        // English wording must match calcResult() in tools/build-en.js.
+        detail.textContent = EN
+          ? (fits ? 'Down ' + fmt(dp) + ' (' + pct + '%) · Monthly ' + fmt((price - dp) / months) : 'Needs ' + pct + '% down')
+          : (fits ? 'مقدم ' + fmt(dp) + ' (' + pct + '%) · قسط ' + fmt((price - dp) / months) : 'محتاج مقدم ' + pct + '% من السعر');
         fit.hidden = !fits; noFit.hidden = fits;
       });
       if (monthly) {
-        ctaText.textContent = 'ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر';
-        setWhatsappMessage(cta, 'عايز وحدة في ' + isolate(project, 'ltr') + ' على قد ' + fmt(monthly) + ' جنيه في الشهر. ابعتلي الوحدات المناسبة.');
+        if (EN) {
+          ctaText.textContent = 'Send me units around EGP ' + fmt(monthly) + ' a month';
+          setWhatsappMessage(cta, 'Hi, I’m looking for a unit at ' + project + ' around EGP ' + fmt(monthly) + ' a month. Please send me suitable units.');
+        } else {
+          ctaText.textContent = 'ابعتلي الوحدات اللي على قد ' + fmt(monthly) + ' جنيه في الشهر';
+          setWhatsappMessage(cta, 'عايز وحدة في ' + isolate(project, 'ltr') + ' على قد ' + fmt(monthly) + ' جنيه في الشهر. ابعتلي الوحدات المناسبة.');
+        }
+      } else if (EN) {
+        ctaText.textContent = 'Enter a monthly installment first';
+        setWhatsappMessage(cta, 'Hi, I’d like to know the available units and installment plans at ' + project + '.');
       } else {
         ctaText.textContent = 'اكتب القسط الشهري الأول';
         setWhatsappMessage(cta, 'عايز أعرف الوحدات المتاحة في ' + isolate(project, 'ltr') + ' وخطط التقسيط.');
@@ -328,7 +341,7 @@
         current = i;
         steps.forEach(function (s, n) { s.classList.toggle('is-current', n === i); });
         bars.forEach(function (b, n) { b.classList.toggle('is-done', n <= i); });
-        if (label) label.textContent = 'خطوة ' + (i + 1) + ' من ' + steps.length;
+        if (label) label.textContent = EN ? 'Step ' + (i + 1) + ' of ' + steps.length : 'خطوة ' + (i + 1) + ' من ' + steps.length;
         if (error) error.hidden = true;
       }
 
@@ -360,7 +373,7 @@
 
       if (note) {
         form.querySelectorAll('[name="purpose"]').forEach(function (r) {
-          r.addEventListener('change', function () { note.hidden = answer('purpose') !== 'سكن فوري'; });
+          r.addEventListener('change', function () { note.hidden = ['سكن فوري', 'Move in now'].indexOf(answer('purpose')) === -1; });
         });
       }
     });
@@ -428,7 +441,7 @@
 
   function initWhatsappLinks() {
     document.querySelectorAll('[data-whatsapp-link]').forEach(function (el) {
-      el.setAttribute('href', whatsappUrl(el.getAttribute('data-whatsapp-message') || 'أرغب بمعرفة التفاصيل'));
+      el.setAttribute('href', whatsappUrl(el.getAttribute('data-whatsapp-message') || (EN ? 'Hi, I’d like more details.' : 'أرغب بمعرفة التفاصيل')));
     });
     document.querySelectorAll('[data-phone-link]').forEach(function (el) {
       el.setAttribute('href', 'tel:' + PHONE_NUMBER);
@@ -523,16 +536,28 @@
         };
 
         var lines = [];
-        if (project) lines.push('مهتم بـ: ' + isolate(project, 'ltr'));
-        if (answers.purpose) lines.push('الغرض: ' + answers.purpose);
-        if (answers.budget_range) lines.push('القسط المريح: ' + answers.budget_range);
-        if (answers.unit_type) lines.push('نوع الوحدة: ' + answers.unit_type);
-        if (answers.timing) lines.push('الشراء: ' + answers.timing);
-        if (name) lines.push('الاسم: ' + isolate(name, 'auto'));
-        if (phone) lines.push('الهاتف: ' + isolate(code + phone, 'ltr'));
-        if (email) lines.push('البريد الإلكتروني: ' + isolate(email, 'ltr'));
-        if (message) lines.push('الرسالة: ' + isolate(message, 'auto'));
-        if (!lines.length) lines.push('أرغب بمعرفة التفاصيل');
+        if (EN) {
+          lines.push('Hi, I’d like unit recommendations.');
+          if (project) lines.push('Project: ' + project);
+          if (answers.purpose) lines.push('Purpose: ' + answers.purpose);
+          if (answers.budget_range) lines.push('Monthly installment: ' + answers.budget_range + ' EGP');
+          if (answers.unit_type) lines.push('Unit type: ' + answers.unit_type);
+          if (answers.timing) lines.push('Buying: ' + answers.timing);
+          if (name) lines.push('Name: ' + isolate(name, 'auto'));
+          if (phone) lines.push('Phone: ' + isolate(code + phone, 'ltr'));
+          if (email) lines.push('Email: ' + email);
+          if (message) lines.push('Message: ' + isolate(message, 'auto'));
+        }
+        if (!EN && project) lines.push('مهتم بـ: ' + isolate(project, 'ltr'));
+        if (!EN && answers.purpose) lines.push('الغرض: ' + answers.purpose);
+        if (!EN && answers.budget_range) lines.push('القسط المريح: ' + answers.budget_range);
+        if (!EN && answers.unit_type) lines.push('نوع الوحدة: ' + answers.unit_type);
+        if (!EN && answers.timing) lines.push('الشراء: ' + answers.timing);
+        if (!EN && name) lines.push('الاسم: ' + isolate(name, 'auto'));
+        if (!EN && phone) lines.push('الهاتف: ' + isolate(code + phone, 'ltr'));
+        if (!EN && email) lines.push('البريد الإلكتروني: ' + isolate(email, 'ltr'));
+        if (!EN && message) lines.push('الرسالة: ' + isolate(message, 'auto'));
+        if (!lines.length) lines.push(EN ? 'Hi, I’d like more details.' : 'أرغب بمعرفة التفاصيل');
 
         // Honeypot filled = bot: skip the Sheet (the rest behaves the same).
         var honeypot = (form.querySelector('[name="website"]') || {}).value || '';
@@ -590,9 +615,13 @@
     if (!/^\/(?!\/)[\w\-\/]*$/.test(from) || from === '/' || /thank-you/.test(from)) return;
     link.setAttribute('href', from);
     var label = link.querySelector('[data-return-label]');
-    if (label) label.textContent = from.indexOf('/projects/') === 0 ? 'ارجع لصفحة المشروع' : 'ارجع للصفحة اللي كنت فيها';
+    var isProject = /^\/(en\/)?projects\//.test(from);
+    if (label) label.textContent = EN
+      ? (isProject ? 'Back to the project page' : 'Back to the page you were on')
+      : (isProject ? 'ارجع لصفحة المشروع' : 'ارجع للصفحة اللي كنت فيها');
     var icon = link.querySelector('i');
-    if (icon) icon.className = 'fa-solid fa-arrow-right';
+    // "Back" points toward where the line starts: right in Arabic, left in English.
+    if (icon) icon.className = EN ? 'fa-solid fa-arrow-left' : 'fa-solid fa-arrow-right';
   }
 
   function initPhoneTracking() {

@@ -30,6 +30,8 @@ http.createServer(function (req, res) {
   // Same as .htaccess rule 3 on the live server: /projects/x -> /projects/x.html,
   // so the site's extensionless links work locally too.
   if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) filePath += '.html';
+  // A folder (/en/) serves its index.html, like Apache's DirectoryIndex.
+  else if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) filePath = path.join(filePath, 'index.html');
   fs.readFile(filePath, function (err, data) {
     if (err) { res.writeHead(404); res.end('Not found: ' + urlPath); return; }
     var ext = path.extname(filePath);
