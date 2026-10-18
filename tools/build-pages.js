@@ -366,6 +366,8 @@ function nav(overlay, enHref) {
     '        ' + desktop + '\n' +
     (lang ? '        ' + lang + '\n' : '') +
     '    </div>\n' +
+    // Phones: the language switch sits in the bar itself, next to the menu button.
+    (lang ? '    ' + lang.replace('class="navbar__lang"', 'class="navbar__lang navbar__lang--bar"') + '\n' : '') +
     '    <button class="navbar__toggle" aria-label="فتح القائمة" data-nav-toggle>\n' +
     '      <span></span><span></span><span></span>\n' +
     '    </button>\n' +
@@ -374,7 +376,6 @@ function nav(overlay, enHref) {
     '  </nav>\n' +
     '  <div class="mobile-menu">\n' +
     '      ' + mobile + '\n' +
-    (lang ? '      ' + lang + '\n' : '') +
     '  </div>'
   );
 }

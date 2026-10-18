@@ -984,7 +984,16 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 }
 .navbar__lang[lang="en"] { font-family: var(--font-en); }
 .navbar__lang[lang="ar"] { font-family: 'Cairo', system-ui, sans-serif; }
-.mobile-menu .navbar__lang { border: none; border-radius: 0; padding: 12px 0; }
+/* Desktop/tablet: the switch is the last item of .navbar__links. Phones
+   (links hidden): a copy in the bar, pushed to the end next to the menu button. */
+.navbar__lang--bar { display: none; }
+@media (max-width: 767px) {
+  .navbar__lang--bar {
+    display: inline-flex; align-items: center; min-height: 36px;
+    margin-inline-start: auto; margin-inline-end: 12px;
+    color: var(--white); text-decoration: none; font-size: 14px;
+  }
+}
 
 html[lang="en"] { --font-ar: 'Manrope', system-ui, sans-serif; }
 html[dir="ltr"] body { direction: ltr; }

@@ -202,6 +202,8 @@ module.exports = function buildEnglish(h) {
       '        ' + row('        ') + '\n' +
       '        ' + lang + '\n' +
       '    </div>\n' +
+      // Phones: the language switch sits in the bar itself, next to the menu button.
+      '    ' + lang.replace('class="navbar__lang"', 'class="navbar__lang navbar__lang--bar"') + '\n' +
       '    <button class="navbar__toggle" aria-label="Open menu" data-nav-toggle>\n' +
       '      <span></span><span></span><span></span>\n' +
       '    </button>\n' +
@@ -209,7 +211,6 @@ module.exports = function buildEnglish(h) {
       '  </nav>\n' +
       '  <div class="mobile-menu">\n' +
       '      ' + row('      ') + '\n' +
-      '      ' + lang + '\n' +
       '  </div>'
     );
   }
