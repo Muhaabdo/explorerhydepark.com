@@ -954,6 +954,13 @@ function seoDescription(p) {
   return out.length > 160 ? head : out;
 }
 
+/** Page context for GA4 (via GTM): pushed BEFORE the GTM snippet so the
+ * page_view and every event on the page carry page_type / project_name / area. */
+function pageContextScript(ctx) {
+  return '<script>window.dataLayer=window.dataLayer||[];window.dataLayer.push(' +
+    JSON.stringify(ctx).replace(/</g, '\\u003c') + ');</script>\n';
+}
+
 function jsonLd(data) {
   return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
 }
@@ -1301,6 +1308,7 @@ function page(p, allMerged) {
   return bakeContactLinks('<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
+pageContextScript({ page_type: 'project', project_name: p.nameEn, area: p.areaSlug }) +
 '<!-- Google Tag Manager -->\n' +
 '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
 'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
@@ -1500,6 +1508,7 @@ function areaPage(slug, merged) {
   return bakeContactLinks('<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
+pageContextScript({ page_type: 'area', project_name: '', area: slug }) +
 '<!-- Google Tag Manager -->\n' +
 '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
 'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
@@ -1586,6 +1595,7 @@ function notFoundPage(merged) {
   return bakeContactLinks('<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
+pageContextScript({ page_type: '404', project_name: '', area: '' }) +
 '<!-- Google Tag Manager -->\n' +
 '<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
 'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
@@ -1743,6 +1753,23 @@ function syncStaticProjectLists(relPath) {
   writeIfChanged(relPath, updated);
 }
 
+var CTX_START = '<!-- AUTO:CTX:START -->';
+var CTX_END = '<!-- AUTO:CTX:END -->';
+var STATIC_PAGE_TYPES = { 'index.html': 'home', 'contact.html': 'contact', 'privacy.html': 'privacy', 'thank-you.html': 'thank_you' };
+
+/** Same page-context push as the generated pages, spliced in right before
+ * the GTM snippet of each hand-written page (between AUTO:CTX markers). */
+function injectStaticPageContext(relPath) {
+  var filePath = path.join(ROOT, relPath);
+  var html = fs.readFileSync(filePath, 'utf8');
+  var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  var block = CTX_START + nl + pageContextScript({ page_type: STATIC_PAGE_TYPES[relPath], project_name: '', area: '' }).trim() + nl + CTX_END;
+  var re = new RegExp(CTX_START + '[\\s\\S]*?' + CTX_END);
+  var updated = re.test(html) ? html.replace(re, block)
+    : html.replace('<!-- Google Tag Manager -->', block + nl + '<!-- Google Tag Manager -->');
+  writeIfChanged(relPath, updated);
+}
+
 function versionStaticAssets(relPath) {
   var html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
   var updated = html.replace(/(["'])((?:\.\.\/)?)(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?:\?v=\w+)?\1/g, function (m, q, prefix, rel) {
@@ -1897,6 +1924,7 @@ injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('contact.html', OG_DEFAULT_IMAGE);
 injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(syncStaticProjectLists);
+['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(injectStaticPageContext);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(versionStaticAssets);
 // Last: lastmod depends on which pages changed above.
 writeSitemap(merged);

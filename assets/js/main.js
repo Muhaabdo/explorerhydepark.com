@@ -41,6 +41,7 @@
     initFloatWhatsapp();
     initYear();
     initReturnLink();
+    initPhoneTracking();
   });
 
   /* ---------------- Floating WhatsApp: hidden over the hero, shown after it ---------------- */
@@ -166,14 +167,25 @@
     Object.keys(chips).forEach(function (id) { io.observe(document.getElementById(id)); });
   }
 
-  /* ---------------- Analytics: new V5 events only ----------------
-     whatsapp_click and generate_lead are GTM triggers already (click on
-     [data-whatsapp-link] / thank-you page view) — never push them here, or
-     they double count. */
-  function track(event, params) {
+  /* ---------------- Analytics ----------------
+     Events pushed here are forwarded to GA4 by one GTM tag ("GA4 - Site
+     Events", Custom Event trigger on these names): unit_tab_click,
+     calculator_used, lead_form_step, phone_click, generate_lead.
+     whatsapp_click stays a GTM click trigger on [data-whatsapp-link] — never
+     push it here, or it double counts. generate_lead is pushed on form
+     submit (not on the thank-you page view, which refreshes re-counted). */
+  function track(event, params, done) {
     window.dataLayer = window.dataLayer || [];
     var payload = { event: event };
     Object.keys(params || {}).forEach(function (k) { payload[k] = params[k]; });
+    if (done) {
+      // Let GTM send the hit before the page navigates; never wait > 1s.
+      var called = false;
+      var finish = function () { if (!called) { called = true; done(); } };
+      payload.eventCallback = finish;
+      payload.eventTimeout = 1000;
+      setTimeout(finish, 1200);
+    }
     window.dataLayer.push(payload);
   }
 
@@ -554,7 +566,16 @@
         }
         // Lets the thank-you page send the visitor back to the page they were on.
         successUrl += (successUrl.indexOf('?') === -1 ? '?' : '&') + 'from=' + encodeURIComponent(location.pathname);
-        window.location.href = successUrl;
+        var go = function () { window.location.href = successUrl; };
+        if (honeypot) { go(); return; }
+        track('generate_lead', {
+          form_type: form.hasAttribute('data-multistep') ? 'project' : 'contact',
+          project_name: project,
+          purpose: answers.purpose,
+          budget_range: answers.budget_range,
+          unit_type: answers.unit_type,
+          timing: answers.timing,
+        }, go);
       });
     });
   }
@@ -572,6 +593,13 @@
     if (label) label.textContent = from.indexOf('/projects/') === 0 ? 'ارجع لصفحة المشروع' : 'ارجع للصفحة اللي كنت فيها';
     var icon = link.querySelector('i');
     if (icon) icon.className = 'fa-solid fa-arrow-right';
+  }
+
+  function initPhoneTracking() {
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('[data-phone-link]');
+      if (el) track('phone_click', { cta_location: el.getAttribute('data-cta-location') || '' });
+    });
   }
 
   function initYear() {
