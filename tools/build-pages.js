@@ -27,6 +27,17 @@ const OUT_DIR = path.join(ROOT, 'projects');
 const SITE_ORIGIN = 'https://www.explorerhydepark.com';
 const OG_DEFAULT_IMAGE = SITE_ORIGIN + '/assets/img/og-default.jpg';
 
+// Same contact number as assets/js/main.js. Baked into every wa.me / tel:
+// href at build time so the links work (and are crawlable) before any JS
+// runs; main.js still rewrites them on load, so keep the two in sync.
+const WHATSAPP_NUMBER = '201069090021';
+const PHONE_NUMBER = '+201069090021';
+const DEFAULT_WA_MESSAGE = 'أرغب بمعرفة التفاصيل';
+
+// Unit types where a bedroom count means something to a buyer. Villas and
+// townhouses in the export sometimes carry a stray "1" — never show it.
+const ROOM_TYPES = ['Apartment', 'Standard Chalet', 'Beach Chalet'];
+
 function fmt(n) {
   return Math.round(n).toLocaleString('en-US');
 }
@@ -287,7 +298,7 @@ function mergeProject(p) {
       name: u.type,
       nameAr: u.label,
       area: formatArea(u.areaMin, u.areaMax),
-      rooms: formatRooms(u.bedrooms),
+      rooms: formatRooms(ROOM_TYPES.indexOf(u.type) !== -1 ? u.bedrooms : []),
       price: u.minPrice,
       count: u.count,
       placeholder: 'صورة ' + u.label,
@@ -300,18 +311,18 @@ function mergeProject(p) {
 
   var faqs = [
     {
-      q: 'ما هو سعر الوحدات في ' + iso(p.nameEn) + '؟',
-      a: 'تبدأ الأسعار من ' + fmt(pr.minPrice) + ' جنيه لـ' + iso(cheapest.name) + '، وتختلف الأسعار حسب نوع الوحدة والمساحة.' +
+      q: 'ما هو سعر الوحدات في ' + p.nameAr + '؟',
+      a: 'تبدأ الأسعار من ' + fmt(pr.minPrice) + ' جنيه (' + cheapest.nameAr + ')، وتختلف الأسعار حسب نوع الوحدة والمساحة.' +
         (pr.refreshed ? '' : ' الأسعار حسب آخر تحديث متاح من المطوّر وقد تتغير — تواصل معنا واتساب للتأكيد.'),
     },
     {
       q: 'ما هي خطة السداد المتاحة؟',
-      a: 'مقدم يبدأ من ' + p.paymentPlan.downPct + '% من قيمة الوحدة، والباقي بالتقسيط على فترة تصل إلى ' + p.paymentPlan.years + ' سنوات.',
+      a: 'مقدم يبدأ من ' + p.paymentPlan.downPct + '% من قيمة الوحدة، والباقي بالتقسيط على فترة تصل إلى ' + yearsAr(p.paymentPlan.years) + '.',
     },
-    { q: 'أين يقع مشروع ' + iso(p.nameEn) + '؟', a: 'يقع المشروع في ' + p.areaAr + '.' },
+    { q: 'أين يقع مشروع ' + p.nameAr + '؟', a: p.locationText.replace(/\s*المسافات[^.]*\.\s*$/, '') },
     {
       q: 'ما هي أنواع الوحدات المتاحة؟',
-      a: units.map(function (u) { return iso(u.name) + ' (' + u.area + (u.rooms ? '، ' + u.rooms : '') + ')'; }).join('، ') + '.',
+      a: units.map(function (u) { return u.nameAr + ' (' + u.area + (u.rooms ? '، ' + u.rooms : '') + ')'; }).join('، ') + '.',
     },
     { q: 'هل ' + iso('Explorer Hyde Park') + ' هي الشركة المطورة؟', a: 'لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.' },
   ];
@@ -382,7 +393,7 @@ function footer() {
     '      <div class="footer__col">\n' +
     '        <span class="footer__heading">المشاريع</span>\n' +
     projects.map(function (p) {
-      return '        <a href="/projects/' + p.slug + '">' + p.nameEn + '</a>\n';
+      return '        <a href="/projects/' + p.slug + '">' + p.nameAr + '</a>\n';
     }).join('') +
     '      </div>\n' +
     '      <div class="footer__col">\n' +
@@ -622,7 +633,7 @@ function locationSectionMarkup(p) {
     // h2 sits in the text column (desktop); on mobile the body is
     // display: contents and the h2 is ordered first, above the image.
     '    <div class="pp-wrap pp-location' + (img ? '' : ' pp-location--no-img') + '">\n' +
-    (img ? '      <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameEn + ' في ' + p.areaAr) + '" loading="lazy" decoding="async">\n' : '') +
+    (img ? '      <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameAr + ' في ' + areaLabel(p)) + '" loading="lazy" decoding="async">\n' : '') +
     '      <div class="pp-location__body">\n' +
     '        <h2 class="pp-h2">' + (hasDistances ? 'الموقع بالدقايق' : 'الموقع') + '</h2>\n' +
     body + maps +
@@ -679,7 +690,7 @@ function nearestSameArea(p) {
 }
 
 function projectBriefAr(o) {
-  return iso(o.nameEn) + ' بيبدأ من ' + fmt(o.startingPrice) + ' جنيه وفيه ' + joinAr(o.units.map(function (u) { return u.nameAr; })) +
+  return o.nameAr + ' بيبدأ من ' + fmt(o.startingPrice) + ' جنيه وفيه ' + joinAr(o.units.map(function (u) { return u.nameAr; })) +
     (o.availableUnits ? '، والمتاح حالياً ' + unitsCountAr(o.availableUnits) : '');
 }
 
@@ -695,7 +706,7 @@ function projectFaqs(p) {
   }
   faqs.push({
     q: 'لو دفعت مقدم أكبر، القسط هيقل؟',
-    a: 'أيوه. القسط الشهري بيتحسب على الباقي بعد المقدم، فكل ما المقدم يزيد القسط بيقل. في ' + iso(p.nameEn) +
+    a: 'أيوه. القسط الشهري بيتحسب على الباقي بعد المقدم، فكل ما المقدم يزيد القسط بيقل. في ' + p.nameAr +
       ' المقدم بيبدأ من ' + p.paymentPlan.downPct + '% والتقسيط لحد ' + yearsAr(p.paymentPlan.years) +
       '، وتقدر تجرّب بنفسك في حاسبة "تقدر تدفع كام في الشهر؟" على الصفحة.',
   });
@@ -888,18 +899,126 @@ function groupsAreaRange(groups) {
   return { min: Math.min.apply(null, mins), max: Math.max.apply(null, maxs) };
 }
 
+/** "التجمع السادس، القاهرة الجديدة" / "6 أكتوبر" / "رأس الحكمة، الساحل الشمالي". */
+function areaLabel(p) {
+  var d = p.areaDetailAr;
+  if (!d) return p.areaAr;
+  return d.indexOf(p.areaAr) !== -1 ? d : d + '، ' + p.areaAr;
+}
+
+/** Year of the current price list — the "أسعار 2026" in titles must match the data, not the build date. */
+function pricingYear() {
+  var m = /^(\d{4})/.exec(pricing.meta.lastUpdated || '');
+  return m ? m[1] : String(new Date().getFullYear());
+}
+
+/** <title>: Arabic name + district + "أسعار <year> ومقدم X%" (people search in Arabic, by district). */
+function seoTitle(p) {
+  if (p.seoTitle) return p.seoTitle;
+  return p.nameAr + ' ' + (p.areaDetailAr || p.areaAr) + ' — أسعار ' + pricingYear() + ' ومقدم ' + p.paymentPlan.downPct + '%';
+}
+
+/** Meta description from live data (price, plan, unit types, availability), kept ≤ ~160 chars. */
+function seoDescription(p) {
+  if (p.metaDescription) return p.metaDescription;
+  var head = 'أسعار ' + p.nameAr + ' في ' + areaLabel(p) + ' تبدأ من ' + fmt(p.startingPrice) + ' جنيه بمقدم ' +
+    p.paymentPlan.downPct + '% وتقسيط حتى ' + yearsAr(p.paymentPlan.years) + '.';
+  var types = uniq(p.units.map(shortTypeAr));
+  var tail = function (list) {
+    return ' ' + joinAr(list) + (p.availableUnits ? ' — ' + unitsCountAr(p.availableUnits) + ' متاحة' : '') + ' من مخزون المطوّر.';
+  };
+  while (types.length > 1 && (head + tail(types)).length > 160) types.pop();
+  var out = head + tail(types);
+  return out.length > 160 ? head : out;
+}
+
+function jsonLd(data) {
+  return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
+}
+
+/** BreadcrumbList + WebPage (dateModified = price list date; publisher = the broker, never the developer). */
+function pageJsonLd(p, canonical) {
+  var breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE_ORIGIN + '/' },
+      { '@type': 'ListItem', position: 2, name: p.nameAr, item: canonical },
+    ],
+  };
+  var webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: seoTitle(p),
+    url: canonical,
+    inLanguage: 'ar',
+    dateModified: pricing.meta.lastUpdated,
+    about: {
+      '@type': 'Place',
+      name: p.nameAr,
+      alternateName: p.nameEn,
+      address: { '@type': 'PostalAddress', addressLocality: p.areaDetailAr || p.areaAr, addressRegion: p.areaAr, addressCountry: 'EG' },
+    },
+    publisher: {
+      '@type': 'RealEstateAgent',
+      name: SITE_NAME,
+      url: SITE_ORIGIN + '/',
+      telephone: PHONE_NUMBER,
+      areaServed: 'EG',
+    },
+  };
+  return jsonLd(breadcrumb) + '\n' + jsonLd(webPage);
+}
+
+/** Bake real wa.me / tel: hrefs into every href="#" contact link in a page. */
+function bakeContactLinks(html) {
+  return html.replace(/<a href="#"([^>]*)>/g, function (tag, attrs) {
+    if (/\sdata-whatsapp-link\b/.test(attrs)) {
+      var m = attrs.match(/data-whatsapp-message="([^"]*)"/);
+      var msg = m ? unescapeHtml(m[1]) : DEFAULT_WA_MESSAGE;
+      return '<a href="https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg) + '"' + attrs + '>';
+    }
+    if (/\sdata-phone-link\b/.test(attrs)) return '<a href="tel:' + PHONE_NUMBER + '"' + attrs + '>';
+    return tag;
+  });
+}
+
+function breadcrumbMarkup(p) {
+  return (
+    '        <nav class="pp-breadcrumb" aria-label="مسار الصفحة"><ol>' +
+    '<li><a href="/">الرئيسية</a></li>' +
+    '<li><a href="/#projects">مشاريع هايد بارك</a></li>' +
+    '<li aria-current="page">' + escapeHtml(p.nameAr) + '</li>' +
+    '</ol></nav>\n'
+  );
+}
+
+/** "مراحل المشروع" — one H3 per phase (long-tail searches like "ووتر ريزيدنسز سنترال"). */
+function phasesMarkup(p) {
+  if (!p.phases || !p.phases.length) return '';
+  return (
+    '        <h3 class="pp-h3">مراحل ' + escapeHtml(p.nameAr) + '</h3>\n' +
+    '        <ul class="pp-phases">\n' +
+    p.phases.map(function (ph) {
+      return '          <li><h4 class="pp-phases__name">' + escapeHtml(ph.nameAr) + ' <bdi class="en">(' + escapeHtml(ph.name) + ')</bdi></h4>' +
+        (ph.note ? '<p>' + escapeHtml(ph.note) + '</p>' : '') + '</li>\n';
+    }).join('') +
+    '        </ul>\n'
+  );
+}
+
 function heroMarkup(p) {
   var img = findImage(p.slug, 'hero');
   var media;
   if (img) {
     var size = imageSize(img);
-    media = '<img class="pp-hero__img" src="../' + img + '" alt="' + escapeHtml(p.nameEn + ' — ' + p.areaAr) + '"' +
+    media = '<img class="pp-hero__img" src="../' + img + '" alt="' + escapeHtml(p.nameAr + ' — ' + areaLabel(p)) + '"' +
       (size ? ' width="' + size.width + '" height="' + size.height + '"' : '') + ' fetchpriority="high" decoding="async">';
   } else {
     media = '<div class="img-slot pp-hero__img"><i class="fa-solid fa-image"></i><span>' + escapeHtml(p.heroPlaceholder) + '</span></div>';
   }
-  var subtitle = [p.areaAr].concat(uniq(p.units.map(shortTypeAr))).join(' · ');
-  var badge = p.availableUnits ? '        <span class="pp-badge">' + p.availableUnits + ' وحدة متاحة</span>\n' : '';
+  var subtitle = [areaLabel(p)].concat(uniq(p.units.map(shortTypeAr))).join(' · ');
+  var badge = p.availableUnits ? '        <span class="pp-badge">' + unitsCountAr(p.availableUnits) + ' متاحة</span>\n' : '';
   var prelim = p.preliminary ? ' <span class="pp-price-card__note">سعر مبدئي</span>' : '';
 
   return (
@@ -909,7 +1028,8 @@ function heroMarkup(p) {
     '      <div class="pp-hero__shade"></div>\n' +
     '      <div class="pp-hero__text">\n' +
     badge +
-    '        <h1 class="pp-hero__title"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></h1>\n' +
+    '        <h1 class="pp-hero__title">' + escapeHtml(p.nameAr) + '</h1>\n' +
+    '        <p class="pp-hero__en"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></p>\n' +
     '        <p class="pp-hero__sub">' + escapeHtml(subtitle) + '</p>\n' +
     '      </div>\n' +
     '    </div>\n' +
@@ -954,12 +1074,12 @@ function summaryHtml(p) {
   });
   var kind = p.areaSlug === 'north-coast' ? 'مشروع ساحلي' : 'مشروع سكني';
   var available = p.availableUnits
-    ? 'المتاح حالياً <strong>' + p.availableUnits + ' وحدة</strong>: '
+    ? 'المتاح حالياً <strong>' + unitsCountAr(p.availableUnits) + '</strong>: '
     : 'الوحدات المتاحة: ';
   var finishing = p.finishingLabel ? '، والوحدات بتتسلّم ' + escapeHtml(p.finishingLabel) : '';
   return (
     escapeHtml(p.nameAr) + ' (<bdi class="en">' + escapeHtml(p.nameEn) + '</bdi>) ' + kind +
-    ' من هايد بارك للتطوير العقاري في ' + escapeHtml(p.areaAr) + '. ' +
+    ' من هايد بارك للتطوير العقاري في ' + escapeHtml(areaLabel(p)) + '. ' +
     available + joinAr(parts) + '. ' +
     'الأسعار بتبدأ من <strong><bdi class="en">' + fmt(p.startingPrice) + '</bdi> جنيه</strong>' +
     ' بمقدم من ' + p.paymentPlan.downPct + '% وتقسيط لحد ' + yearsAr(p.paymentPlan.years) + finishing + '.'
@@ -967,7 +1087,7 @@ function summaryHtml(p) {
 }
 
 function overviewMarkup(p) {
-  var facts = [['الموقع', escapeHtml(p.areaAr)]];
+  var facts = [['الموقع', escapeHtml(areaLabel(p))]];
   var a = Math.round(p.areaRange.min), b = Math.round(p.areaRange.max);
   facts.push(['المساحات', '<bdi class="en">' + (a === b ? fmt(a) : fmt(a) + ' – ' + fmt(b)) + '</bdi> م²']);
   if (p.finishingLabel) facts.push(['التشطيب', escapeHtml(p.finishingLabel)]);
@@ -982,9 +1102,12 @@ function overviewMarkup(p) {
     '  <section class="pp-section" id="overview">\n' +
     '    <div class="pp-wrap pp-overview">\n' +
     '      <div class="pp-overview__text">\n' +
+    breadcrumbMarkup(p) +
     '        <h2 class="pp-h2">' + escapeHtml(p.nameAr) + ' في سطور</h2>\n' +
     '        <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
     '        <p class="pp-byline">' + byline + '</p>\n' +
+    (p.aboutAr ? '        <h3 class="pp-h3">عن ' + escapeHtml(p.nameAr) + '</h3>\n        <p class="pp-about">' + escapeHtml(p.aboutAr) + '</p>\n' : '') +
+    phasesMarkup(p) +
     '      </div>\n' +
     '      <dl class="pp-facts">\n' +
     facts.map(function (f) {
@@ -1000,12 +1123,12 @@ function overviewMarkup(p) {
 function galleryMarkup(p) {
   var imgs = p.galleryImages;
   if (!imgs.length) return '';
-  var alt = function (n) { return 'صورة ' + n + ' من مشروع ' + p.nameEn + ' في ' + p.areaAr; };
+  var alt = function (n) { return 'صورة ' + n + ' من مشروع ' + p.nameAr + ' (' + p.nameEn + ') في ' + areaLabel(p); };
   var thumbs = imgs.map(function (src, i) {
     return (
       '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../' + src + '" data-alt="' + escapeHtml(alt(i + 1)) + '"' +
       ' aria-label="صورة ' + (i + 1) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
-      '<img src="../' + src + '" alt="" loading="lazy" decoding="async"></button>\n'
+      '<img src="../' + src + '" alt="' + escapeHtml(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n'
     );
   }).join('');
   return (
@@ -1129,12 +1252,12 @@ function injectStaticOgTags(relPath, imageUrl) {
 }
 
 function page(p, allMerged) {
-  var title = p.nameEn + ' | ' + SITE_NAME + ' — أسعار ومساحات وخطط السداد';
-  var description = p.intro.replace(/\s*\*.*$/, '').slice(0, 155);
+  var title = seoTitle(p);
+  var description = seoDescription(p);
   var canonical = 'https://www.explorerhydepark.com/projects/' + p.slug;
   var faqs = projectFaqs(p);
 
-  return '<!DOCTYPE html>\n' +
+  return bakeContactLinks('<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
 '<!-- Google Tag Manager -->\n' +
@@ -1156,6 +1279,7 @@ ogTagsMarkup({ title: title, description: description, url: canonical, image: og
 '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7/css/flag-icons.min.css">\n' +
 '<link rel="stylesheet" href="' + assetUrl('../', 'assets/css/style.css') + '">\n' +
 faqJsonLd(faqs) + '\n' +
+pageJsonLd(p, canonical) + '\n' +
 '</head>\n' +
 '<body class="pp-page">\n\n' +
 '<!-- Google Tag Manager (noscript) -->\n' +
@@ -1188,7 +1312,7 @@ stickyBarMarkup(p) + '\n' +
 '<script src="' + assetUrl('../', 'assets/js/phone-field.js') + '"></script>\n' +
 '<script src="' + assetUrl('../', 'assets/js/main.js') + '"></script>\n' +
 '</body>\n' +
-'</html>\n';
+'</html>\n');
 }
 
 /** Homepage project card (project pages use the lighter .pp-project-card in compareSectionMarkup). */
@@ -1200,7 +1324,8 @@ function projectCardMarkup(p, href, extraClass, imgPrefix) {
     '        ' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', imgPrefix, 'position:absolute;inset:0') + '\n' +
     '      </div>\n' +
     '      <div class="card__body project-card__body">\n' +
-    '        <span class="project-card__name"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></span>\n' +
+    '        <span class="project-card__name">' + escapeHtml(p.nameAr) + '</span>\n' +
+    '        <span class="project-card__en"><bdi class="en">' + escapeHtml(p.nameEn) + '</bdi></span>\n' +
     '        <div class="card__price">\n' +
     '          <span class="card__price-label">يبدأ من</span>\n' +
     '          <span class="card__price-value">' + fmt(p.startingPrice) + ' جنيه</span>\n' +
@@ -1282,7 +1407,7 @@ function versionStaticAssets(relPath) {
   var updated = html.replace(/(["'])((?:\.\.\/)?)(assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?:\?v=\w+)?\1/g, function (m, q, prefix, rel) {
     return q + assetUrl(prefix, rel) + q;
   });
-  writeIfChanged(relPath, updated);
+  writeIfChanged(relPath, bakeContactLinks(updated));
 }
 
 // Files whose content actually changed during this build (relative paths).

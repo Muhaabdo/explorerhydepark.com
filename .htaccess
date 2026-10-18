@@ -18,6 +18,15 @@ RewriteRule \.md$ - [R=404,L]
 # (any host, any scheme, with or without trailing slash).
 RewriteRule ^projects/hyde-park-taony(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-tawny [R=301,L]
 
+# --- 1a. Old project slugs (pricing keys used as URLs in an earlier build;
+# /projects/hyde-central is still in Google's index). One 301 straight to
+# the canonical URL, any host/scheme, with or without .html / trailing slash.
+RewriteRule ^projects/hyde-central(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-central [R=301,L]
+RewriteRule ^projects/hyde-new-cairo(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-new-cairo [R=301,L]
+RewriteRule ^projects/hyde-terraces(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-terraces [R=301,L]
+RewriteRule ^projects/(garden-lakes|hyde-park-garden-lakes)(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-garden-lake [R=301,L]
+RewriteRule ^projects/(seashore|hyde-park-seashore)(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-sea-shore [R=301,L]
+
 # --- 1b. "index"/"index.html" is the docroot's DirectoryIndex file, not a
 # distinct page — must 301 straight to the site root in one hop. Without
 # this, rule 2's generic ".html"-stripping capture would turn

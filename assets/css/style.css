@@ -271,7 +271,8 @@ h1, h2, h3, h4 {
 .project-card { position: relative; }
 .project-card__media { position: relative; height: 200px; }
 .project-card__body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
-.project-card__name { font-size: 19px; font-family: var(--font-en); font-weight: 700; color: var(--navy); }
+.project-card__name { font-size: 19px; font-weight: 800; color: var(--navy); }
+.project-card__en { margin-top: -6px; font-family: var(--font-en); font-size: 13px; font-weight: 600; color: var(--muted); }
 
 /* ---------- Form fields ---------- */
 .field { display: flex; flex-direction: column; gap: 8px; }
@@ -464,6 +465,20 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 }
 .pp-hero__title { color: var(--white); font-size: clamp(26px, 7.5vw, 40px); line-height: 1.15; }
 .pp-hero__sub { margin: 0; font-size: 13px; font-weight: 600; }
+.pp-hero__en { margin: 0; font-family: var(--font-en); font-size: 14px; font-weight: 700; opacity: .85; }
+
+/* SEO additions (Oct 2026): breadcrumb, about paragraph, project phases */
+.pp-breadcrumb ol { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--muted); }
+.pp-breadcrumb li + li::before { content: "‹"; margin-inline-end: 4px; opacity: .6; }
+.pp-breadcrumb a { color: var(--blue); text-decoration: none; }
+.pp-breadcrumb a:hover { text-decoration: underline; }
+.pp-h3 { font-size: 16px; line-height: 1.5; color: var(--navy); margin: 18px 0 6px; }
+.pp-about { margin: 0 0 8px; font-size: 15px; line-height: 1.85; }
+.pp-phases { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 8px; }
+.pp-phases li { padding: 10px 12px; border-radius: 10px; background: rgba(13,64,136,.05); border-inline-start: 3px solid var(--sky); }
+.pp-phases__name { margin: 0; font-size: 14px; color: var(--navy); }
+.pp-phases__name .en { font-family: var(--font-en); font-weight: 600; font-size: 12px; color: var(--muted); }
+.pp-phases p { margin: 2px 0 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
 
 .pp-price-card {
   position: relative; z-index: 1; margin: -22px 12px 0; padding: 14px;

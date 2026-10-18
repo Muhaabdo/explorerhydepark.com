@@ -42,6 +42,13 @@ The build only rewrites files whose content changed, and `sitemap.xml`
 data changed: the host caches CSS/JS for 7 days, and the build stamps every
 page's CSS/JS links with `?v=<content hash>` so visitors get the new files.
 
+## SEO fields (per project, `tools/projects-data.js`)
+
+- `areaDetailAr` — district people search with (التجمع السادس، رأس الحكمة). Feeds the `<title>`, meta description, hero line and schema.
+- `seoTitle` / `metaDescription` — optional hand-written overrides. Empty = built from the data (`أسعار <year> ومقدم X%`, starting price, plan, availability).
+- `aboutAr` + `phases` — project-specific copy (sources noted above each entry). Facts only.
+- WhatsApp / phone links are baked into the HTML at build time (`WHATSAPP_NUMBER` / `PHONE_NUMBER` in `build-pages.js` — keep in sync with `assets/js/main.js`).
+
 ## Still to fill in
 
-- `tools/projects-data.js`: `deliveryYear`, `distances`, `mapsUrl`, `finishingCostNote` per project (optional — each shows up on the page once filled).
+- `tools/projects-data.js`: `deliveryYear`, `distances` (minutes to landmarks), `mapsUrl`, `finishingCostNote` per project (optional — each shows up on the page once filled).

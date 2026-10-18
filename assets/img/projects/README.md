@@ -61,7 +61,7 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-tawny-twin-house.jpg` ✅ — Twin House unit photo
 - [x] `hyde-park-tawny-standalone.jpg` ✅ — Standalone unit photo
 
-## Hyde Park Garden Lake  (`assets/img/projects/hyde-park-garden-lake/`)
+## Hyde Park Garden Lakes  (`assets/img/projects/hyde-park-garden-lake/`)
 
 - [x] `hyde-park-garden-lake-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
 - [x] `hyde-park-garden-lake-gallery-1.jpg` ✅ — gallery photo 1
