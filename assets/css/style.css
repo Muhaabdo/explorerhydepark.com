@@ -470,6 +470,17 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 /* Lead-form honeypot: off-screen for people, visible to naive bots */
 .hp-field { position: absolute !important; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
+/* Area hub pages (/areas/…) */
+.pp-area-hero { padding-top: 96px; }
+.pp-area-title { font-size: clamp(26px, 6vw, 40px); line-height: 1.25; color: var(--navy); margin: 0 0 12px; }
+.pp-area-table th a { color: var(--blue); font-weight: 800; }
+.pp-area-table__sub { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+.pp-area-table tbody th { white-space: normal; color: var(--navy); }
+.pp-area-picks dd { font-size: 14px; }
+.pp-area-cta { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.pp-area-cta p { margin: 0; }
+.pp-area-link { margin: 10px 0 0; font-size: 14px; }
+
 /* SEO additions (Oct 2026): breadcrumb, about paragraph, project phases */
 .pp-breadcrumb ol { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; font-size: 12px; color: var(--muted); }
 .pp-breadcrumb li + li::before { content: "‹"; margin-inline-end: 4px; opacity: .6; }

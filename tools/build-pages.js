@@ -871,7 +871,8 @@ function compareSectionMarkup(p, allMerged) {
       '            <tr><th scope="row">المتاح</th>' + cols.map(function (o) { return cell(o, o.availableUnits ? '<bdi class="en">' + o.availableUnits + '</bdi>' : '—'); }).join('') + '</tr>\n' +
       '          </tbody>\n' +
       '        </table>\n' +
-      '      </div>\n';
+      '      </div>\n' +
+      (areaUrl(p.areaSlug) ? '      <p class="pp-area-link"><a class="pp-link" href="' + areaUrl(p.areaSlug) + '">كل مشاريع هايد بارك في ' + escapeHtml(AREAS[p.areaSlug].nameAr) + ' والمقارنة الكاملة ←</a></p>\n' : '');
   }
   var cards = others.map(function (o) {
     var img = findImage(o.slug, 'hero');
@@ -962,10 +963,13 @@ function pageJsonLd(p, canonical) {
   var breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE_ORIGIN + '/' },
-      { '@type': 'ListItem', position: 2, name: p.nameAr, item: canonical },
-    ],
+    itemListElement: (function () {
+      var hub = areaUrl(p.areaSlug);
+      var items = [{ '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE_ORIGIN + '/' }];
+      if (hub) items.push({ '@type': 'ListItem', position: 2, name: 'مشاريع هايد بارك في ' + AREAS[p.areaSlug].nameAr, item: SITE_ORIGIN + hub });
+      items.push({ '@type': 'ListItem', position: items.length + 1, name: p.nameAr, item: canonical });
+      return items;
+    })(),
   };
   var webPage = {
     '@context': 'https://schema.org',
@@ -1005,10 +1009,12 @@ function bakeContactLinks(html) {
 }
 
 function breadcrumbMarkup(p) {
+  var hub = areaUrl(p.areaSlug);
   return (
     '        <nav class="pp-breadcrumb" aria-label="مسار الصفحة"><ol>' +
     '<li><a href="/">الرئيسية</a></li>' +
-    '<li><a href="/#projects">مشاريع هايد بارك</a></li>' +
+    (hub ? '<li><a href="' + hub + '">مشاريع هايد بارك في ' + escapeHtml(AREAS[p.areaSlug].nameAr) + '</a></li>'
+      : '<li><a href="/#projects">مشاريع هايد بارك</a></li>') +
     '<li aria-current="page">' + escapeHtml(p.nameAr) + '</li>' +
     '</ol></nav>\n'
   );
@@ -1350,6 +1356,225 @@ stickyBarMarkup(p) + '\n' +
 '</html>\n');
 }
 
+/* ---------------- Area hub pages (/areas/<slug>) ----------------
+ * One page per area with 2+ projects: data-driven comparison of every Hyde
+ * Park project in that area, linked to from the homepage area headings and
+ * the project pages' breadcrumb. Areas with a single project (North Coast)
+ * get no hub — it would only duplicate that project's page. */
+var AREAS = {
+  'new-cairo': {
+    nameAr: 'القاهرة الجديدة',
+    blurb: 'مشاريع هايد بارك في شرق القاهرة متجمّعة حوالين التجمع الخامس والتجمع السادس وطريق السخنة القديم، وأقدمها هايد بارك نيو كايرو، أول مشروع للشركة.',
+  },
+  'october': {
+    nameAr: '6 أكتوبر',
+    blurb: 'مشاريع هايد بارك في غرب القاهرة متجاورة في قلب مدينة 6 أكتوبر حوالين نادي الجزيرة، وقريبة من محور 26 يوليو وطريق القاهرة الإسكندرية الصحراوي.',
+  },
+};
+
+function areaUrl(areaSlug) {
+  return AREAS[areaSlug] && areaProjects(areaSlug).length > 1 ? '/areas/' + areaSlug : '';
+}
+
+function areaProjects(areaSlug, merged) {
+  return (merged || mergedAll).filter(function (p) { return p.areaSlug === areaSlug; });
+}
+
+function areaTitle(a) {
+  return 'مشاريع هايد بارك في ' + a.nameAr + ' — أسعار ' + pricingYear() + ' والمقارنة';
+}
+
+function minBy(list, fn) {
+  return list.reduce(function (best, o) { return fn(o) < fn(best) ? o : best; }, list[0]);
+}
+
+/** "أ" / "أ وب" / "أ، ب وج" — project names in running Arabic text. */
+function namesAr(list) {
+  var n = list.map(function (o) { return o.nameAr; });
+  if (n.length <= 1) return n.join('');
+  return n.slice(0, -1).join('، ') + ' و' + n[n.length - 1];
+}
+
+/** Data-driven "how to choose" facts — recomputed every build from pricing. */
+function areaFacts(list) {
+  var cheapest = minBy(list, function (o) { return o.startingPrice; });
+  var minDown = Math.min.apply(null, list.map(function (o) { return o.paymentPlan.downPct; }));
+  var maxYears = Math.max.apply(null, list.map(function (o) { return o.paymentPlan.years; }));
+  var withApts = list.filter(function (o) { return o.units.some(function (u) { return u.name === 'Apartment'; }); });
+  var villasOnly = list.filter(function (o) { return !o.units.some(function (u) { return u.name === 'Apartment'; }); });
+  var withCount = list.filter(function (o) { return o.availableUnits; });
+  var most = withCount.length ? minBy(withCount, function (o) { return -o.availableUnits; }) : null;
+  return {
+    cheapest: cheapest,
+    minDown: minDown,
+    minDownList: list.filter(function (o) { return o.paymentPlan.downPct === minDown; }),
+    maxYears: maxYears,
+    maxYearsList: list.filter(function (o) { return o.paymentPlan.years === maxYears; }),
+    withApts: withApts,
+    villasOnly: villasOnly,
+    most: most,
+  };
+}
+
+function areaDescription(a, list, f) {
+  var out = list.length + ' مشاريع لهايد بارك في ' + a.nameAr + ': ' + namesAr(list) + '. أسعار تبدأ من ' +
+    fmt(f.cheapest.startingPrice) + ' جنيه، ومقدم من ' + f.minDown + '% وتقسيط حتى ' + yearsAr(f.maxYears) + '.';
+  return out.length > 160 ? list.length + ' مشاريع لهايد بارك في ' + a.nameAr + '، أسعار تبدأ من ' + fmt(f.cheapest.startingPrice) +
+    ' جنيه ومقدم من ' + f.minDown + '% وتقسيط حتى ' + yearsAr(f.maxYears) + '. قارن المساحات والأنواع والمتاح.' : out;
+}
+
+function areaFaqs(a, list, f) {
+  var faqs = [
+    { q: 'كام مشروع لهايد بارك في ' + a.nameAr + '؟',
+      a: 'هايد بارك عندها ' + list.length + ' مشاريع في ' + a.nameAr + ': ' + namesAr(list) + '.' },
+    { q: 'إيه أرخص مشروع لهايد بارك في ' + a.nameAr + '؟',
+      a: f.cheapest.nameAr + '، بأسعار تبدأ من ' + fmt(f.cheapest.startingPrice) + ' جنيه (' + f.cheapest.units.filter(function (u) { return u.price === f.cheapest.startingPrice; }).map(function (u) { return u.nameAr; })[0] + ').' },
+    { q: 'أقل مقدم وأطول تقسيط في مشاريع هايد بارك ' + a.nameAr + ' كام؟',
+      a: 'أقل مقدم ' + f.minDown + '% في ' + namesAr(f.minDownList) + '، وأطول تقسيط ' + yearsAr(f.maxYears) + ' في ' + namesAr(f.maxYearsList) + '.' },
+  ];
+  if (f.withApts.length && f.villasOnly.length) {
+    faqs.push({ q: 'أنهي مشروع فيه شقق وأنهي فلل بس؟',
+      a: 'الشقق متاحة في ' + namesAr(f.withApts) + '، أما ' + namesAr(f.villasOnly) + ' فوحداته تاون هاوس وفلل.' });
+  }
+  faqs.push({ q: 'هل Explorer Hyde Park هي الشركة المطورة؟',
+    a: 'لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.' });
+  return faqs;
+}
+
+function areaJsonLd(a, slug, list, faqs) {
+  var url = SITE_ORIGIN + '/areas/' + slug;
+  return [
+    jsonLd({
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE_ORIGIN + '/' },
+        { '@type': 'ListItem', position: 2, name: 'مشاريع هايد بارك في ' + a.nameAr, item: url },
+      ],
+    }),
+    jsonLd({
+      '@context': 'https://schema.org', '@type': 'ItemList',
+      name: 'مشاريع هايد بارك في ' + a.nameAr,
+      itemListElement: list.map(function (o, i) {
+        return { '@type': 'ListItem', position: i + 1, name: o.nameAr, url: SITE_ORIGIN + '/projects/' + o.slug };
+      }),
+    }),
+    faqJsonLd(faqs),
+  ].join('\n');
+}
+
+function areaPage(slug, merged) {
+  var a = AREAS[slug];
+  var list = areaProjects(slug, merged).slice().sort(function (x, y) { return x.startingPrice - y.startingPrice; });
+  var f = areaFacts(list);
+  var title = areaTitle(a);
+  var description = areaDescription(a, list, f);
+  var canonical = SITE_ORIGIN + '/areas/' + slug;
+  var faqs = areaFaqs(a, list, f);
+
+  var intro = 'هايد بارك عندها <strong>' + list.length + ' مشاريع</strong> في ' + escapeHtml(a.nameAr) + ': ' + escapeHtml(namesAr(list)) + '. ' +
+    'الأسعار بتبدأ من <strong><bdi class="en">' + fmt(f.cheapest.startingPrice) + '</bdi> جنيه</strong> في ' + escapeHtml(f.cheapest.nameAr) +
+    '، والمقدم من ' + f.minDown + '% والتقسيط لحد ' + yearsAr(f.maxYears) + '. ' + escapeHtml(a.blurb);
+
+  var rows = list.map(function (o) {
+    return '            <tr>' +
+      '<th scope="row"><a href="/projects/' + o.slug + '">' + escapeHtml(o.nameAr) + '</a><span class="pp-area-table__sub">' + escapeHtml(o.areaDetailAr || o.areaAr) + '</span></th>' +
+      '<td><bdi class="en">' + fmt(o.startingPrice) + '</bdi></td>' +
+      '<td><bdi class="en">' + o.paymentPlan.downPct + '%</bdi></td>' +
+      '<td>' + yearsAr(o.paymentPlan.years) + '</td>' +
+      '<td>' + escapeHtml(uniq(o.units.map(shortTypeAr)).join(' · ')) + '</td>' +
+      '<td>' + (o.availableUnits ? '<bdi class="en">' + o.availableUnits + '</bdi>' : '—') + '</td>' +
+      '</tr>\n';
+  }).join('');
+
+  var picks = [
+    ['أقل سعر بداية', f.cheapest.nameAr + ' — من ' + fmt(f.cheapest.startingPrice) + ' جنيه'],
+    ['أقل مقدم', namesAr(f.minDownList) + ' — ' + f.minDown + '%'],
+    ['أطول تقسيط', namesAr(f.maxYearsList) + ' — ' + yearsAr(f.maxYears)],
+  ];
+  if (f.most) picks.push(['أكتر وحدات متاحة', f.most.nameAr + ' — ' + unitsCountAr(f.most.availableUnits)]);
+  if (f.withApts.length) picks.push(['فيها شقق', namesAr(f.withApts)]);
+  if (f.villasOnly.length) picks.push(['تاون هاوس وفلل بس', namesAr(f.villasOnly)]);
+
+  var cards = list.map(function (o) { return projectCardMarkup(o, '/projects/' + o.slug, '', '../'); }).join('');
+
+  return bakeContactLinks('<!DOCTYPE html>\n' +
+'<html lang="ar" dir="rtl">\n' +
+'<head>\n' +
+'<!-- Google Tag Manager -->\n' +
+'<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':\n' +
+'new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],\n' +
+'j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=\n' +
+'\'https://www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);\n' +
+'})(window,document,\'script\',\'dataLayer\',\'GTM-5FD83KJ7\');</script>\n' +
+'<!-- End Google Tag Manager -->\n' +
+'<meta charset="UTF-8">\n' +
+'<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+'<title>' + escapeHtml(title) + '</title>\n' +
+'<meta name="description" content="' + escapeHtml(description) + '">\n' +
+'<link rel="canonical" href="' + canonical + '">\n' +
+ogTagsMarkup({ title: title, description: description, url: canonical, image: ogImageUrl(f.cheapest.slug) }) + '\n' +
+'<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+'<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
+'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\n' +
+'<link rel="stylesheet" href="' + assetUrl('../', 'assets/css/style.css') + '">\n' +
+areaJsonLd(a, slug, list, faqs) + '\n' +
+'</head>\n' +
+'<body class="pp-page pp-area-page">\n\n' +
+'<!-- Google Tag Manager (noscript) -->\n' +
+'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
+'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
+'<!-- End Google Tag Manager (noscript) -->\n\n' +
+nav(false) + '\n\n' +
+'  <header class="pp-section pp-area-hero">\n' +
+'    <div class="pp-wrap">\n' +
+'      <nav class="pp-breadcrumb" aria-label="مسار الصفحة"><ol><li><a href="/">الرئيسية</a></li><li aria-current="page">مشاريع هايد بارك في ' + escapeHtml(a.nameAr) + '</li></ol></nav>\n' +
+'      <h1 class="pp-area-title">مشاريع هايد بارك في ' + escapeHtml(a.nameAr) + '</h1>\n' +
+'      <p class="pp-summary">' + intro + '</p>\n' +
+'      <p class="pp-byline">' + (p0LastUpdated() ? 'الأسعار محدّثة: ' + p0LastUpdated() + ' · ' : '') + 'من مخزون المطوّر · إعداد فريق <bdi class="en">Explorer Hyde Park</bdi></p>\n' +
+'    </div>\n' +
+'  </header>\n\n' +
+'  <section class="pp-section pp-section--gray">\n' +
+'    <div class="pp-wrap">\n' +
+'      <h2 class="pp-h2">مقارنة سريعة</h2>\n' +
+'      <div class="pp-compare pp-area-table">\n' +
+'        <table>\n' +
+'          <thead><tr><th scope="col">المشروع</th><th scope="col">يبدأ من (جنيه)</th><th scope="col">المقدم</th><th scope="col">التقسيط</th><th scope="col">الأنواع</th><th scope="col">المتاح</th></tr></thead>\n' +
+'          <tbody>\n' + rows +
+'          </tbody>\n' +
+'        </table>\n' +
+'      </div>\n' +
+'    </div>\n' +
+'  </section>\n\n' +
+'  <section class="pp-section">\n' +
+'    <div class="pp-wrap">\n' +
+'      <h2 class="pp-h2">تختار إزاي؟</h2>\n' +
+'      <dl class="pp-facts pp-area-picks">\n' +
+picks.map(function (k) { return '        <div class="pp-fact"><dt>' + k[0] + '</dt><dd>' + escapeHtml(k[1]) + '</dd></div>\n'; }).join('') +
+'      </dl>\n' +
+'    </div>\n' +
+'  </section>\n\n' +
+'  <section class="section section--gray">\n' +
+'    <h2 class="section-title">كل مشاريع هايد بارك في ' + escapeHtml(a.nameAr) + '</h2>\n' +
+'    <div class="grid grid--projects">\n' + cards + '    </div>\n' +
+'  </section>\n\n' +
+faqSectionMarkup(faqs) + '\n' +
+'  <section class="pp-section pp-section--gray">\n' +
+'    <div class="pp-wrap pp-area-cta">\n' +
+'      <h2 class="pp-h2">محتار بين المشاريع؟</h2>\n' +
+'      <p>ابعتلنا ميزانيتك والقسط المريح ليك، وهنرشحلك الوحدات المتاحة في ' + escapeHtml(a.nameAr) + '.</p>\n' +
+'      <a href="#" class="pp-btn pp-btn--green" data-whatsapp-link data-whatsapp-message="محتاج ترشيح وحدات في مشاريع هايد بارك ' + escapeHtml(a.nameAr) + '" data-cta-location="area"><i class="fa-brands fa-whatsapp"></i> كلّمنا واتساب</a>\n' +
+'    </div>\n' +
+'  </section>\n\n' +
+footer() + '\n\n' +
+'<script src="' + assetUrl('../', 'assets/js/main.js') + '"></script>\n' +
+'</body>\n' +
+'</html>\n');
+}
+
+function p0LastUpdated() {
+  return arMonthYear(pricing.meta.lastUpdated);
+}
+
 /** Homepage project card (project pages use the lighter .pp-project-card in compareSectionMarkup). */
 function projectCardMarkup(p, href, extraClass, imgPrefix) {
   return (
@@ -1378,7 +1603,9 @@ function homepageCards(merged) {
   });
   var out = '';
   Object.keys(byArea).forEach(function (area) {
-    out += '  <h3 style="text-align:center;color:var(--navy);opacity:.7;font-weight:700;font-size:16px;margin:0 0 16px;">' + escapeHtml(area) + '</h3>\n';
+    var hub = areaUrl(byArea[area][0].areaSlug);
+    out += '  <h3 style="text-align:center;color:var(--navy);opacity:.7;font-weight:700;font-size:16px;margin:0 0 16px;">' +
+      (hub ? '<a href="' + hub + '" style="color:inherit">مشاريع هايد بارك في ' + escapeHtml(AREAS[byArea[area][0].areaSlug].nameAr) + ' ←</a>' : escapeHtml(area)) + '</h3>\n';
     out += '  <div class="grid grid--projects" style="margin-bottom:44px">\n';
     byArea[area].forEach(function (p) {
       out += projectCardMarkup(p, '/projects/' + p.slug);
@@ -1507,6 +1734,9 @@ function sitemapUrls(merged) {
   merged.forEach(function (p) {
     urls.push({ loc: SITE_ORIGIN + '/projects/' + p.slug, file: 'projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.9' });
   });
+  Object.keys(AREAS).forEach(function (slug) {
+    if (areaUrl(slug)) urls.push({ loc: SITE_ORIGIN + areaUrl(slug), file: 'areas/' + slug + '.html', changefreq: 'weekly', priority: '0.8' });
+  });
   urls.forEach(function (u) { u.lastmod = changedFiles[u.file] || !prev[u.loc] ? today : prev[u.loc]; });
   return urls;
 }
@@ -1559,6 +1789,7 @@ function updateIndexHtml(merged) {
 }
 
 var merged = projects.map(mergeProject);
+var mergedAll = merged;
 // Second pass: needs every project merged first.
 merged.forEach(function (p) {
   p.sameArea = sameAreaProjects(p, merged, 2);
@@ -1595,6 +1826,12 @@ merged.forEach(function (p) {
   console.log((changed ? 'wrote ' : 'unchanged ') + 'projects/' + p.slug + '.html' +
     ' — starting ' + fmt(p.startingPrice) + ' EGP' +
     (p.preliminary ? '  (⚠ pricing not yet confirmed by developer)' : ''));
+});
+Object.keys(AREAS).forEach(function (slug) {
+  if (!areaUrl(slug)) return;
+  if (!fs.existsSync(path.join(ROOT, 'areas'))) fs.mkdirSync(path.join(ROOT, 'areas'));
+  var changed = writeIfChanged('areas/' + slug + '.html', areaPage(slug, merged));
+  console.log((changed ? 'wrote ' : 'unchanged ') + 'areas/' + slug + '.html');
 });
 updateIndexHtml(merged);
 writeIfChanged('assets/img/projects/README.md', imageChecklist(merged));
