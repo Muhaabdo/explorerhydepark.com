@@ -617,14 +617,29 @@ function calcSectionMarkup(p) {
   );
 }
 
+/** "دقيقة" / "دقيقتين" / "3 دقايق" / "14 دقيقة" (digits LTR-isolated). */
+function minutesAr(n) {
+  if (n === 1) return 'دقيقة';
+  if (n === 2) return 'دقيقتين';
+  return '<bdi class="en">' + n + '</bdi> ' + (n <= 10 ? 'دقايق' : 'دقيقة');
+}
+
 function locationSectionMarkup(p) {
   var img = findImage(p.slug, 'location');
-  var hasDistances = p.distances && p.distances.length;
-  var body = hasDistances
-    ? '        <ul class="pp-distances">\n' + p.distances.map(function (d) {
-        return '          <li><span>' + escapeHtml(d.place) + '</span><span class="pp-distances__min"><bdi class="en">' + d.minutes + '</bdi> دقيقة</span></li>\n';
-      }).join('') + '        </ul>\n'
-    : '        <p class="pp-location__text">' + escapeHtml(p.locationText) + '</p>\n';
+  var list = p.distances || [];
+  var anyMinutes = list.some(function (d) { return d.minutes; });
+  // Always the written location first; then nearby landmarks (minutes shown
+  // only where a source gives them — portals don't for every project).
+  var body = '        <p class="pp-location__text">' + escapeHtml(p.locationText) + '</p>\n' +
+    (list.length
+      ? '        <h3 class="pp-h3">أهم المعالم القريبة</h3>\n' +
+        '        <ul class="pp-distances">\n' + list.map(function (d) {
+          return '          <li><span>' + escapeHtml(d.place) + '</span>' +
+            (d.minutes ? '<span class="pp-distances__min">' + minutesAr(d.minutes) + '</span>' : (d.note ? '<span class="pp-distances__min">' + escapeHtml(d.note) + '</span>' : '')) +
+            '</li>\n';
+        }).join('') + '        </ul>\n' +
+        (anyMinutes ? '        <p class="pp-distances__note">المسافات بالسيارة تقريبية وبتختلف حسب الزحمة.</p>\n' : '')
+      : '');
   var maps = p.mapsUrl
     ? '        <a class="pp-link" href="' + escapeHtml(p.mapsUrl) + '" target="_blank" rel="noopener">افتح على Google Maps ←</a>\n'
     : '';
@@ -635,7 +650,7 @@ function locationSectionMarkup(p) {
     '    <div class="pp-wrap pp-location' + (img ? '' : ' pp-location--no-img') + '">\n' +
     (img ? '      <img class="pp-location__img" src="../' + img + '" alt="' + escapeHtml('موقع ' + p.nameAr + ' في ' + areaLabel(p)) + '" loading="lazy" decoding="async">\n' : '') +
     '      <div class="pp-location__body">\n' +
-    '        <h2 class="pp-h2">' + (hasDistances ? 'الموقع بالدقايق' : 'الموقع') + '</h2>\n' +
+    '        <h2 class="pp-h2">موقع ' + escapeHtml(p.nameAr) + '</h2>\n' +
     body + maps +
     '      </div>\n' +
     '    </div>\n' +
@@ -1091,7 +1106,6 @@ function overviewMarkup(p) {
   var a = Math.round(p.areaRange.min), b = Math.round(p.areaRange.max);
   facts.push(['المساحات', '<bdi class="en">' + (a === b ? fmt(a) : fmt(a) + ' – ' + fmt(b)) + '</bdi> م²']);
   if (p.finishingLabel) facts.push(['التشطيب', escapeHtml(p.finishingLabel)]);
-  if (p.deliveryYear) facts.push(['الاستلام', '<bdi class="en">' + escapeHtml(p.deliveryYear) + '</bdi>']);
   if (p.pricePerSqm) facts.push(['سعر المتر (شقق) من', '<bdi class="en">' + fmt(p.pricePerSqm) + '</bdi> ج/م²']);
   facts.push(['المطوّر', 'هايد بارك للتطوير']);
 

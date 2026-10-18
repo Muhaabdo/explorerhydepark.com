@@ -51,4 +51,4 @@ page's CSS/JS links with `?v=<content hash>` so visitors get the new files.
 
 ## Still to fill in
 
-- `tools/projects-data.js`: `deliveryYear`, `distances` (minutes to landmarks), `mapsUrl`, `finishingCostNote` per project (optional — each shows up on the page once filled).
+- `tools/projects-data.js`: `mapsUrl`, `finishingCostNote` per project, and minutes for any `distances` entry that has none (optional — each shows up on the page once filled). There is deliberately no delivery-year field: delivery differs by phase inside a project.
