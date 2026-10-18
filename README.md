@@ -36,7 +36,13 @@ node tools/build-pages.js --dump hyde-park-central
 
 # preview locally at http://localhost:8843
 node tools/dev-server.js
+
+# after a push has deployed: tell Bing (IndexNow) which pages changed today
+node tools/indexnow.js --changed
 ```
+
+IndexNow's key file is `4e0dd8f2e973d2cb85fbb5f68adc6232.txt` in the site root
+— keep it there; Bing reads it to confirm the site is ours.
 
 The build only rewrites files whose content changed, and `sitemap.xml`
 `<lastmod>` moves only for those pages.

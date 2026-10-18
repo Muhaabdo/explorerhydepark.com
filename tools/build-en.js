@@ -137,6 +137,21 @@ module.exports = function buildEnglish(h) {
     });
   }
 
+  /* ---------------- Areas ---------------- */
+
+  // Same areas as AREAS in build-pages.js (a hub exists only for 2+ projects).
+  var AREAS_EN = {
+    'new-cairo': {
+      name: 'New Cairo',
+      blurb: 'Hyde Park’s East Cairo projects are clustered around the 5th and 6th Settlements and the Old Sokhna Road. The oldest is Hyde Park New Cairo, the company’s first project.',
+    },
+    'october': {
+      name: '6th of October',
+      blurb: 'Hyde Park’s West Cairo projects sit next to each other in the heart of 6th of October City around Gezira Club, close to the 26th of July Corridor and the Cairo–Alexandria Desert Road.',
+    },
+  };
+  function enAreaPath(slug) { return h.areaUrl(slug) && AREAS_EN[slug] ? '/en/areas/' + slug : ''; }
+
   /* ---------------- URLs ---------------- */
 
   function enProjectPath(slug) { return '/en/projects/' + slug; }
@@ -189,7 +204,7 @@ module.exports = function buildEnglish(h) {
       { href: '/en/', label: 'Home' },
       { href: '/en/#projects', label: 'Projects' },
       { href: '/en/#about', label: 'About' },
-      { href: '/en/#contact', label: 'Contact' },
+      { href: '/en/contact', label: 'Contact' },
     ];
     var lang = '<a href="' + arHref + '" class="navbar__lang" lang="ar" hreflang="ar">العربية</a>';
     var row = function (indent) {
@@ -229,8 +244,8 @@ module.exports = function buildEnglish(h) {
       '        <span class="footer__heading">Quick links</span>\n' +
       '        <a href="/en/">Home</a>\n' +
       '        <a href="/en/#about">About</a>\n' +
-      '        <a href="/en/#contact">Contact</a>\n' +
-      '        <a href="/privacy" lang="ar" hreflang="ar">Privacy policy (Arabic)</a>\n' +
+      '        <a href="/en/contact">Contact</a>\n' +
+      '        <a href="/en/privacy">Privacy policy</a>\n' +
       '      </div>\n' +
       '      <div class="footer__col">\n' +
       '        <span class="footer__heading">Projects</span>\n' +
@@ -307,10 +322,13 @@ module.exports = function buildEnglish(h) {
     var breadcrumb = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/en/' },
-        { '@type': 'ListItem', position: 2, name: p.nameEn, item: canonical },
-      ],
+      itemListElement: (function () {
+        var items = [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/en/' }];
+        var hub = enAreaPath(p.areaSlug);
+        if (hub) items.push({ '@type': 'ListItem', position: 2, name: 'Hyde Park projects in ' + AREAS_EN[p.areaSlug].name, item: SITE + hub });
+        items.push({ '@type': 'ListItem', position: items.length + 1, name: p.nameEn, item: canonical });
+        return items;
+      })(),
     };
     var webPage = {
       '@context': 'https://schema.org',
@@ -446,7 +464,7 @@ module.exports = function buildEnglish(h) {
       '  <section class="pp-section" id="overview">\n' +
       '    <div class="pp-wrap pp-overview">\n' +
       '      <div class="pp-overview__text">\n' +
-      '        <nav class="pp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/en/">Home</a></li><li><a href="/en/#projects">Hyde Park projects</a></li><li aria-current="page">' + esc(p.nameEn) + '</li></ol></nav>\n' +
+      '        <nav class="pp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/en/">Home</a></li>' + (enAreaPath(p.areaSlug) ? '<li><a href="' + enAreaPath(p.areaSlug) + '">Hyde Park projects in ' + esc(AREAS_EN[p.areaSlug].name) + '</a></li>' : '<li><a href="/en/#projects">Hyde Park projects</a></li>') + '<li aria-current="page">' + esc(p.nameEn) + '</li></ol></nav>\n' +
       '        <h2 class="pp-h2">' + esc(p.nameEn) + ' at a glance</h2>\n' +
       '        <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
       '        <p class="pp-byline">' + byline + '</p>\n' +
@@ -817,7 +835,7 @@ module.exports = function buildEnglish(h) {
       '        </div>\n' +
       '        <p class="pp-lead__error" data-step-error hidden>Please answer every question to continue.</p>\n' +
       '      </form>\n' +
-      '      <p class="form-consent">By submitting, you agree to our <a href="/privacy" lang="ar" hreflang="ar">privacy policy</a> (in Arabic).</p>\n' +
+      '      <p class="form-consent">By submitting, you agree to our <a href="/en/privacy">privacy policy</a>.</p>\n' +
       '    </div>\n' +
       '  </section>\n'
     );
@@ -862,7 +880,8 @@ module.exports = function buildEnglish(h) {
         '            <tr><th scope="row">Available</th>' + cols.map(function (o) { return cell(o, o.availableUnits ? String(o.availableUnits) : '—'); }).join('') + '</tr>\n' +
         '          </tbody>\n' +
         '        </table>\n' +
-        '      </div>\n';
+        '      </div>\n' +
+        (enAreaPath(p.areaSlug) ? '      <p class="pp-area-link"><a class="pp-link" href="' + enAreaPath(p.areaSlug) + '">All Hyde Park projects in ' + esc(AREAS_EN[p.areaSlug].name) + ' and the full comparison →</a></p>\n' : '');
     }
     return (
       '  <section class="pp-section pp-compare-section" id="other-projects">\n' +
@@ -960,7 +979,8 @@ module.exports = function buildEnglish(h) {
       description: 'Marketing platform and authorized broker for Hyde Park Developments projects in Egypt. Not the developer.',
     });
     var projectsHtml = areas.map(function (area) {
-      return '  <h3 class="en-area-heading">' + esc(area) + '</h3>\n' +
+      var hub = enAreaPath(byArea[area][0].areaSlug);
+      return '  <h3 class="en-area-heading">' + (hub ? '<a href="' + hub + '">Hyde Park projects in ' + esc(area) + ' →</a>' : esc(area)) + '</h3>\n' +
         '  <div class="grid grid--projects" style="margin-bottom:44px">\n' + byArea[area].map(homeCard).join('') + '  </div>\n';
     }).join('');
     return doc({
@@ -1018,7 +1038,7 @@ module.exports = function buildEnglish(h) {
         '      <p>Tell us your budget and the monthly installment that suits you, and we’ll send the available units that match.</p>\n' +
         '      <div class="en-cta__btns">\n' +
         '        <a href="#" class="btn btn-whatsapp" data-whatsapp-link data-whatsapp-message="' + esc(waMsg) + '" data-cta-location="home"><i class="fa-brands fa-whatsapp"></i> WhatsApp us</a>\n' +
-        '        <a href="#" class="btn btn-yellow" data-phone-link data-cta-location="home"><i class="fa-solid fa-phone"></i> Call us</a>\n' +
+        '        <a href="/en/contact" class="btn btn-yellow"><i class="fa-solid fa-paper-plane"></i> Request a call</a>\n' +
         '      </div>\n' +
         '    </div>\n' +
         '  </section>\n\n',
@@ -1049,10 +1069,268 @@ module.exports = function buildEnglish(h) {
     });
   }
 
+  /* ---------------- Area hub pages ---------------- */
+
+  function areaPage(slug) {
+    var a = AREAS_EN[slug];
+    var list = all.filter(function (o) { return o.areaSlug === slug; }).sort(function (x, y) { return x.startingPrice - y.startingPrice; });
+    var minBy = function (l, fn) { return l.reduce(function (b, o) { return fn(o) < fn(b) ? o : b; }, l[0]); };
+    var cheapest = minBy(list, function (o) { return o.startingPrice; });
+    var minDown = Math.min.apply(null, list.map(function (o) { return o.paymentPlan.downPct; }));
+    var maxYears = Math.max.apply(null, list.map(function (o) { return o.paymentPlan.years; }));
+    var minDownList = list.filter(function (o) { return o.paymentPlan.downPct === minDown; });
+    var maxYearsList = list.filter(function (o) { return o.paymentPlan.years === maxYears; });
+    var withApts = list.filter(function (o) { return o.units.some(function (u) { return u.name === 'Apartment'; }); });
+    var villasOnly = list.filter(function (o) { return !o.units.some(function (u) { return u.name === 'Apartment'; }); });
+    var withCount = list.filter(function (o) { return o.availableUnits; });
+    var most = withCount.length ? minBy(withCount, function (o) { return -o.availableUnits; }) : null;
+    var names = function (l) { return joinEn(l.map(function (o) { return o.nameEn; })); };
+    var cheapestType = typeEn(cheapest.units.filter(function (u) { return u.price === cheapest.startingPrice; })[0] || cheapest.units[0]).toLowerCase();
+
+    var path = '/en/areas/' + slug, canonical = SITE + path;
+    var title = 'Hyde Park Projects in ' + a.name + ': ' + pricingYear() + ' Prices Compared';
+    var description = list.length + ' Hyde Park projects in ' + a.name + ': ' + names(list) + '. Prices from ' + egp(cheapest.startingPrice) +
+      ', ' + minDown + '% down and installments up to ' + years(maxYears) + '.';
+    if (description.length > 160) description = list.length + ' Hyde Park projects in ' + a.name + ', prices from ' + egp(cheapest.startingPrice) +
+      ', ' + minDown + '% down and up to ' + years(maxYears) + '. Compare sizes, types and availability.';
+
+    var faqList = [
+      { q: 'How many Hyde Park projects are there in ' + a.name + '?', a: 'Hyde Park has ' + list.length + ' projects in ' + a.name + ': ' + names(list) + '.' },
+      { q: 'What is the most affordable Hyde Park project in ' + a.name + '?', a: cheapest.nameEn + ', with prices from ' + egp(cheapest.startingPrice) + ' (' + cheapestType + ').' },
+      { q: 'What are the lowest down payment and longest installment plan in ' + a.name + '?',
+        a: 'The lowest down payment is ' + minDown + '% at ' + names(minDownList) + ', and the longest plan is ' + years(maxYears) + ' at ' + names(maxYearsList) + '.' },
+    ];
+    if (withApts.length && villasOnly.length) {
+      faqList.push({ q: 'Which projects have apartments, and which are villas only?',
+        a: 'Apartments are available at ' + names(withApts) + ', while ' + names(villasOnly) + (villasOnly.length > 1 ? ' offer' : ' offers') + ' townhouses and villas.' });
+    }
+    faqList.push({ q: 'Is Explorer Hyde Park the developer?', a: 'No. We are a marketing platform and authorized broker for Hyde Park projects, not the real estate developer.' });
+
+    var picks = [
+      ['Lowest starting price', cheapest.nameEn + ' — from ' + egp(cheapest.startingPrice)],
+      ['Lowest down payment', names(minDownList) + ' — ' + minDown + '%'],
+      ['Longest installment plan', names(maxYearsList) + ' — ' + years(maxYears)],
+    ];
+    if (most) picks.push(['Most units available', most.nameEn + ' — ' + unitsCount(most.availableUnits)]);
+    if (withApts.length) picks.push(['Has apartments', names(withApts)]);
+    if (villasOnly.length) picks.push(['Townhouses & villas only', names(villasOnly)]);
+
+    var rows = list.map(function (o) {
+      return '            <tr>' +
+        '<th scope="row"><a href="' + enProjectPath(o.slug) + '">' + esc(o.nameEn) + '</a><span class="pp-area-table__sub">' + esc(areaLabel(o)) + '</span></th>' +
+        '<td>' + fmt(o.startingPrice) + '</td>' +
+        '<td>' + o.paymentPlan.downPct + '%</td>' +
+        '<td>' + years(o.paymentPlan.years) + '</td>' +
+        '<td>' + esc(uniq(o.units.map(shortEn)).join(' · ')) + '</td>' +
+        '<td>' + (o.availableUnits ? o.availableUnits : '—') + '</td>' +
+        '</tr>\n';
+    }).join('');
+
+    var schema = [
+      h.jsonLd({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/en/' },
+        { '@type': 'ListItem', position: 2, name: 'Hyde Park projects in ' + a.name, item: canonical },
+      ] }),
+      h.jsonLd({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Hyde Park projects in ' + a.name,
+        itemListElement: list.map(function (o, i) { return { '@type': 'ListItem', position: i + 1, name: o.nameEn, url: SITE + enProjectPath(o.slug) }; }) }),
+      h.faqJsonLd(faqList),
+    ].join('\n');
+
+    return doc({
+      ctx: { page_type: 'area', project_name: '', area: slug },
+      title: title,
+      description: description,
+      canonical: canonical,
+      alternates: hreflang('/areas/' + slug, path),
+      og: { title: title, description: description, url: canonical, image: h.ogImageUrl(cheapest.slug) },
+      schema: schema,
+      bodyClass: 'pp-page pp-area-page',
+      body:
+        nav(false, '/areas/' + slug) + '\n\n' +
+        '  <header class="pp-section pp-area-hero">\n' +
+        '    <div class="pp-wrap">\n' +
+        '      <nav class="pp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/en/">Home</a></li><li aria-current="page">Hyde Park projects in ' + esc(a.name) + '</li></ol></nav>\n' +
+        '      <h1 class="pp-area-title">Hyde Park projects in ' + esc(a.name) + '</h1>\n' +
+        '      <p class="pp-summary">Hyde Park has <strong>' + list.length + ' projects</strong> in ' + esc(a.name) + ': ' + esc(names(list)) + '. ' +
+        'Prices start from <strong>' + egp(cheapest.startingPrice) + '</strong> at ' + esc(cheapest.nameEn) + ', with down payments from ' + minDown +
+        '% and installments up to ' + years(maxYears) + '. ' + esc(a.blurb) + '</p>\n' +
+        '      <p class="pp-byline">' + (lastUpdated ? 'Prices updated: ' + lastUpdated + ' · ' : '') + 'From the developer’s inventory · By the Explorer Hyde Park team</p>\n' +
+        '    </div>\n' +
+        '  </header>\n\n' +
+        '  <section class="pp-section pp-section--gray">\n' +
+        '    <div class="pp-wrap">\n' +
+        '      <h2 class="pp-h2">Quick comparison</h2>\n' +
+        '      <div class="pp-compare pp-area-table">\n' +
+        '        <table>\n' +
+        '          <thead><tr><th scope="col">Project</th><th scope="col">From (EGP)</th><th scope="col">Down payment</th><th scope="col">Installments</th><th scope="col">Types</th><th scope="col">Available</th></tr></thead>\n' +
+        '          <tbody>\n' + rows + '          </tbody>\n' +
+        '        </table>\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </section>\n\n' +
+        '  <section class="pp-section">\n' +
+        '    <div class="pp-wrap">\n' +
+        '      <h2 class="pp-h2">How to choose</h2>\n' +
+        '      <dl class="pp-facts pp-area-picks">\n' +
+        picks.map(function (k) { return '        <div class="pp-fact"><dt>' + k[0] + '</dt><dd>' + esc(k[1]) + '</dd></div>\n'; }).join('') +
+        '      </dl>\n' +
+        '    </div>\n' +
+        '  </section>\n\n' +
+        '  <section class="section section--gray">\n' +
+        '    <h2 class="section-title">All Hyde Park projects in ' + esc(a.name) + '</h2>\n' +
+        '    <div class="grid grid--projects">\n' + list.map(homeCard).join('') + '    </div>\n' +
+        '  </section>\n\n' +
+        faqSection(faqList) + '\n' +
+        '  <section class="pp-section pp-section--gray">\n' +
+        '    <div class="pp-wrap pp-area-cta">\n' +
+        '      <h2 class="pp-h2">Can’t decide between projects?</h2>\n' +
+        '      <p>Send us your budget and the monthly installment that suits you, and we’ll recommend the available units in ' + esc(a.name) + '.</p>\n' +
+        '      <a href="#" class="pp-btn pp-btn--green" data-whatsapp-link data-whatsapp-message="' + esc('Hi, I’d like unit recommendations in Hyde Park projects in ' + a.name + '.') + '" data-cta-location="area"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>\n' +
+        '    </div>\n' +
+        '  </section>\n\n',
+    });
+  }
+
+  /* ---------------- Contact ---------------- */
+
+  function contactPage() {
+    var title = 'Contact Us | Explorer Hyde Park';
+    var description = 'Contact the Explorer Hyde Park team about prices, sizes and payment plans for Hyde Park projects in New Cairo, 6th of October and the North Coast.';
+    var canonical = SITE + '/en/contact';
+    var card = function (attrs, icon, iconStyle, head, sub) {
+      return '        <' + (attrs ? 'a ' + attrs : 'div') + ' class="card en-contact__card">\n' +
+        '          <div class="amenity__icon"' + (iconStyle ? ' style="' + iconStyle + '"' : '') + '><i class="' + icon + '"></i></div>\n' +
+        '          <div><div class="en-contact__head">' + head + '</div><div class="en-contact__sub">' + sub + '</div></div>\n' +
+        '        </' + (attrs ? 'a' : 'div') + '>\n';
+    };
+    return doc({
+      ctx: { page_type: 'contact', project_name: '', area: '' },
+      title: title,
+      description: description,
+      canonical: canonical,
+      alternates: hreflang('/contact', '/en/contact'),
+      og: { title: title, description: description, url: canonical, image: h.OG_DEFAULT_IMAGE },
+      phoneField: true,
+      body:
+        nav(false, '/contact') + '\n\n' +
+        '  <div class="breadcrumb container"><a href="/en/">Home</a> / Contact us</div>\n\n' +
+        '  <section class="section en-contact">\n' +
+        '    <h1 class="section-title" style="margin-bottom:8px">Contact us</h1>\n' +
+        '    <p class="section-sub">Leave your details and our team will call you, or reach us directly on WhatsApp or by phone.</p>\n' +
+        '    <div class="en-contact__grid">\n' +
+        '      <div class="en-contact__form">\n' +
+        '        <form class="form-card" data-lead-form data-project-name="" data-success-url="/en/thank-you">\n' +
+        '          <div class="field field-icon">\n' +
+        '            <label for="c-name">Name</label>\n' +
+        '            <i class="fa-solid fa-user"></i>\n' +
+        '            <input type="text" id="c-name" name="name" placeholder="Your name" autocomplete="name" required>\n' +
+        '          </div>\n' +
+        '          <div class="field">\n' +
+        '            <label for="c-phone">Phone number</label>\n' +
+        '            <div class="form-row">\n' +
+        '              ' + phoneField() + '\n' +
+        '              <input type="tel" id="c-phone" name="phone" class="field-tel" dir="ltr" placeholder="1XX XXX XXXX" autocomplete="tel-national" required>\n' +
+        '            </div>\n' +
+        '          </div>\n' +
+        '          <div class="field field-icon">\n' +
+        '            <label for="c-email">Email <span class="optional-tag">(optional)</span></label>\n' +
+        '            <i class="fa-solid fa-envelope"></i>\n' +
+        '            <input type="email" id="c-email" name="email" placeholder="example@email.com" autocomplete="email">\n' +
+        '          </div>\n' +
+        '          <div class="field">\n' +
+        '            <label for="c-project">Project you’re interested in</label>\n' +
+        '            <select id="c-project" name="project">\n' +
+        '              <option value="">Not sure / all projects</option>\n' +
+        all.map(function (p) { return '              <option value="' + esc(p.nameEn) + '">' + esc(p.nameEn) + '</option>\n'; }).join('') +
+        '            </select>\n' +
+        '          </div>\n' +
+        '          <div class="field">\n' +
+        '            <label for="c-message">Your message <span class="optional-tag">(optional)</span></label>\n' +
+        '            <textarea id="c-message" name="message" placeholder="Write your question here" rows="3"></textarea>\n' +
+        '          </div>\n' +
+        '          <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">\n' +
+        '          <button type="submit" class="btn btn-yellow">Send request</button>\n' +
+        '        </form>\n' +
+        '        <p class="form-consent" style="text-align:center">By submitting, you agree to our <a href="/en/privacy">privacy policy</a>.</p>\n' +
+        '      </div>\n' +
+        '      <div class="en-contact__cards">\n' +
+        card('href="#" data-whatsapp-link data-whatsapp-message="' + esc(GENERAL_WA) + '" data-cta-location="contact"', 'fa-brands fa-whatsapp', 'background:rgba(0,215,160,.15);color:var(--green)', 'WhatsApp', 'Fast reply within minutes') +
+        card('href="#" data-phone-link data-cta-location="contact"', 'fa-solid fa-phone', '', 'Call us', 'Available during business hours') +
+        card('', 'fa-solid fa-location-dot', '', 'Cairo, Egypt', 'Covering New Cairo, 6th of October and the North Coast') +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </section>\n\n',
+    });
+  }
+
+  /* ---------------- Privacy ---------------- */
+
+  function privacyPage() {
+    var title = 'Privacy Policy | Explorer Hyde Park';
+    var description = 'Explorer Hyde Park privacy policy: the data we collect, how we use it, cookies, Google and Meta ads, and your rights over your data.';
+    var canonical = SITE + '/en/privacy';
+    var sec = function (n, head, html) {
+      return '      <div>\n        <h2 class="en-legal__h2">' + n + '. ' + head + '</h2>\n' + html + '      </div>\n';
+    };
+    var ul = function (items) { return '        <ul class="en-legal__list">\n' + items.map(function (i) { return '          <li>' + i + '</li>\n'; }).join('') + '        </ul>\n'; };
+    var para = function (t, cls) { return '        <p' + (cls ? ' class="' + cls + '"' : '') + '>' + t + '</p>\n'; };
+    return doc({
+      ctx: { page_type: 'privacy', project_name: '', area: '' },
+      title: title,
+      description: description,
+      canonical: canonical,
+      alternates: hreflang('/privacy', '/en/privacy'),
+      og: { title: title, description: description, url: canonical, image: h.OG_DEFAULT_IMAGE },
+      body:
+        nav(false, '/privacy') + '\n\n' +
+        '  <div class="breadcrumb container"><a href="/en/">Home</a> / Privacy policy</div>\n\n' +
+        '  <section class="section en-legal">\n' +
+        '    <h1 class="section-title en-legal__title">Privacy policy</h1>\n' +
+        '    <p class="en-legal__date">Last updated: 18 October 2026</p>\n' +
+        '    <div class="en-legal__body">\n' +
+        '      <div>\n' +
+        para('Explorer Hyde Park (“the website”, “we”) is a marketing platform and authorized broker that presents Hyde Park real estate projects in New Cairo, 6th of October and the North Coast. We are not the developer of any of these projects, and we do not own them or run their sales directly — our role is to present the information available about them and help you reach the right sales team. This policy explains what data we collect when you use the website, how we use it, and your rights over it.') +
+        '      </div>\n' +
+        sec(1, 'The data we collect',
+          para('When you fill in a contact form on the website (on a project page or the contact page), we may collect:', 'en-legal__lead') +
+          ul(['Your <strong>name</strong> and <strong>phone number</strong> — required so we can answer your enquiry.',
+            'Your <strong>email</strong> and <strong>message</strong> — optional; you can leave them empty.',
+            'The project you’re interested in (if you choose one), and your answers to the form questions.']) +
+          para('In addition, your browser automatically sends general technical data (such as device type, browser and the pages you visit) to every website you visit, and this may appear in the reports of the analytics or advertising tools used on the website (see the cookies section below).', 'en-legal__after')) +
+        sec(2, 'How we use your data',
+          ul(['To answer your enquiry and contact you about the project or projects you’re interested in.',
+            'To improve the website’s content and understand which sections interest our visitors most.',
+            'To run advertising campaigns (such as Google Ads and Meta Ads) and measure their performance.']) +
+          para('We do not sell your data to any third party for their own marketing.', 'en-legal__after')) +
+        sec(3, 'How forms are sent and data is stored',
+          para('When you send a form on the website, two things happen. The form data (name, mobile number and your answers) is recorded in a spreadsheet on Google Sheets that only our sales team can access, so we can contact you and follow up on your request, together with simple information about where your visit came from (for example, a Google search or an ad) and the page you sent it from. At the same time, a ready-made WhatsApp message to the sales team opens (WhatsApp/Meta’s privacy policy governs sending and receiving that message). Only our team can access this data, we use it to contact you about your request, and you can ask us to delete it at any time (see “Your rights”).')) +
+        sec(4, 'Cookies and advertising',
+          para('The website uses or connects to external services that may set cookies or collect limited usage data, including:', 'en-legal__lead') +
+          ul(['<strong>Google Analytics</strong> (through Google Tag Manager) — to measure visits, pages viewed and buttons clicked, without identifying you personally.',
+            '<strong>Google Fonts</strong> and <strong>Font Awesome</strong> — to load fonts and icons.',
+            '<strong>Google Ads</strong> and <strong>Meta Ads</strong> (Facebook/Instagram) — if you reached the website from an ad, or if we run remarketing later, pixels/cookies may be used to measure ad performance and show you relevant ads on other platforms.']) +
+          para('You can control or block cookies from your browser settings at any time, although this may affect some features of the website.', 'en-legal__after')) +
+        sec(5, 'Sharing data',
+          para('We share your enquiry data only with the sales team of the project (or projects) you’re interested in, so they can answer you. We don’t share your data with anyone else for purposes unrelated to your enquiry, unless required by law.')) +
+        sec(6, 'Your rights',
+          para('At any time you can ask us what data we hold about you, or ask us to correct or delete it, or withdraw your consent to be contacted — just reach us on WhatsApp or by phone from the <a href="/en/contact">contact page</a>, and we’ll respond as soon as possible.')) +
+        sec(7, 'Children’s privacy',
+          para('This website is intended for adults interested in buying or renting property. It is not directed at children under 18, and we do not knowingly collect data from this age group.')) +
+        sec(8, 'Links to external websites',
+          para('The website contains links to external services such as WhatsApp. We are not responsible for the privacy policies or content of those external websites or apps, and we recommend reviewing their privacy policies separately.')) +
+        sec(9, 'Updates to this policy',
+          para('We may update this policy from time to time to reflect changes in how we work. The date of the last update is shown at the top of the page, and we recommend reviewing it periodically.')) +
+        sec(10, 'Contact us',
+          para('If you have any questions about this privacy policy or want to exercise any of your rights, contact us from the <a href="/en/contact">contact page</a> or directly on WhatsApp.')) +
+        '    </div>\n' +
+        '  </section>\n\n',
+    });
+  }
+
   /* ---------------- Write ---------------- */
 
   var fs = require('fs'), path = require('path');
-  ['en', 'en/projects'].forEach(function (d) {
+  ['en', 'en/projects', 'en/areas'].forEach(function (d) {
     var dir = path.join(h.ROOT, d);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   });
@@ -1062,10 +1340,22 @@ module.exports = function buildEnglish(h) {
   });
   h.writeIfChanged('en/index.html', homePage());
   h.writeIfChanged('en/thank-you.html', thankYouPage());
-  console.log('wrote en/index.html, en/thank-you.html');
+  h.writeIfChanged('en/contact.html', contactPage());
+  h.writeIfChanged('en/privacy.html', privacyPage());
+  var hubs = Object.keys(AREAS_EN).filter(enAreaPath);
+  hubs.forEach(function (slug) { h.writeIfChanged('en/areas/' + slug + '.html', areaPage(slug)); });
+  console.log('wrote en/index.html, en/contact.html, en/privacy.html, en/thank-you.html, en/areas/' + hubs.join(', en/areas/'));
 
-  // For the sitemap.
-  return [{ loc: SITE + '/en/', file: 'en/index.html', changefreq: 'weekly', priority: '0.9' }].concat(all.map(function (p) {
-    return { loc: SITE + enProjectPath(p.slug), file: 'en/projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.8' };
-  }));
+  // For the sitemap (thank-you is noindex, so it stays out).
+  return [{ loc: SITE + '/en/', file: 'en/index.html', changefreq: 'weekly', priority: '0.9' }]
+    .concat(all.map(function (p) {
+      return { loc: SITE + enProjectPath(p.slug), file: 'en/projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.8' };
+    }))
+    .concat(hubs.map(function (slug) {
+      return { loc: SITE + '/en/areas/' + slug, file: 'en/areas/' + slug + '.html', changefreq: 'weekly', priority: '0.7' };
+    }))
+    .concat([
+      { loc: SITE + '/en/contact', file: 'en/contact.html', changefreq: 'monthly', priority: '0.5' },
+      { loc: SITE + '/en/privacy', file: 'en/privacy.html', changefreq: 'yearly', priority: '0.3' },
+    ]);
 };

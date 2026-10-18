@@ -1536,6 +1536,7 @@ pageContextScript({ page_type: 'area', project_name: '', area: slug }) +
 '<title>' + escapeHtml(title) + '</title>\n' +
 '<meta name="description" content="' + escapeHtml(description) + '">\n' +
 '<link rel="canonical" href="' + canonical + '">\n' +
+hreflangLinks('/areas/' + slug, '/en/areas/' + slug) +
 ogTagsMarkup({ title: title, description: description, url: canonical, image: ogImageUrl(f.cheapest.slug) }) + '\n' +
 '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
@@ -1548,7 +1549,7 @@ areaJsonLd(a, slug, list, faqs) + '\n' +
 '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FD83KJ7"\n' +
 'height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
 '<!-- End Google Tag Manager (noscript) -->\n\n' +
-nav(false) + '\n\n' +
+nav(false, '/en/areas/' + slug) + '\n\n' +
 '  <header class="pp-section pp-area-hero">\n' +
 '    <div class="pp-wrap">\n' +
 '      <nav class="pp-breadcrumb" aria-label="مسار الصفحة"><ol><li><a href="/">الرئيسية</a></li><li aria-current="page">مشاريع هايد بارك في ' + escapeHtml(a.nameAr) + '</li></ol></nav>\n' +
@@ -1949,7 +1950,7 @@ var englishUrls = require('./build-en')({
   fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
   pageContextScript: pageContextScript, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
-  bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged,
+  bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,
 });
 // Last: lastmod depends on which pages changed above.
 writeSitemap(merged, englishUrls);
