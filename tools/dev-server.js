@@ -14,13 +14,22 @@ const TYPES = {
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
 };
 
 http.createServer(function (req, res) {
   var urlPath = decodeURIComponent(req.url.split('?')[0]);
   if (urlPath === '/') urlPath = '/index.html';
+  urlPath = urlPath.replace(/\/+$/, '') || '/index.html';
   var filePath = path.join(ROOT, urlPath);
   if (!filePath.startsWith(ROOT)) { res.writeHead(403); res.end('Forbidden'); return; }
+  // Same as .htaccess rule 3 on the live server: /projects/x -> /projects/x.html,
+  // so the site's extensionless links work locally too.
+  if (!path.extname(filePath) && fs.existsSync(filePath + '.html')) filePath += '.html';
   fs.readFile(filePath, function (err, data) {
     if (err) { res.writeHead(404); res.end('Not found: ' + urlPath); return; }
     var ext = path.extname(filePath);
