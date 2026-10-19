@@ -28,6 +28,10 @@ no framework and no build dependencies beyond Node.
 ## Everyday tasks
 
 ```sh
+# new availability sheet from the developer (CSV export) → prices, units, counts
+python tools/import-availability.py path/to/Sales_Availability_Report.csv --date 2026-10-19
+node tools/build-pages.js
+
 # after editing projects-data.js, pricing.json, inventory.json or adding photos
 node tools/build-pages.js
 

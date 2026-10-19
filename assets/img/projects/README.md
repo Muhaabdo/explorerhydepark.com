@@ -20,6 +20,7 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-central-townhouse.jpg` ✅ — Townhouse unit photo
 - [x] `hyde-park-central-quad.jpg` ✅ — Quad unit photo
 - [x] `hyde-park-central-standalone.jpg` ✅ — Standalone unit photo
+- [ ] `hyde-park-central-duplex.jpg` — Duplex unit photo
 
 ## Hyde Park New Cairo  (`assets/img/projects/hyde-park-new-cairo/`)
 
@@ -103,7 +104,6 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-sea-shore-location.jpg` ✅ — map or location photo
 - [x] `hyde-park-sea-shore-apartment.jpg` ✅ — Apartment unit photo
 - [x] `hyde-park-sea-shore-standard-chalet.jpg` ✅ — Standard Chalet unit photo
-- [x] `hyde-park-sea-shore-beach-chalet.jpg` ✅ — Beach Chalet unit photo
 - [x] `hyde-park-sea-shore-townhouse.jpg` ✅ — Townhouse unit photo
 - [x] `hyde-park-sea-shore-twin-house.jpg` ✅ — Twin House unit photo
 - [x] `hyde-park-sea-shore-twin-house-with-roof.jpg` ✅ — Twin House with Roof unit photo

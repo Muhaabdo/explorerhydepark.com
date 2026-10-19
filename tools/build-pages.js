@@ -36,7 +36,7 @@ const DEFAULT_WA_MESSAGE = 'أرغب بمعرفة التفاصيل';
 
 // Unit types where a bedroom count means something to a buyer. Villas and
 // townhouses in the export sometimes carry a stray "1" — never show it.
-const ROOM_TYPES = ['Apartment', 'Standard Chalet', 'Beach Chalet'];
+const ROOM_TYPES = ['Apartment', 'Duplex', 'Standard Chalet', 'Beach Chalet'];
 
 function fmt(n) {
   return Math.round(n).toLocaleString('en-US');
@@ -177,6 +177,7 @@ function formatRooms(bedrooms) {
 // Variants collapse into one family (both chalets → شاليه, all villas → فيلا).
 var TYPE_SHORT_AR = {
   'Apartment': 'شقق',
+  'Duplex': 'دوبلكس',
   'Townhouse': 'تاون',
   'Quad': 'كواد',
   'Twin House': 'توين',

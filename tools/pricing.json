@@ -1,14 +1,14 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-04",
+    "lastUpdated": "2026-10-19",
     "currency": "EGP",
     "priceBasis": "Lowest available price per unit type (developer inventory export).",
-    "source": "Hyde Park developer inventory — Available units only."
+    "source": "Hyde Park Sales Availability Report — available units only."
   },
   "projects": {
     "garden-lakes": {
       "refreshed": true,
-      "availableUnits": 42,
+      "availableUnits": 47,
       "minPrice": 6800000,
       "bedrooms": [
         1,
@@ -27,16 +27,16 @@
             2,
             3
           ],
-          "count": 33
+          "count": 38
         },
         {
           "type": "Townhouse",
           "label": "تاون هاوس",
-          "minPrice": 24470000,
+          "minPrice": 24440000,
           "areaMin": 215.0,
           "areaMax": 215.0,
           "bedrooms": [],
-          "count": 4
+          "count": 2
         },
         {
           "type": "Twin House",
@@ -45,7 +45,7 @@
           "areaMin": 242.0,
           "areaMax": 242.0,
           "bedrooms": [],
-          "count": 3
+          "count": 4
         },
         {
           "type": "Standalone",
@@ -54,14 +54,14 @@
           "areaMin": 242.0,
           "areaMax": 242.0,
           "bedrooms": [],
-          "count": 2
+          "count": 3
         }
       ]
     },
     "signature": {
       "refreshed": true,
-      "availableUnits": 50,
-      "minPrice": 6590000,
+      "availableUnits": 48,
+      "minPrice": 6650000,
       "bedrooms": [
         1,
         2,
@@ -71,7 +71,7 @@
         {
           "type": "Apartment",
           "label": "شقق",
-          "minPrice": 6590000,
+          "minPrice": 6650000,
           "areaMin": 68.21,
           "areaMax": 148.4,
           "bedrooms": [
@@ -79,16 +79,16 @@
             2,
             3
           ],
-          "count": 32
+          "count": 31
         },
         {
           "type": "Townhouse",
           "label": "تاون هاوس",
-          "minPrice": 23540000,
+          "minPrice": 23940000,
           "areaMin": 195.0,
           "areaMax": 195.0,
           "bedrooms": [],
-          "count": 9
+          "count": 8
         },
         {
           "type": "Twin House",
@@ -113,25 +113,29 @@
     "hyde-central": {
       "refreshed": true,
       "availableUnits": 110,
-      "minPrice": 6430000,
+      "minPrice": 6410000,
       "bedrooms": [
         1,
         2,
-        3
+        3,
+        4,
+        5
       ],
       "units": [
         {
           "type": "Apartment",
           "label": "شقق",
-          "minPrice": 6430000,
+          "minPrice": 6410000,
           "areaMin": 63.0,
-          "areaMax": 156.0,
+          "areaMax": 178.0,
           "bedrooms": [
             1,
             2,
-            3
+            3,
+            4,
+            5
           ],
-          "count": 87
+          "count": 83
         },
         {
           "type": "Townhouse",
@@ -140,16 +144,16 @@
           "areaMin": 212.0,
           "areaMax": 212.0,
           "bedrooms": [],
-          "count": 9
+          "count": 11
         },
         {
           "type": "Quad",
           "label": "كواد",
-          "minPrice": 25540000,
+          "minPrice": 26790000,
           "areaMin": 217.0,
           "areaMax": 217.0,
           "bedrooms": [],
-          "count": 13
+          "count": 10
         },
         {
           "type": "Standalone",
@@ -158,50 +162,58 @@
           "areaMin": 265.0,
           "areaMax": 265.0,
           "bedrooms": [],
-          "count": 1
+          "count": 2
+        },
+        {
+          "type": "Duplex",
+          "label": "دوبلكس",
+          "minPrice": 16480000,
+          "areaMin": 185.0,
+          "areaMax": 211.0,
+          "bedrooms": [
+            3,
+            4
+          ],
+          "count": 4
         }
       ]
     },
     "hyde-new-cairo": {
       "refreshed": true,
-      "availableUnits": 43,
-      "minPrice": 7220000,
+      "availableUnits": 33,
+      "minPrice": 10280000,
       "bedrooms": [
         1,
-        2,
-        3
+        2
       ],
       "units": [
         {
           "type": "Apartment",
           "label": "شقق",
-          "minPrice": 7220000,
-          "areaMin": 75.0,
-          "areaMax": 178.84,
+          "minPrice": 10280000,
+          "areaMin": 78.28,
+          "areaMax": 125.55,
           "bedrooms": [
             1,
-            2,
-            3
+            2
           ],
-          "count": 36
+          "count": 28
         },
         {
           "type": "Standalone",
           "label": "فيلا مستقلة",
-          "minPrice": 74250000,
+          "minPrice": 79750000,
           "areaMin": 327.7,
           "areaMax": 1287.0,
-          "bedrooms": [
-            1
-          ],
-          "count": 7
+          "bedrooms": [],
+          "count": 5
         }
       ]
     },
     "seashore": {
       "refreshed": true,
-      "availableUnits": 113,
-      "minPrice": 8410000,
+      "availableUnits": 122,
+      "minPrice": 9060000,
       "bedrooms": [
         1,
         2,
@@ -211,7 +223,7 @@
         {
           "type": "Apartment",
           "label": "شقق",
-          "minPrice": 8410000,
+          "minPrice": 9060000,
           "areaMin": 63.0,
           "areaMax": 138.0,
           "bedrooms": [
@@ -219,39 +231,27 @@
             2,
             3
           ],
-          "count": 72
+          "count": 80
         },
         {
           "type": "Standard Chalet",
           "label": "شاليه ستاندرد",
-          "minPrice": 13030000,
-          "areaMin": 76.39,
+          "minPrice": 22210000,
+          "areaMin": 111.99,
           "areaMax": 135.7,
           "bedrooms": [
-            1,
             3
           ],
-          "count": 4
-        },
-        {
-          "type": "Beach Chalet",
-          "label": "شاليه شاطئ",
-          "minPrice": 22450000,
-          "areaMin": 130.0,
-          "areaMax": 130.0,
-          "bedrooms": [
-            3
-          ],
-          "count": 1
+          "count": 2
         },
         {
           "type": "Townhouse",
           "label": "تاون هاوس",
           "minPrice": 34340000,
-          "areaMin": 182.0,
+          "areaMin": 168.0,
           "areaMax": 195.0,
           "bedrooms": [],
-          "count": 23
+          "count": 26
         },
         {
           "type": "Twin House",
@@ -278,7 +278,7 @@
           "areaMin": 245.0,
           "areaMax": 245.0,
           "bedrooms": [],
-          "count": 4
+          "count": 5
         },
         {
           "type": "Beach Medium Villa",
@@ -293,7 +293,7 @@
     },
     "hyde-terraces": {
       "refreshed": true,
-      "availableUnits": 7,
+      "availableUnits": 6,
       "minPrice": 23400000,
       "bedrooms": [],
       "units": [
@@ -301,24 +301,24 @@
           "type": "Townhouse",
           "label": "تاون هاوس",
           "minPrice": 23400000,
-          "areaMin": 196,
-          "areaMax": 198,
+          "areaMin": 196.0,
+          "areaMax": 196.0,
           "bedrooms": [],
-          "count": null
+          "count": 4
         },
         {
           "type": "Standalone",
           "label": "فيلا مستقلة",
-          "minPrice": 23400000,
-          "areaMin": 240,
-          "areaMax": 285,
+          "minPrice": 56620000,
+          "areaMin": 285.0,
+          "areaMax": 285.0,
           "bedrooms": [],
-          "count": null
+          "count": 2
         }
       ]
     },
     "tawny": {
-      "refreshed": true,
+      "refreshed": false,
       "availableUnits": null,
       "minPrice": 15300000,
       "bedrooms": [],

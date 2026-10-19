@@ -52,6 +52,7 @@ module.exports = function buildEnglish(h) {
   // Unit types as they appear in pricing.json ("type"), in English.
   var TYPE_EN = {
     'Apartment': 'Apartments',
+    'Duplex': 'Duplex',
     'Townhouse': 'Townhouse',
     'Quad': 'Quad villa',
     'Twin House': 'Twin house',
@@ -65,6 +66,7 @@ module.exports = function buildEnglish(h) {
   // Family label (hero line, tabs, tables) — variants collapse into one.
   var TYPE_SHORT_EN = {
     'Apartment': 'Apartments',
+    'Duplex': 'Duplexes',
     'Townhouse': 'Townhouses',
     'Quad': 'Quads',
     'Twin House': 'Twin houses',

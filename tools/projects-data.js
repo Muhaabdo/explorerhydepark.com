@@ -7,8 +7,9 @@
  * After editing either file, run `node tools/build-pages.js` to regenerate
  * the static pages in /projects and the project cards on the homepage.
  *
- * inventoryName: the project's name inside inventory.json (null when the
- *   export doesn't include it) — unit-level detail is derived from there.
+ * inventoryName: the project's name in the developer's availability report
+ *   ("project Name" column — see tools/import-availability.py; null when the
+ *   report doesn't include it) — unit-level detail is derived from there.
  * nameAr: Arabic name used in headings and the summary paragraph.
  * finishingLabel: text of the "التشطيب" fact (and the finishing clause in the
  *   summary) — set by hand per project; empty string hides both.
@@ -71,7 +72,7 @@ module.exports = [
   {
     slug: 'hyde-park-new-cairo',
     pricingKey: 'hyde-new-cairo',
-    inventoryName: 'Hyde Park New Cairo',
+    inventoryName: 'Hyde Park Residential',
     nameEn: 'Hyde Park New Cairo',
     nameAr: 'هايد بارك نيو كايرو',
     finishingLabel: 'كور آند شل',
@@ -100,7 +101,7 @@ module.exports = [
   {
     slug: 'hyde-park-terraces',
     pricingKey: 'hyde-terraces',
-    inventoryName: null,
+    inventoryName: 'Terraces',
     nameEn: 'Hyde Park Terraces',
     nameAr: 'هايد بارك تراسيس',
     finishingLabel: 'كور آند شل',
@@ -193,7 +194,7 @@ module.exports = [
   {
     slug: 'hyde-park-signature',
     pricingKey: 'signature',
-    inventoryName: 'HP Signature',
+    inventoryName: 'Signature',
     nameEn: 'Hyde Park Signature',
     nameAr: 'هايد بارك سيجنتشر',
     finishingLabel: 'كور آند شل',
@@ -223,7 +224,7 @@ module.exports = [
   {
     slug: 'hyde-park-sea-shore',
     pricingKey: 'seashore',
-    inventoryName: 'Seashore Ras El Hekma',
+    inventoryName: 'Hyde Park North',
     nameEn: 'Hyde Park Sea Shore',
     nameAr: 'هايد بارك سي شور',
     finishingLabel: 'كور آند شل',
