@@ -1044,3 +1044,6 @@ html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3, html[lang="en"] h4 {
 .en-legal__h2 { font-size: 20px; color: var(--blue); margin: 0 0 10px; }
 .en-legal__list { margin: 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 6px; }
 .en-legal a { color: var(--blue); }
+/* "X is part of Y" line under the about paragraph (One Hyde Park → HP New Cairo). */
+.pp-parent { margin: 12px 0 0; font-size: 15px; font-weight: 600; }
+.pp-phases__name a { color: var(--blue); }

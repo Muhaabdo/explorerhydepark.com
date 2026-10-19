@@ -35,6 +35,24 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-new-cairo-apartment.jpg` ✅ — Apartment unit photo
 - [x] `hyde-park-new-cairo-standalone.jpg` ✅ — Standalone unit photo
 
+## One Hyde Park  (`assets/img/projects/one-hyde-park/`)
+
+- [x] `one-hyde-park-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [ ] `one-hyde-park-gallery-1.jpg` — gallery photo 1
+- [ ] `one-hyde-park-gallery-2.jpg` — gallery photo 2
+- [ ] `one-hyde-park-gallery-3.jpg` — gallery photo 3
+- [ ] `one-hyde-park-gallery-4.jpg` — gallery photo 4
+- [ ] `one-hyde-park-gallery-5.jpg` — gallery photo 5
+- [ ] `one-hyde-park-gallery-6.jpg` — gallery photo 6
+- [ ] `one-hyde-park-location.jpg` — map or location photo
+- [ ] `one-hyde-park-apartment.jpg` — Apartment unit photo
+- [ ] `one-hyde-park-duplex.jpg` — Duplex unit photo
+- [ ] `one-hyde-park-sky-villa.jpg` — Sky Villa unit photo
+- [ ] `one-hyde-park-garden-villa.jpg` — Garden Villa unit photo
+- [ ] `one-hyde-park-townhouse.jpg` — Townhouse unit photo
+- [ ] `one-hyde-park-twin-house.jpg` — Twin House unit photo
+- [ ] `one-hyde-park-standalone.jpg` — Standalone unit photo
+
 ## Hyde Park Terraces  (`assets/img/projects/hyde-park-terraces/`)
 
 - [x] `hyde-park-terraces-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
@@ -109,3 +127,15 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 - [x] `hyde-park-sea-shore-twin-house-with-roof.jpg` ✅ — Twin House with Roof unit photo
 - [x] `hyde-park-sea-shore-small-villa.jpg` ✅ — Small Villa unit photo
 - [x] `hyde-park-sea-shore-beach-medium-villa.jpg` ✅ — Beach Medium Villa unit photo
+
+## Hyde Park Business District  (`assets/img/projects/hyde-park-business-district/`)
+
+- [x] `hyde-park-business-district-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
+- [ ] `hyde-park-business-district-gallery-1.jpg` — gallery photo 1
+- [ ] `hyde-park-business-district-gallery-2.jpg` — gallery photo 2
+- [ ] `hyde-park-business-district-gallery-3.jpg` — gallery photo 3
+- [ ] `hyde-park-business-district-gallery-4.jpg` — gallery photo 4
+- [ ] `hyde-park-business-district-gallery-5.jpg` — gallery photo 5
+- [ ] `hyde-park-business-district-gallery-6.jpg` — gallery photo 6
+- [ ] `hyde-park-business-district-location.jpg` — map or location photo
+- [ ] `hyde-park-business-district-office.jpg` — Office unit photo

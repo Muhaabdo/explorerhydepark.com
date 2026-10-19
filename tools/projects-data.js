@@ -31,7 +31,12 @@
  *   metaDescription: hand-written override; empty → built from pricing.json.
  *   aboutAr: project-specific paragraph (facts only — keep sources below).
  *   phases: [{ name: 'Water Residences', nameAr: 'ووتر ريزيدنسز', note: '...' }]
- *     → "مراحل المشروع" block in the overview. Empty array hides it.
+ *     → "مراحل المشروع" block in the overview. Empty array hides it. A phase
+ *     with `slug` (a project of its own on the site) links to that page.
+ *   parentSlug: this project sits inside another one (One Hyde Park → Hyde Park
+ *     New Cairo) — adds it to the breadcrumb and a linked line in the overview.
+ *   kind: 'commercial' for offices / clinics — own group on the homepage, kept
+ *     out of the residential comparisons and area hubs, business-oriented form.
  */
 
 module.exports = [
@@ -87,12 +92,46 @@ module.exports = [
     amenities: ['حمامات سباحة', 'مساحات خضراء', 'أمن وحراسة', 'مطاعم وكافيهات', 'جيم', 'مدارس قريبة'],
     locationText: 'يقع هايد بارك نيو كايرو في التجمع الخامس بالقاهرة الجديدة على شارع التسعين، وعلى بُعد دقيقة من هايد بارك سنترال.',
     aboutAr: 'هايد بارك نيو كايرو أول مشروع لشركة هايد بارك للتطوير العقاري والمجتمع السكني الرئيسي للعلامة في القاهرة الجديدة. داخل المشروع نادي Ryze Club اللي بيخدم كمان سكان المشاريع الجديدة القريبة، والمطوّر وقّع مع مستشفيات صفا لإنشاء مجمع طبي يخدم سكان المجتمع.',
-    phases: [],
+    phases: [
+      { name: 'One Hyde Park', nameAr: 'وان هايد بارك', slug: 'one-hyde-park', note: 'كمبوند مقفول جوه هايد بارك نيو كايرو، أُطلق في سبتمبر 2026 بشقق ودوبلكس وسكاي فيلا وفيلات.' },
+    ],
     distances: [
       { place: 'الجامعة الأمريكية بالقاهرة' },
       { place: 'شارع التسعين' },
       { place: 'هايد بارك سنترال', minutes: 1 },
       { place: 'مطار القاهرة الدولي', minutes: 20 },
+    ],
+    mapsUrl: '',
+    finishingCostNote: '',
+  },
+  // Sources (Oct 2026): Abdo (gated compound inside Hyde Park Residential / HP New Cairo); invest-gate.me 8 Sep 2026 launch article (240 feddans, ~8,500 units, 6 towers, 75–377 m², two international schools, rowing lake, internal shuttle, Ryze Club access, travel times); nawy.com/compound/2644 (5% down / 8 years, Core & Shell, Road 90).
+  {
+    slug: 'one-hyde-park',
+    pricingKey: 'one-hyde-park',
+    inventoryName: 'One Hyde Park',
+    nameEn: 'One Hyde Park',
+    nameAr: 'وان هايد بارك',
+    parentSlug: 'hyde-park-new-cairo',
+    finishingLabel: 'كور آند شل',
+    areaAr: 'القاهرة الجديدة',
+    areaSlug: 'new-cairo',
+    areaDetailAr: 'التجمع الخامس',
+    seoTitle: '',
+    metaDescription: '',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: '',
+    paymentPlan: { downPct: 5, years: 8 },
+    amenities: ['بحيرة للتجديف', 'مدرستين دوليتين', 'مساحات خضراء', 'شاتل داخلي', 'محلات وخدمات', 'نادي Ryze Club', 'أمن وحراسة'],
+    locationText: 'يقع وان هايد بارك في التجمع الخامس بالقاهرة الجديدة جوه مجتمع هايد بارك نيو كايرو، ومتصل مباشرة بالطريق الدائري الأوسطي.',
+    aboutAr: 'وان هايد بارك كمبوند مقفول جوه هايد بارك نيو كايرو، أطلقته هايد بارك للتطوير العقاري في سبتمبر 2026 على مساحة حوالي 240 فدانًا وبحوالي 8,500 وحدة. المشروع فيه 6 أبراج وُصفت بأنها الأعلى في التجمع الخامس، مع شقق ودوبلكس وسكاي فيلا وجاردن فيلا وتاون هاوس وتوين هاوس وفيلات مستقلة بمساحات من 75 لـ 377 م². من خدماته مدرستين دوليتين وبحيرة رئيسية للتجديف وشاتل داخلي، وسكانه بيستخدموا نادي Ryze Club في هايد بارك نيو كايرو.',
+    phases: [],
+    distances: [
+      { place: 'محور محمد نجيب', minutes: 7 },
+      { place: 'شارع جمال عبد الناصر', minutes: 9 },
+      { place: 'الجامعة الأمريكية بالقاهرة', minutes: 10 },
+      { place: 'العاصمة الإدارية الجديدة', minutes: 12 },
+      { place: 'طريق العين السخنة', minutes: 15 },
+      { place: 'مطار القاهرة الدولي', minutes: 25 },
     ],
     mapsUrl: '',
     finishingCostNote: '',
@@ -249,6 +288,37 @@ module.exports = [
       { place: 'مطار العلمين الدولي' },
       { place: 'أبراج العلمين' },
       { place: 'مطار مرسى مطروح' },
+    ],
+    mapsUrl: '',
+    finishingCostNote: '',
+  },
+  // Sources (Oct 2026): corporate.nawy.com/compound/198-hyde-park-business-district (Road 90 entrance, link to New Ring Road, ~70% greenery, executive triplex offices, conference centre, piazza, underground parking, 5% / 8 years, ~20 min to the New Capital, next to HydeOut).
+  {
+    slug: 'hyde-park-business-district',
+    pricingKey: 'business-district',
+    inventoryName: 'Business District',
+    nameEn: 'Hyde Park Business District',
+    nameAr: 'هايد بارك بيزنس ديستريكت',
+    kind: 'commercial',
+    parentSlug: 'hyde-park-new-cairo',
+    finishingLabel: 'كور آند شل',
+    areaAr: 'القاهرة الجديدة',
+    areaSlug: 'new-cairo',
+    areaDetailAr: 'التجمع الخامس',
+    seoTitle: '',
+    metaDescription: '',
+    heroPlaceholder: 'صورة المشروع (خارجية / رندر)',
+    intro: '',
+    paymentPlan: { downPct: 5, years: 8 },
+    amenities: ['مركز مؤتمرات', 'بيازا بنافورات', 'جراج تحت الأرض', 'أمن 24 ساعة', 'مولد كهرباء احتياطي', 'تكييف مركزي', 'ألياف ضوئية'],
+    locationText: 'يقع هايد بارك بيزنس ديستريكت في التجمع الخامس بالقاهرة الجديدة، ومدخله الرئيسي على شارع التسعين المتصل بالطريق الدائري الجديد، وجنب مول هايد أوت.',
+    aboutAr: 'هايد بارك بيزنس ديستريكت المنطقة الإدارية والتجارية في هايد بارك نيو كايرو، وفيه مكاتب إدارية بمساحات مختلفة، منها مكاتب تنفيذية تريبلكس على تلات أدوار. حوالي 70% من مساحة المشروع مساحات خضراء ولاندسكيب، والمباني فوق جراج تحت الأرض، ومن خدماته مركز مؤتمرات وبيازا بنافورات وأماكن للجلوس، ومحلات وكافيهات ومطاعم على مسافة مشي.',
+    phases: [],
+    distances: [
+      { place: 'شارع التسعين', note: 'المدخل الرئيسي' },
+      { place: 'مول هايد أوت', note: 'جنب المشروع' },
+      { place: 'الطريق الدائري الجديد' },
+      { place: 'العاصمة الإدارية الجديدة', minutes: 20 },
     ],
     mapsUrl: '',
     finishingCostNote: '',

@@ -318,7 +318,7 @@
       ]
     },
     "tawny": {
-      "refreshed": false,
+      "refreshed": true,
       "availableUnits": null,
       "minPrice": 15300000,
       "bedrooms": [],
@@ -349,6 +349,110 @@
           "areaMax": null,
           "bedrooms": [],
           "count": null
+        }
+      ]
+    },
+    "one-hyde-park": {
+      "refreshed": true,
+      "availableUnits": 129,
+      "minPrice": 6870000,
+      "bedrooms": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "units": [
+        {
+          "type": "Apartment",
+          "label": "شقق",
+          "minPrice": 6870000,
+          "areaMin": 73.0,
+          "areaMax": 199.0,
+          "bedrooms": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "count": 90
+        },
+        {
+          "type": "Duplex",
+          "label": "دوبلكس",
+          "minPrice": 17200000,
+          "areaMin": 203.0,
+          "areaMax": 208.0,
+          "bedrooms": [
+            3
+          ],
+          "count": 9
+        },
+        {
+          "type": "Sky Villa",
+          "label": "سكاي فيلا",
+          "minPrice": 23280000,
+          "areaMin": 234.0,
+          "areaMax": 270.0,
+          "bedrooms": [
+            3
+          ],
+          "count": 9
+        },
+        {
+          "type": "Garden Villa",
+          "label": "جاردن فيلا",
+          "minPrice": 23040000,
+          "areaMin": 219.0,
+          "areaMax": 219.0,
+          "bedrooms": [
+            3
+          ],
+          "count": 1
+        },
+        {
+          "type": "Townhouse",
+          "label": "تاون هاوس",
+          "minPrice": 26240000,
+          "areaMin": 196.0,
+          "areaMax": 198.0,
+          "bedrooms": [],
+          "count": 6
+        },
+        {
+          "type": "Twin House",
+          "label": "توين هاوس",
+          "minPrice": 34920000,
+          "areaMin": 218.0,
+          "areaMax": 218.0,
+          "bedrooms": [],
+          "count": 5
+        },
+        {
+          "type": "Standalone",
+          "label": "فيلا مستقلة",
+          "minPrice": 48420000,
+          "areaMin": 220.0,
+          "areaMax": 350.0,
+          "bedrooms": [],
+          "count": 9
+        }
+      ]
+    },
+    "business-district": {
+      "refreshed": true,
+      "availableUnits": 15,
+      "minPrice": 13120000,
+      "bedrooms": [],
+      "units": [
+        {
+          "type": "Office",
+          "label": "مكاتب",
+          "minPrice": 13120000,
+          "areaMin": 50.0,
+          "areaMax": 144.0,
+          "bedrooms": [],
+          "count": 15
         }
       ]
     }

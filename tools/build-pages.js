@@ -36,7 +36,7 @@ const DEFAULT_WA_MESSAGE = 'أرغب بمعرفة التفاصيل';
 
 // Unit types where a bedroom count means something to a buyer. Villas and
 // townhouses in the export sometimes carry a stray "1" — never show it.
-const ROOM_TYPES = ['Apartment', 'Duplex', 'Standard Chalet', 'Beach Chalet'];
+const ROOM_TYPES = ['Apartment', 'Duplex', 'Sky Villa', 'Garden Villa', 'Standard Chalet', 'Beach Chalet'];
 
 function fmt(n) {
   return Math.round(n).toLocaleString('en-US');
@@ -187,6 +187,10 @@ var TYPE_SHORT_AR = {
   'Beach Medium Villa': 'فيلا',
   'Standard Chalet': 'شاليه',
   'Beach Chalet': 'شاليه',
+  'Sky Villa': 'سكاي فيلا',
+  'Garden Villa': 'جاردن فيلا',
+  'Office': 'مكاتب',
+  'Clinic': 'عيادات',
 };
 
 function shortTypeAr(u) {
@@ -280,9 +284,21 @@ function galleryImages(slug) {
   return out;
 }
 
+/** Offices / clinics (kind: 'commercial') — compared only with each other. */
+function isCommercial(p) {
+  return p.kind === 'commercial';
+}
+
+/** Parent project (One Hyde Park → Hyde Park New Cairo), or null. */
+function parentOf(p) {
+  return p.parentSlug ? projects.filter(function (o) { return o.slug === p.parentSlug; })[0] || null : null;
+}
+
 /** Up to `limit` other projects sharing this project's areaSlug, in projects-data.js order. */
 function sameAreaProjects(p, allMerged, limit) {
-  return allMerged.filter(function (o) { return o.slug !== p.slug && o.areaSlug === p.areaSlug; }).slice(0, limit || 2);
+  return allMerged.filter(function (o) {
+    return o.slug !== p.slug && o.areaSlug === p.areaSlug && isCommercial(o) === isCommercial(p);
+  }).slice(0, limit || 2);
 }
 
 /** Merge a content entry with its pricing.json record into one render-ready project object. */
@@ -811,7 +827,7 @@ function leadSectionMarkup(p) {
     '        <div class="pp-progress" aria-hidden="true"><span class="is-done"></span><span></span><span></span></div>\n' +
     '        <p class="pp-lead__step-label" data-step-label>خطوة 1 من 3</p>\n' +
     '        <div class="pp-step" data-step="1">\n' +
-    optionGroup('purpose', ['سكن فوري', 'سكن مستقبلي', 'استثمار', 'مقيم خارج مصر'], 'بتشتري ليه؟') +
+    optionGroup('purpose', isCommercial(p) ? ['مقر لشركتي', 'استثمار وإيجار', 'مقيم خارج مصر'] : ['سكن فوري', 'سكن مستقبلي', 'استثمار', 'مقيم خارج مصر'], 'بتشتري ليه؟') +
     note +
     optionGroup('budget_range', budgetRanges(p), 'القسط الشهري المريح ليك') +
     '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--green" data-step-next>التالي</button></div>\n' +
@@ -980,6 +996,8 @@ function pageJsonLd(p, canonical) {
       var hub = areaUrl(p.areaSlug);
       var items = [{ '@type': 'ListItem', position: 1, name: 'الرئيسية', item: SITE_ORIGIN + '/' }];
       if (hub) items.push({ '@type': 'ListItem', position: 2, name: 'مشاريع هايد بارك في ' + AREAS[p.areaSlug].nameAr, item: SITE_ORIGIN + hub });
+      var parent = parentOf(p);
+      if (parent) items.push({ '@type': 'ListItem', position: items.length + 1, name: parent.nameAr, item: SITE_ORIGIN + '/projects/' + parent.slug });
       items.push({ '@type': 'ListItem', position: items.length + 1, name: p.nameAr, item: canonical });
       return items;
     })(),
@@ -1028,6 +1046,7 @@ function breadcrumbMarkup(p) {
     '<li><a href="/">الرئيسية</a></li>' +
     (hub ? '<li><a href="' + hub + '">مشاريع هايد بارك في ' + escapeHtml(AREAS[p.areaSlug].nameAr) + '</a></li>'
       : '<li><a href="/#projects">مشاريع هايد بارك</a></li>') +
+    (parentOf(p) ? '<li><a href="/projects/' + parentOf(p).slug + '">' + escapeHtml(parentOf(p).nameAr) + '</a></li>' : '') +
     '<li aria-current="page">' + escapeHtml(p.nameAr) + '</li>' +
     '</ol></nav>\n'
   );
@@ -1040,7 +1059,9 @@ function phasesMarkup(p) {
     '        <h3 class="pp-h3">مراحل ' + escapeHtml(p.nameAr) + '</h3>\n' +
     '        <ul class="pp-phases">\n' +
     p.phases.map(function (ph) {
-      return '          <li><h4 class="pp-phases__name">' + escapeHtml(ph.nameAr) + ' <bdi class="en">(' + escapeHtml(ph.name) + ')</bdi></h4>' +
+      var name = escapeHtml(ph.nameAr) + ' <bdi class="en">(' + escapeHtml(ph.name) + ')</bdi>';
+      if (ph.slug) name = '<a href="/projects/' + ph.slug + '">' + name + '</a>';
+      return '          <li><h4 class="pp-phases__name">' + name + '</h4>' +
         (ph.note ? '<p>' + escapeHtml(ph.note) + '</p>' : '') + '</li>\n';
     }).join('') +
     '        </ul>\n'
@@ -1127,7 +1148,7 @@ function summaryHtml(p) {
     var a = Math.round(r.min), b = Math.round(r.max);
     return 'شقق ' + (a === b ? 'بمساحة ' + a + ' م²' : 'من ' + a + ' لـ ' + b + ' م²');
   });
-  var kind = p.areaSlug === 'north-coast' ? 'مشروع ساحلي' : 'مشروع سكني';
+  var kind = isCommercial(p) ? 'مشروع إداري وتجاري' : p.areaSlug === 'north-coast' ? 'مشروع ساحلي' : 'مشروع سكني';
   var available = p.availableUnits
     ? 'المتاح حالياً <strong>' + unitsCountAr(p.availableUnits) + '</strong>: '
     : 'الوحدات المتاحة: ';
@@ -1161,6 +1182,8 @@ function overviewMarkup(p) {
     '        <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
     '        <p class="pp-byline">' + byline + '</p>\n' +
     (p.aboutAr ? '        <h3 class="pp-h3">عن ' + escapeHtml(p.nameAr) + '</h3>\n        <p class="pp-about">' + escapeHtml(p.aboutAr) + '</p>\n' : '') +
+    (parentOf(p) ? '        <p class="pp-parent">' + escapeHtml(p.nameAr) + ' جزء من <a class="pp-link" href="/projects/' + parentOf(p).slug + '">' + escapeHtml(parentOf(p).nameAr) +
+      '</a> — شوف أسعار ووحدات ' + escapeHtml(parentOf(p).nameAr) + ' نفسه ←</p>\n' : '') +
     phasesMarkup(p) +
     '      </div>\n' +
     '      <dl class="pp-facts">\n' +
@@ -1401,7 +1424,7 @@ function areaUrl(areaSlug) {
 }
 
 function areaProjects(areaSlug, merged) {
-  return (merged || mergedAll).filter(function (p) { return p.areaSlug === areaSlug; });
+  return (merged || mergedAll).filter(function (p) { return p.areaSlug === areaSlug && !isCommercial(p); });
 }
 
 function areaTitle(a) {
@@ -1677,15 +1700,18 @@ function projectCardMarkup(p, href, extraClass, imgPrefix) {
   );
 }
 
+var COMMERCIAL_GROUP_AR = 'مكاتب ووحدات إدارية';
+
 function homepageCards(merged) {
   var byArea = {};
   merged.forEach(function (p) {
-    byArea[p.areaAr] = byArea[p.areaAr] || [];
-    byArea[p.areaAr].push(p);
+    var key = isCommercial(p) ? COMMERCIAL_GROUP_AR : p.areaAr;
+    byArea[key] = byArea[key] || [];
+    byArea[key].push(p);
   });
   var out = '';
   Object.keys(byArea).forEach(function (area) {
-    var hub = areaUrl(byArea[area][0].areaSlug);
+    var hub = area === COMMERCIAL_GROUP_AR ? '' : areaUrl(byArea[area][0].areaSlug);
     out += '  <h3 style="text-align:center;color:var(--navy);opacity:.7;font-weight:700;font-size:16px;margin:0 0 16px;">' +
       (hub ? '<a href="' + hub + '" style="color:inherit">مشاريع هايد بارك في ' + escapeHtml(AREAS[byArea[area][0].areaSlug].nameAr) + ' ←</a>' : escapeHtml(area)) + '</h3>\n';
     out += '  <div class="grid grid--projects" style="margin-bottom:44px">\n';
@@ -1950,7 +1976,7 @@ var englishUrls = require('./build-en')({
   PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
   fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
-  pageContextScript: pageContextScript, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
+  pageContextScript: pageContextScript, isCommercial: isCommercial, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
   bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,
 });
 // Last: lastmod depends on which pages changed above.

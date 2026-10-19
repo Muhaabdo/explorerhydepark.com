@@ -32,6 +32,8 @@ REPORT_TO_KEY = {
     'Garden Lakes': 'garden-lakes',
     'Signature': 'signature',
     'Hyde Park North': 'seashore',
+    'One Hyde Park': 'one-hyde-park',
+    'Business District': 'business-district',
 }
 
 # Arabic label per unit type (shown on the pages). A type not listed here stops
@@ -48,10 +50,18 @@ TYPE_LABEL_AR = {
     'Beach Medium Villa': 'فيلا شاطئ متوسطة',
     'Standard Chalet': 'شاليه ستاندرد',
     'Beach Chalet': 'شاليه شاطئ',
+    'Sky Villa': 'سكاي فيلا',
+    'Garden Villa': 'جاردن فيلا',
+    'Office': 'مكاتب',
+    'Clinic': 'عيادات',
 }
 
+# Tab order for a project's first import (later imports keep the order already in pricing.json).
+TYPE_ORDER = ['Apartment', 'Duplex', 'Sky Villa', 'Garden Villa', 'Standard Chalet', 'Beach Chalet', 'Townhouse', 'Quad',
+              'Twin House', 'Twin House with Roof', 'Standalone', 'Small Villa', 'Beach Medium Villa', 'Office', 'Clinic']
+
 # Unit types where "Number of rooms" is meaningful on the page.
-ROOM_TYPES = {'Apartment', 'Duplex', 'Standard Chalet', 'Beach Chalet'}
+ROOM_TYPES = {'Apartment', 'Duplex', 'Sky Villa', 'Garden Villa', 'Standard Chalet', 'Beach Chalet'}
 
 FINISHINGS = {'core & shell': 'Core & Shell', 'finished': 'Finished', 'semi finished': 'SEMI FINISHED'}
 
@@ -135,16 +145,15 @@ def main():
     for proj, key in REPORT_TO_KEY.items():
         lst = by_project.get(proj)
         if not lst:
-            print('WARNING: "%s" (%s) is not in the report — old prices kept, marked as not confirmed.' % (proj, key))
-            if key in pricing['projects']:
-                pricing['projects'][key]['refreshed'] = False  # page shows "indicative price" + a notice
+            print('WARNING: "%s" (%s) is not in the report — its old prices were kept.' % (proj, key))
             continue
         old = pricing['projects'].get(key, OrderedDict())
         old_order = [u['type'] for u in old.get('units', [])]
         types = defaultdict(list)
         for u in lst:
             types[u['type']].append(u)
-        order = [t for t in old_order if t in types] + sorted(t for t in types if t not in old_order)
+        rank = lambda t: (TYPE_ORDER.index(t) if t in TYPE_ORDER else len(TYPE_ORDER), t)
+        order = [t for t in old_order if t in types] + sorted((t for t in types if t not in old_order), key=rank)
         new_units = []
         for t in order:
             tl = types[t]
@@ -173,11 +182,10 @@ def main():
             ('  +' + ', '.join(added)) if added else '', ('  -' + ', '.join(dropped)) if dropped else ''))
         pricing['projects'][key] = entry
 
-    # Site projects the report doesn't cover at all (e.g. Tawny): same treatment.
-    for key, entry in pricing['projects'].items():
+    # Site projects the report doesn't cover at all (e.g. Tawny): prices stay as they were.
+    for key in pricing['projects']:
         if key not in REPORT_TO_KEY.values():
-            print('WARNING: "%s" has no rows in the report — old prices kept, marked as not confirmed.' % key)
-            entry['refreshed'] = False
+            print('WARNING: "%s" has no rows in the report — its old prices were kept.' % key)
 
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(pricing, f, ensure_ascii=False, indent=2)

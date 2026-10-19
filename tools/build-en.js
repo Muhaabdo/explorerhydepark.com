@@ -42,7 +42,7 @@ module.exports = function buildEnglish(h) {
       locationEn: e.locationTextEn,
       aboutEn: e.aboutEn,
       amenitiesEn: e.amenitiesEn || [],
-      phasesEn: (p.phases || []).map(function (ph, i) { return { name: ph.name, note: e.phases[i].note }; }),
+      phasesEn: (p.phases || []).map(function (ph, i) { return { name: ph.name, note: e.phases[i].note, slug: ph.slug || '' }; }),
       distancesEn: (p.distances || []).map(function (d, i) {
         return { place: e.distances[i].place, minutes: d.minutes, note: e.distances[i].note || '' };
       }),
@@ -62,6 +62,10 @@ module.exports = function buildEnglish(h) {
     'Beach Medium Villa': 'Medium beach villa',
     'Standard Chalet': 'Standard chalet',
     'Beach Chalet': 'Beach chalet',
+    'Sky Villa': 'Sky villa',
+    'Garden Villa': 'Garden villa',
+    'Office': 'Offices',
+    'Clinic': 'Clinics',
   };
   // Family label (hero line, tabs, tables) — variants collapse into one.
   var TYPE_SHORT_EN = {
@@ -76,6 +80,10 @@ module.exports = function buildEnglish(h) {
     'Beach Medium Villa': 'Villas',
     'Standard Chalet': 'Chalets',
     'Beach Chalet': 'Chalets',
+    'Sky Villa': 'Sky villas',
+    'Garden Villa': 'Garden villas',
+    'Office': 'Offices',
+    'Clinic': 'Clinics',
   };
   function typeEn(u) { return TYPE_EN[u.name] || u.name; }
   function shortEn(u) { return TYPE_SHORT_EN[u.name] || u.name; }
@@ -104,6 +112,10 @@ module.exports = function buildEnglish(h) {
     if (!d) return p.areaEn;
     return d.indexOf(p.areaEn) !== -1 ? d : d + ', ' + p.areaEn;
   }
+
+  var isCommercial = h.isCommercial;
+  function parentOf(p) { return p.parentSlug ? bySlug[p.parentSlug] || null : null; }
+  var COMMERCIAL_GROUP = 'Offices & commercial';
 
   function shortName(p) { return p.nameEn.replace(/^Hyde Park\s+/, ''); }
 
@@ -328,6 +340,8 @@ module.exports = function buildEnglish(h) {
         var items = [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/en/' }];
         var hub = enAreaPath(p.areaSlug);
         if (hub) items.push({ '@type': 'ListItem', position: 2, name: 'Hyde Park projects in ' + AREAS_EN[p.areaSlug].name, item: SITE + hub });
+        var parent = parentOf(p);
+        if (parent) items.push({ '@type': 'ListItem', position: items.length + 1, name: parent.nameEn, item: SITE + enProjectPath(parent.slug) });
         items.push({ '@type': 'ListItem', position: items.length + 1, name: p.nameEn, item: canonical });
         return items;
       })(),
@@ -436,7 +450,7 @@ module.exports = function buildEnglish(h) {
       var a = Math.round(r.min), b = Math.round(r.max);
       return 'apartments ' + (a === b ? 'of ' + a + ' m²' : 'from ' + a + ' to ' + b + ' m²');
     });
-    var kind = p.areaSlug === 'north-coast' ? 'a coastal project' : 'a residential project';
+    var kind = isCommercial(p) ? 'an office and commercial project' : p.areaSlug === 'north-coast' ? 'a coastal project' : 'a residential project';
     var available = p.availableUnits ? 'Currently available: <strong>' + unitsCount(p.availableUnits) + '</strong> — ' : 'Unit types: ';
     var finishing = p.finishingEn ? ', and units are delivered ' + esc(p.finishingEn) : '';
     return (
@@ -458,7 +472,8 @@ module.exports = function buildEnglish(h) {
       ? '        <h3 class="pp-h3">' + esc(p.nameEn) + ' phases</h3>\n' +
         '        <ul class="pp-phases">\n' +
         p.phasesEn.map(function (ph) {
-          return '          <li><h4 class="pp-phases__name">' + esc(ph.name) + '</h4>' + (ph.note ? '<p>' + esc(ph.note) + '</p>' : '') + '</li>\n';
+          var name = ph.slug ? '<a href="' + enProjectPath(ph.slug) + '">' + esc(ph.name) + '</a>' : esc(ph.name);
+          return '          <li><h4 class="pp-phases__name">' + name + '</h4>' + (ph.note ? '<p>' + esc(ph.note) + '</p>' : '') + '</li>\n';
         }).join('') +
         '        </ul>\n'
       : '';
@@ -466,11 +481,14 @@ module.exports = function buildEnglish(h) {
       '  <section class="pp-section" id="overview">\n' +
       '    <div class="pp-wrap pp-overview">\n' +
       '      <div class="pp-overview__text">\n' +
-      '        <nav class="pp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/en/">Home</a></li>' + (enAreaPath(p.areaSlug) ? '<li><a href="' + enAreaPath(p.areaSlug) + '">Hyde Park projects in ' + esc(AREAS_EN[p.areaSlug].name) + '</a></li>' : '<li><a href="/en/#projects">Hyde Park projects</a></li>') + '<li aria-current="page">' + esc(p.nameEn) + '</li></ol></nav>\n' +
+      '        <nav class="pp-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="/en/">Home</a></li>' + (enAreaPath(p.areaSlug) ? '<li><a href="' + enAreaPath(p.areaSlug) + '">Hyde Park projects in ' + esc(AREAS_EN[p.areaSlug].name) + '</a></li>' : '<li><a href="/en/#projects">Hyde Park projects</a></li>') +
+        (parentOf(p) ? '<li><a href="' + enProjectPath(parentOf(p).slug) + '">' + esc(parentOf(p).nameEn) + '</a></li>' : '') + '<li aria-current="page">' + esc(p.nameEn) + '</li></ol></nav>\n' +
       '        <h2 class="pp-h2">' + esc(p.nameEn) + ' at a glance</h2>\n' +
       '        <p class="pp-summary">' + summaryHtml(p) + '</p>\n' +
       '        <p class="pp-byline">' + byline + '</p>\n' +
       (p.aboutEn ? '        <h3 class="pp-h3">About ' + esc(p.nameEn) + '</h3>\n        <p class="pp-about">' + esc(p.aboutEn) + '</p>\n' : '') +
+      (parentOf(p) ? '        <p class="pp-parent">' + esc(p.nameEn) + ' is part of <a class="pp-link" href="' + enProjectPath(parentOf(p).slug) + '">' + esc(parentOf(p).nameEn) +
+        '</a> — see ' + esc(parentOf(p).nameEn) + '’s own prices and units →</p>\n' : '') +
       phases +
       '      </div>\n' +
       '      <dl class="pp-facts">\n' +
@@ -810,7 +828,7 @@ module.exports = function buildEnglish(h) {
       '        <div class="pp-progress" aria-hidden="true"><span class="is-done"></span><span></span><span></span></div>\n' +
       '        <p class="pp-lead__step-label" data-step-label>Step 1 of 3</p>\n' +
       '        <div class="pp-step" data-step="1">\n' +
-      optionGroup('purpose', ['Move in now', 'Move in later', 'Investment', 'Living abroad'], 'What are you buying for?') +
+      optionGroup('purpose', isCommercial(p) ? ['Office for my company', 'Investment & rental', 'Living abroad'] : ['Move in now', 'Move in later', 'Investment', 'Living abroad'], 'What are you buying for?') +
       note +
       optionGroup('budget_range', budgetRanges(p), 'Comfortable monthly installment (EGP)') +
       '          <div class="pp-lead__nav"><button type="button" class="pp-btn pp-btn--green" data-step-next>Next</button></div>\n' +
@@ -961,8 +979,9 @@ module.exports = function buildEnglish(h) {
     var areas = [];
     var byArea = {};
     all.forEach(function (p) {
-      if (!byArea[p.areaEn]) { byArea[p.areaEn] = []; areas.push(p.areaEn); }
-      byArea[p.areaEn].push(p);
+      var key = isCommercial(p) ? COMMERCIAL_GROUP : p.areaEn;
+      if (!byArea[key]) { byArea[key] = []; areas.push(key); }
+      byArea[key].push(p);
     });
     var cheapest = all.reduce(function (m, o) { return o.startingPrice < m.startingPrice ? o : m; }, all[0]);
     var minDown = Math.min.apply(null, all.map(function (o) { return o.paymentPlan.downPct; }));
@@ -981,7 +1000,7 @@ module.exports = function buildEnglish(h) {
       description: 'Marketing platform and authorized broker for Hyde Park Developments projects in Egypt. Not the developer.',
     });
     var projectsHtml = areas.map(function (area) {
-      var hub = enAreaPath(byArea[area][0].areaSlug);
+      var hub = area === COMMERCIAL_GROUP ? '' : enAreaPath(byArea[area][0].areaSlug);
       return '  <h3 class="en-area-heading">' + (hub ? '<a href="' + hub + '">Hyde Park projects in ' + esc(area) + ' →</a>' : esc(area)) + '</h3>\n' +
         '  <div class="grid grid--projects" style="margin-bottom:44px">\n' + byArea[area].map(homeCard).join('') + '  </div>\n';
     }).join('');
@@ -1012,7 +1031,7 @@ module.exports = function buildEnglish(h) {
         '  <section class="section section--tight">\n' +
         '    <div class="grid en-stats">\n' +
         '      <div class="center"><div class="amenity__icon"><i class="fa-solid fa-city"></i></div><strong>' + all.length + '</strong><span>Hyde Park projects</span></div>\n' +
-        '      <div class="center"><div class="amenity__icon"><i class="fa-solid fa-map-location-dot"></i></div><strong>' + areas.length + '</strong><span>Areas: New Cairo, 6th of October, North Coast</span></div>\n' +
+        '      <div class="center"><div class="amenity__icon"><i class="fa-solid fa-map-location-dot"></i></div><strong>' + areas.filter(function (x) { return x !== COMMERCIAL_GROUP; }).length + '</strong><span>Areas: New Cairo, 6th of October, North Coast</span></div>\n' +
         '      <div class="center"><div class="amenity__icon"><i class="fa-solid fa-percent"></i></div><strong>' + minDown + '%</strong><span>Lowest down payment</span></div>\n' +
         '    </div>\n' +
         '  </section>\n\n' +
@@ -1075,7 +1094,7 @@ module.exports = function buildEnglish(h) {
 
   function areaPage(slug) {
     var a = AREAS_EN[slug];
-    var list = all.filter(function (o) { return o.areaSlug === slug; }).sort(function (x, y) { return x.startingPrice - y.startingPrice; });
+    var list = all.filter(function (o) { return o.areaSlug === slug && !isCommercial(o); }).sort(function (x, y) { return x.startingPrice - y.startingPrice; });
     var minBy = function (l, fn) { return l.reduce(function (b, o) { return fn(o) < fn(b) ? o : b; }, l[0]); };
     var cheapest = minBy(list, function (o) { return o.startingPrice; });
     var minDown = Math.min.apply(null, list.map(function (o) { return o.paymentPlan.downPct; }));
