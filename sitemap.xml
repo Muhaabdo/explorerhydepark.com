@@ -168,4 +168,28 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/articles/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/articles/hyde-park-dream-land-october</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/en/articles/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/en/articles/hyde-park-dream-land-october</loc>
+    <lastmod>2026-10-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

@@ -264,6 +264,7 @@ module.exports = function buildEnglish(h) {
       '        <a href="/en/">Home</a>\n' +
       '        <a href="/en/#about">About</a>\n' +
       '        <a href="/en/contact">Contact</a>\n' +
+      '        <a href="/en/articles/">News & articles</a>\n' +
       '        <a href="/en/privacy">Privacy policy</a>\n' +
       '      </div>\n' +
       '      <div class="footer__col">\n' +
@@ -962,6 +963,22 @@ module.exports = function buildEnglish(h) {
 
   /* ---------------- Home ---------------- */
 
+  /** "Latest news" strip on the home page — newest 3 articles (tools/articles.js). */
+  function latestNews() {
+    var list = require('./articles').slice().sort(function (a, b) { return a.published < b.published ? 1 : -1; }).slice(0, 3);
+    if (!list.length) return '';
+    return '  <section class="section">\n' +
+      '    <h2 class="section-title">Latest Hyde Park news</h2>\n' +
+      '    <ul class="article-list article-list--home">\n' +
+      list.map(function (a) {
+        return '      <li class="article-card"><a href="/en/articles/' + a.slug + '"><span class="article-card__title">' + esc(a.en.title) + '</span>' +
+          '<span class="article-card__desc">' + esc(a.en.description) + '</span><span class="article-card__more">Read the article →</span></a></li>\n';
+      }).join('') +
+      '    </ul>\n' +
+      '    <p class="center"><a class="pp-link" href="/en/articles/">All news & articles →</a></p>\n' +
+      '  </section>\n\n';
+  }
+
   function homeCard(p) {
     return (
       '    <a href="' + enProjectPath(p.slug) + '" class="card project-card" style="text-decoration:none;color:inherit">\n' +
@@ -1045,6 +1062,7 @@ module.exports = function buildEnglish(h) {
         '    <p class="section-sub">Prices from the developer’s inventory, updated ' + esc(lastUpdated) + '.</p>\n' +
         projectsHtml +
         '  </section>\n\n' +
+        latestNews('en') +
         '  <section class="section en-about" id="about">\n' +
         '    <h2 class="section-title">About us</h2>\n' +
         '    <p class="en-about__lede">Explorer Hyde Park is a marketing platform and authorized broker for Hyde Park Developments projects in New Cairo, 6th of October and the North Coast. We put every price, size and payment plan in one place, so you don’t have to go from office to office.</p>\n' +
@@ -1410,6 +1428,16 @@ module.exports = function buildEnglish(h) {
       line();
     }
 
+    var news = require('./articles').slice().sort(function (a, b) { return a.published < b.published ? 1 : -1; });
+    if (news.length) {
+      line('## News and articles');
+      line();
+      news.forEach(function (a) {
+        line('- [' + a.en.title + '](' + SITE + '/en/articles/' + a.slug + ') (' + a.published + '): ' + a.en.description + ' Arabic: ' + SITE + '/articles/' + a.slug);
+      });
+      line();
+    }
+
     line('## What each project page contains');
     line();
     line('- Starting price, down payment and installment period; available units by type and bedrooms with area ranges and prices.');
@@ -1448,8 +1476,9 @@ module.exports = function buildEnglish(h) {
   h.writeIfChanged('llms.txt', llmsTxt());
   console.log('wrote llms.txt');
 
-  // For the sitemap (thank-you is noindex, so it stays out).
-  return [{ loc: SITE + '/en/', file: 'en/index.html', changefreq: 'weekly', priority: '0.9' }]
+  // For the sitemap (thank-you is noindex, so it stays out) + the page pieces
+  // build-articles.js reuses for the English articles.
+  var urls = [{ loc: SITE + '/en/', file: 'en/index.html', changefreq: 'weekly', priority: '0.9' }]
     .concat(all.map(function (p) {
       return { loc: SITE + enProjectPath(p.slug), file: 'en/projects/' + p.slug + '.html', changefreq: 'weekly', priority: '0.8' };
     }))
@@ -1460,4 +1489,5 @@ module.exports = function buildEnglish(h) {
       { loc: SITE + '/en/contact', file: 'en/contact.html', changefreq: 'monthly', priority: '0.5' },
       { loc: SITE + '/en/privacy', file: 'en/privacy.html', changefreq: 'yearly', priority: '0.3' },
     ]);
+  return { urls: urls, doc: doc, nav: nav, hreflang: hreflang, homeCard: homeCard };
 };

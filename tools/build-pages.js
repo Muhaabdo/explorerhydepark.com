@@ -419,6 +419,7 @@ function footer() {
     '        <a href="/">الرئيسية</a>\n' +
     '        <a href="/#about">من نحن</a>\n' +
     '        <a href="/contact">تواصل معنا</a>\n' +
+    '        <a href="/articles/">أخبار ومقالات</a>\n' +
     '        <a href="/privacy">سياسة الخصوصية</a>\n' +
     '      </div>\n' +
     '      <div class="footer__col">\n' +
@@ -1912,6 +1913,30 @@ function writeRobotsTxt() {
   console.log('wrote robots.txt');
 }
 
+/** "آخر الأخبار" on index.html between AUTO:NEWS markers (inserted after the
+ * projects section the first time) — newest 3 articles from tools/articles.js. */
+function updateIndexNews() {
+  var html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  var list = require('./articles').slice().sort(function (a, b) { return a.published < b.published ? 1 : -1; }).slice(0, 3);
+  var block = '<!-- AUTO:NEWS:START -->' + nl +
+    '  <section class="section">' + nl +
+    '    <h2 class="section-title">آخر أخبار هايد بارك</h2>' + nl +
+    '    <ul class="article-list article-list--home">' + nl +
+    list.map(function (a) {
+      return '      <li class="article-card"><a href="/articles/' + a.slug + '"><span class="article-card__title">' + escapeHtml(a.ar.title) + '</span>' +
+        '<span class="article-card__desc">' + escapeHtml(a.ar.description) + '</span><span class="article-card__more">اقرأ المقال ←</span></a></li>';
+    }).join(nl) + nl +
+    '    </ul>' + nl +
+    '    <p class="center"><a class="pp-link" href="/articles/">كل الأخبار والمقالات ←</a></p>' + nl +
+    '  </section>' + nl +
+    '  <!-- AUTO:NEWS:END -->';
+  var re = /<!-- AUTO:NEWS:START -->[\s\S]*?<!-- AUTO:NEWS:END -->/;
+  var updated = re.test(html) ? html.replace(re, block)
+    : html.replace('  <!-- ABOUT -->', block + nl + nl + '  <!-- ABOUT -->');
+  writeIfChanged('index.html', updated);
+}
+
 /** Splices the homepage project cards straight into index.html between two
  * marker comments — no manual copy/paste step once images (or prices) change. */
 function updateIndexHtml(merged) {
@@ -1987,7 +2012,7 @@ injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(injectStaticPageContext);
 ['index.html', 'contact.html', 'privacy.html', 'thank-you.html'].forEach(versionStaticAssets);
 // English pages (/en/...): same data, English wording — see tools/build-en.js.
-var englishUrls = require('./build-en')({
+var english = require('./build-en')({
   merged: merged, pricing: pricing, ROOT: ROOT, IMG_ROOT: IMG_ROOT, SITE_ORIGIN: SITE_ORIGIN, SITE_NAME: SITE_NAME,
   PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
   fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
@@ -1995,6 +2020,15 @@ var englishUrls = require('./build-en')({
   pageContextScript: pageContextScript, isCommercial: isCommercial, isCoreShell: isCoreShell, onlyCoreShell: onlyCoreShell, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
   bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,
 });
+// Articles (/articles/, /en/articles/) — content in tools/articles.js.
+var articleUrls = require('./build-articles')({
+  merged: merged, ROOT: ROOT, SITE_ORIGIN: SITE_ORIGIN, SITE_NAME: SITE_NAME, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
+  fmt: fmt, escapeHtml: escapeHtml, isCommercial: isCommercial, nav: nav, footer: footer, hreflangLinks: hreflangLinks,
+  pageContextScript: pageContextScript, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl, assetUrl: assetUrl,
+  bakeContactLinks: bakeContactLinks, jsonLd: jsonLd, faqJsonLd: faqJsonLd, projectCardMarkup: projectCardMarkup,
+  writeIfChanged: writeIfChanged,
+}, english);
+updateIndexNews();
 // Last: lastmod depends on which pages changed above.
-writeSitemap(merged, englishUrls);
+writeSitemap(merged, english.urls.concat(articleUrls));
 writeRobotsTxt();

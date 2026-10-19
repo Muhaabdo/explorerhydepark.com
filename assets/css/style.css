@@ -1047,3 +1047,40 @@ html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3, html[lang="en"] h4 {
 /* "X is part of Y" line under the about paragraph (One Hyde Park → HP New Cairo). */
 .pp-parent { margin: 12px 0 0; font-size: 15px; font-weight: 600; }
 .pp-phases__name a { color: var(--blue); }
+
+/* ==========================================================================
+   Articles (/articles/, /en/articles/)
+   ========================================================================== */
+.article { padding-top: 96px; }
+.article__wrap { max-width: 780px; margin: 0 auto; }
+.article__title { font-size: clamp(24px, 5.5vw, 38px); line-height: 1.3; color: var(--navy); margin: 0 0 10px; }
+.article__lede { font-size: 18px; line-height: 1.9; font-weight: 600; margin: 8px 0 24px; }
+.article__body { font-size: 16.5px; line-height: 1.95; }
+.article__body h2 { font-size: clamp(20px, 3.4vw, 26px); color: var(--blue); margin: 32px 0 12px; }
+.article__body p { margin: 0 0 14px; }
+.article__body ul { margin: 0 0 16px; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 6px; }
+.article__body a { color: var(--blue); font-weight: 700; }
+.article__table { margin: 6px 0 16px; }
+.article__table table { min-width: 520px; font-size: 14px; }
+.article__table td { white-space: nowrap; }
+.article__table th a { color: var(--blue); font-weight: 800; }
+.article__cta { margin: 10px 0 20px; }
+.article__cta .pp-btn { display: inline-flex; }
+.article__sources-title { margin-top: 32px; }
+.article__sources { margin: 0; padding-inline-start: 22px; font-size: 14px; line-height: 1.8; color: var(--muted); }
+.article__sources a { color: inherit; word-break: break-word; }
+
+.article-list { list-style: none; margin: 0 auto; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.article-list--home { max-width: 900px; margin-bottom: 18px; }
+.article-card a {
+  display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; text-decoration: none; color: var(--navy);
+  border: 1px solid var(--gray-border); border-radius: 16px; background: var(--white);
+}
+.article-card a:hover { border-color: var(--blue); }
+.article-card__date { font-size: 13px; color: var(--muted); }
+.article-card__title { font-size: 18px; font-weight: 800; line-height: 1.5; }
+.article-card__desc { font-size: 15px; line-height: 1.8; color: var(--muted); }
+.article-card__more { font-size: 14px; font-weight: 700; color: var(--blue); }
+@media (min-width: 1024px) {
+  .article { padding-top: 56px; }
+}
