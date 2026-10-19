@@ -14,6 +14,8 @@
  * Each English page and its Arabic twin point at each other with hreflang.
  */
 var EN = require('./projects-data-en');
+// Finishing values in the developer's report → English page wording.
+var FINISHING_EN = { 'Core & Shell': 'Core & Shell', 'Finished': 'fully finished', 'SEMI FINISHED': 'semi-finished' };
 
 module.exports = function buildEnglish(h) {
   var fmt = h.fmt, esc = h.escapeHtml, uniq = h.uniq, findImage = h.findImage;
@@ -38,7 +40,10 @@ module.exports = function buildEnglish(h) {
       areaDetailEn: e.areaDetailEn,
       seoTitleEn: e.seoTitle,
       metaDescriptionEn: e.metaDescription,
-      finishingEn: p.finishingLabel ? e.finishingLabelEn : '',
+      // Same rule as the Arabic label: from the report's rows when there are any.
+      finishingEn: p.finishings && p.finishings.length
+        ? p.finishings.map(function (f) { return FINISHING_EN[f] || f; }).join(' or ')
+        : (p.finishingLabel ? e.finishingLabelEn : ''),
       locationEn: e.locationTextEn,
       aboutEn: e.aboutEn,
       amenitiesEn: e.amenitiesEn || [],
@@ -464,7 +469,7 @@ module.exports = function buildEnglish(h) {
   function overview(p) {
     var facts = [['Location', esc(areaLabel(p))]];
     facts.push(['Sizes', areaSqm(p.areaRange.min, p.areaRange.max)]);
-    if (p.finishingEn) facts.push(['Finishing', esc(p.finishingEn)]);
+    if (p.finishingEn) facts.push(['Finishing', esc(p.finishingEn.charAt(0).toUpperCase() + p.finishingEn.slice(1))]);
     if (p.pricePerSqm) facts.push(['Price per m² (apartments) from', egp(p.pricePerSqm)]);
     facts.push(['Developer', 'Hyde Park Developments']);
     var byline = (lastUpdated ? 'Updated: ' + lastUpdated + ' · ' : '') + 'From the developer’s inventory · By the Explorer Hyde Park team';
@@ -716,7 +721,7 @@ module.exports = function buildEnglish(h) {
 
   function faqs(p) {
     var out = [];
-    if (p.finishingEn === 'Core & Shell') {
+    if (h.isCoreShell(p)) {
       out.push({
         q: 'What does “Core & Shell” mean?',
         a: 'Core & Shell means the unit is handed over as a concrete structure with finished facades and no interior finishing, so the buyer finishes it to their own taste.',
@@ -817,7 +822,7 @@ module.exports = function buildEnglish(h) {
 
   function lead(p) {
     var unitOptions = p.units.map(typeEn).concat(['Not sure yet']);
-    var note = p.finishingEn === 'Core & Shell'
+    var note = h.onlyCoreShell(p)
       ? '          <p class="pp-lead__note" data-immediate-note hidden>' + esc(p.nameEn) + ' units are delivered Core & Shell, so we’ll also suggest ready or near-delivery units in other Hyde Park projects.</p>\n'
       : '';
     return (
@@ -1348,6 +1353,80 @@ module.exports = function buildEnglish(h) {
     });
   }
 
+  /* ---------------- llms.txt ----------------
+   * Plain-text summary of the site for AI assistants and answer engines
+   * (llmstxt.org format: H1, short summary, then linked sections). Rebuilt
+   * from the same data as the pages, so prices and counts never drift. */
+  function llmsTxt() {
+    var L = [];
+    var line = function (t) { L.push(t == null ? '' : t); };
+    var plan = function (p) { return p.paymentPlan.downPct + '% down, installments up to ' + years(p.paymentPlan.years); };
+    var types = function (p) { return uniq(p.units.map(shortEn)).join(', ').toLowerCase(); };
+    var residential = all.filter(function (p) { return !isCommercial(p); });
+    var commercial = all.filter(isCommercial);
+
+    line('# Explorer Hyde Park');
+    line();
+    line('> Explorer Hyde Park (explorerhydepark.com) is a marketing platform and authorized broker for Hyde Park Developments projects in Egypt — New Cairo, 6th of October and the North Coast. It is not the developer. Every price below is the lowest available price from the developer’s availability report' + (lastUpdated ? ' (' + lastUpdated + ')' : '') + ', in Egyptian pounds (EGP). The site is in Arabic (main) and English.');
+    line();
+    line('Key facts:');
+    line('- Projects listed: ' + all.length + ' (' + residential.length + ' residential, ' + commercial.length + ' office/commercial).');
+    line('- Developer of every project: Hyde Park Developments (هايد بارك للتطوير العقاري). Explorer Hyde Park only markets and brokers the units.');
+    line('- No commission is charged to the buyer. Buyers living abroad can complete the purchase online, with the contract signed through a power of attorney.');
+    line('- Contact: WhatsApp or phone, both linked on every page and on the contact page.');
+    line();
+
+    var groups = [];
+    var byArea = {};
+    residential.forEach(function (p) {
+      if (!byArea[p.areaEn]) { byArea[p.areaEn] = []; groups.push(p.areaEn); }
+      byArea[p.areaEn].push(p);
+    });
+    groups.forEach(function (area) {
+      line('## Residential projects in ' + area);
+      line();
+      byArea[area].forEach(function (p) {
+        var parent = parentOf(p);
+        line('- [' + p.nameEn + ' (' + p.nameAr + ')](' + SITE + enProjectPath(p.slug) + '): ' + areaLabel(p) + '. From ' + egp(p.startingPrice) +
+          (p.availableUnits ? ', ' + unitsCount(p.availableUnits) + ' available' : '') + '. ' + types(p).replace(/^./, function (c) { return c.toUpperCase(); }) + '. ' + plan(p) + '.' +
+          (p.finishingEn ? ' Delivered ' + p.finishingEn + '.' : '') +
+          (parent ? ' A gated compound inside ' + parent.nameEn + '.' : '') +
+          ' Arabic page: ' + SITE + arProjectPath(p.slug));
+      });
+      var hub = Object.keys(AREAS_EN).filter(function (k) { return AREAS_EN[k].name === area && enAreaPath(k); })[0];
+      if (hub) {
+        line('- [Compare all Hyde Park projects in ' + area + '](' + SITE + enAreaPath(hub) + '): side-by-side prices, down payments, installment years, unit types and availability.');
+      }
+      line();
+    });
+
+    if (commercial.length) {
+      line('## Offices and commercial units');
+      line();
+      commercial.forEach(function (p) {
+        line('- [' + p.nameEn + ' (' + p.nameAr + ')](' + SITE + enProjectPath(p.slug) + '): ' + areaLabel(p) + '. ' + types(p).replace(/^./, function (c) { return c.toUpperCase(); }) +
+          ' from ' + egp(p.startingPrice) + (p.availableUnits ? ', ' + unitsCount(p.availableUnits) + ' available' : '') + '. ' + plan(p) + '. Arabic page: ' + SITE + arProjectPath(p.slug));
+      });
+      line();
+    }
+
+    line('## What each project page contains');
+    line();
+    line('- Starting price, down payment and installment period; available units by type and bedrooms with area ranges and prices.');
+    line('- A monthly-budget calculator (what down payment each unit needs for a given monthly installment).');
+    line('- Location and nearby landmarks, amenities, project phases, and an FAQ (also as FAQPage structured data).');
+    line();
+    line('## Other pages');
+    line();
+    line('- [Home (English)](' + SITE + '/en/): all projects grouped by area.');
+    line('- [الصفحة الرئيسية (Arabic home)](' + SITE + '/): the main version of the site.');
+    line('- [Contact](' + SITE + '/en/contact): request a call or message on WhatsApp.');
+    line('- [Privacy policy](' + SITE + '/en/privacy)');
+    line('- [Sitemap](' + SITE + '/sitemap.xml)');
+    line();
+    return L.join('\n');
+  }
+
   /* ---------------- Write ---------------- */
 
   var fs = require('fs'), path = require('path');
@@ -1366,6 +1445,8 @@ module.exports = function buildEnglish(h) {
   var hubs = Object.keys(AREAS_EN).filter(enAreaPath);
   hubs.forEach(function (slug) { h.writeIfChanged('en/areas/' + slug + '.html', areaPage(slug)); });
   console.log('wrote en/index.html, en/contact.html, en/privacy.html, en/thank-you.html, en/areas/' + hubs.join(', en/areas/'));
+  h.writeIfChanged('llms.txt', llmsTxt());
+  console.log('wrote llms.txt');
 
   // For the sitemap (thank-you is noindex, so it stays out).
   return [{ loc: SITE + '/en/', file: 'en/index.html', changefreq: 'weekly', priority: '0.9' }]

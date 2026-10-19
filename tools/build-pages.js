@@ -344,7 +344,16 @@ function mergeProject(p) {
     { q: 'هل ' + iso('Explorer Hyde Park') + ' هي الشركة المطورة؟', a: 'لا، نحن منصّة تسويقية ووسيط معتمد لعرض مشاريع هايد بارك، ولسنا المطوّر العقاري.' },
   ];
 
+  // Finishing comes from the report when the project has unit rows (it changes
+  // between reports — Sea Shore is fully finished, Garden Lakes is mixed);
+  // the hand-written finishingLabel is only the fallback (e.g. Tawny).
+  var invFinishings = finishingTypes(invRows);
+  var finishingLabel = invFinishings.length
+    ? invFinishings.map(function (f) { return FINISHING_AR[f] || f; }).join(' أو ')
+    : p.finishingLabel;
+
   return Object.assign({}, p, {
+    finishingLabel: finishingLabel,
     units: units,
     startingPrice: pr.minPrice,
     availableUnits: pr.availableUnits,
@@ -437,8 +446,15 @@ function footer() {
 /* ---------------- V5 sections below the gallery ---------------- */
 
 var CORE_SHELL = 'كور آند شل';
+var FINISHING_AR = { 'Core & Shell': CORE_SHELL, 'Finished': 'تشطيب كامل', 'SEMI FINISHED': 'نص تشطيب' };
 
+/** Some or all units are Core & Shell → the "what does it mean" FAQ. */
 function isCoreShell(p) {
+  return (p.finishingLabel || '').indexOf(CORE_SHELL) !== -1;
+}
+
+/** Every unit is Core & Shell → the lead-form note about ready units elsewhere. */
+function onlyCoreShell(p) {
   return p.finishingLabel === CORE_SHELL;
 }
 
@@ -816,7 +832,7 @@ function optionGroup(name, options, legend) {
  * the existing data-lead-form flow in main.js. */
 function leadSectionMarkup(p) {
   var unitOptions = p.units.map(function (u) { return u.nameAr; }).concat(['لسه مش متأكد']);
-  var note = isCoreShell(p)
+  var note = onlyCoreShell(p)
     ? '          <p class="pp-lead__note" data-immediate-note hidden>وحدات ' + iso(p.nameEn) + ' بتتسلّم كور آند شل، فهنرشحلك كمان وحدات جاهزة أو قريبة من التسليم في مشاريع هايد بارك التانية.</p>\n'
     : '';
   return (
@@ -1976,7 +1992,7 @@ var englishUrls = require('./build-en')({
   PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
   fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
-  pageContextScript: pageContextScript, isCommercial: isCommercial, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
+  pageContextScript: pageContextScript, isCommercial: isCommercial, isCoreShell: isCoreShell, onlyCoreShell: onlyCoreShell, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
   bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,
 });
 // Last: lastmod depends on which pages changed above.

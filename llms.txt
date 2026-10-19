@@ -1,0 +1,46 @@
+# Explorer Hyde Park
+
+> Explorer Hyde Park (explorerhydepark.com) is a marketing platform and authorized broker for Hyde Park Developments projects in Egypt — New Cairo, 6th of October and the North Coast. It is not the developer. Every price below is the lowest available price from the developer’s availability report (October 2026), in Egyptian pounds (EGP). The site is in Arabic (main) and English.
+
+Key facts:
+- Projects listed: 9 (8 residential, 1 office/commercial).
+- Developer of every project: Hyde Park Developments (هايد بارك للتطوير العقاري). Explorer Hyde Park only markets and brokers the units.
+- No commission is charged to the buyer. Buyers living abroad can complete the purchase online, with the contract signed through a power of attorney.
+- Contact: WhatsApp or phone, both linked on every page and on the contact page.
+
+## Residential projects in New Cairo
+
+- [Hyde Park Central (هايد بارك سنترال)](https://www.explorerhydepark.com/en/projects/hyde-park-central): 6th Settlement, New Cairo. From EGP 6,410,000, 110 units available. Apartments, townhouses, quads, villas, duplexes. 5% down, installments up to 8 years. Delivered Core & Shell. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-central
+- [Hyde Park New Cairo (هايد بارك نيو كايرو)](https://www.explorerhydepark.com/en/projects/hyde-park-new-cairo): 5th Settlement, New Cairo. From EGP 10,280,000, 33 units available. Apartments, villas. 5% down, installments up to 8 years. Delivered fully finished or Core & Shell or semi-finished. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-new-cairo
+- [One Hyde Park (وان هايد بارك)](https://www.explorerhydepark.com/en/projects/one-hyde-park): 5th Settlement, New Cairo. From EGP 6,870,000, 129 units available. Apartments, duplexes, sky villas, garden villas, townhouses, twin houses, villas. 5% down, installments up to 8 years. Delivered Core & Shell. A gated compound inside Hyde Park New Cairo. Arabic page: https://www.explorerhydepark.com/projects/one-hyde-park
+- [Hyde Park Terraces (هايد بارك تراسيس)](https://www.explorerhydepark.com/en/projects/hyde-park-terraces): New Cairo. From EGP 23,400,000, 6 units available. Townhouses, villas. 10% down, installments up to 8 years. Delivered Core & Shell. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-terraces
+- [Compare all Hyde Park projects in New Cairo](https://www.explorerhydepark.com/en/areas/new-cairo): side-by-side prices, down payments, installment years, unit types and availability.
+
+## Residential projects in 6th of October
+
+- [Hyde Park Tawny (هايد بارك تاوني)](https://www.explorerhydepark.com/en/projects/hyde-park-tawny): 6th of October. From EGP 15,300,000. Townhouses, twin houses, villas. 10% down, installments up to 7 years. Delivered Core & Shell. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-tawny
+- [Hyde Park Garden Lakes (هايد بارك جاردن ليكس)](https://www.explorerhydepark.com/en/projects/hyde-park-garden-lake): 6th of October. From EGP 6,800,000, 47 units available. Apartments, townhouses, twin houses, villas. 10% down, installments up to 8 years. Delivered Core & Shell or fully finished. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-garden-lake
+- [Hyde Park Signature (هايد بارك سيجنتشر)](https://www.explorerhydepark.com/en/projects/hyde-park-signature): 6th of October. From EGP 6,650,000, 48 units available. Apartments, townhouses, twin houses, villas. 10% down, installments up to 8 years. Delivered Core & Shell. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-signature
+- [Compare all Hyde Park projects in 6th of October](https://www.explorerhydepark.com/en/areas/october): side-by-side prices, down payments, installment years, unit types and availability.
+
+## Residential projects in North Coast
+
+- [Hyde Park Sea Shore (هايد بارك سي شور)](https://www.explorerhydepark.com/en/projects/hyde-park-sea-shore): Ras El Hekma, North Coast. From EGP 9,060,000, 122 units available. Apartments, chalets, townhouses, twin houses, villas. 10% down, installments up to 6 years. Delivered fully finished. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-sea-shore
+
+## Offices and commercial units
+
+- [Hyde Park Business District (هايد بارك بيزنس ديستريكت)](https://www.explorerhydepark.com/en/projects/hyde-park-business-district): 5th Settlement, New Cairo. Offices from EGP 13,120,000, 15 units available. 5% down, installments up to 8 years. Arabic page: https://www.explorerhydepark.com/projects/hyde-park-business-district
+
+## What each project page contains
+
+- Starting price, down payment and installment period; available units by type and bedrooms with area ranges and prices.
+- A monthly-budget calculator (what down payment each unit needs for a given monthly installment).
+- Location and nearby landmarks, amenities, project phases, and an FAQ (also as FAQPage structured data).
+
+## Other pages
+
+- [Home (English)](https://www.explorerhydepark.com/en/): all projects grouped by area.
+- [الصفحة الرئيسية (Arabic home)](https://www.explorerhydepark.com/): the main version of the site.
+- [Contact](https://www.explorerhydepark.com/en/contact): request a call or message on WhatsApp.
+- [Privacy policy](https://www.explorerhydepark.com/en/privacy)
+- [Sitemap](https://www.explorerhydepark.com/sitemap.xml)
