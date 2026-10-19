@@ -38,14 +38,14 @@ Accepted extensions: `.jpg`, `.jpeg`, `.png`, `.webp` (first match wins).
 ## One Hyde Park  (`assets/img/projects/one-hyde-park/`)
 
 - [x] `one-hyde-park-hero.jpg` ✅ — main exterior / render — used on this page and on the project card everywhere else
-- [ ] `one-hyde-park-gallery-1.jpg` — gallery photo 1
-- [ ] `one-hyde-park-gallery-2.jpg` — gallery photo 2
-- [ ] `one-hyde-park-gallery-3.jpg` — gallery photo 3
-- [ ] `one-hyde-park-gallery-4.jpg` — gallery photo 4
-- [ ] `one-hyde-park-gallery-5.jpg` — gallery photo 5
-- [ ] `one-hyde-park-gallery-6.jpg` — gallery photo 6
+- [x] `one-hyde-park-gallery-1.jpg` ✅ — gallery photo 1
+- [x] `one-hyde-park-gallery-2.jpg` ✅ — gallery photo 2
+- [x] `one-hyde-park-gallery-3.jpg` ✅ — gallery photo 3
+- [x] `one-hyde-park-gallery-4.jpg` ✅ — gallery photo 4
+- [x] `one-hyde-park-gallery-5.jpg` ✅ — gallery photo 5
+- [x] `one-hyde-park-gallery-6.jpg` ✅ — gallery photo 6
 - [ ] `one-hyde-park-location.jpg` — map or location photo
-- [ ] `one-hyde-park-apartment.jpg` — Apartment unit photo
+- [x] `one-hyde-park-apartment.jpg` ✅ — Apartment unit photo
 - [ ] `one-hyde-park-duplex.jpg` — Duplex unit photo
 - [ ] `one-hyde-park-sky-villa.jpg` — Sky Villa unit photo
 - [ ] `one-hyde-park-garden-villa.jpg` — Garden Villa unit photo
