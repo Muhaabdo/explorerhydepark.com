@@ -1895,6 +1895,10 @@ function nonBlockingStyles(html) {
     if (html.indexOf(viewport) !== -1) html = html.replace(viewport, '');
     html = html.replace(head[0], head[0] + charset + viewport + style[0]);
   }
+  // Our scripts sit at the end of <body> but were still parser-blocking (they
+  // showed up in PageSpeed's critical chain). They only act on DOMContentLoaded,
+  // so `defer` is safe and keeps their order.
+  html = html.replace(/<script src="((?:\.\.\/|\/)?assets\/js\/[\w.-]+\.js[^"]*)"><\/script>/g, '<script src="$1" defer></script>');
   // One <main> landmark: page content between the mobile menu and the footer.
   if (html.indexOf('<main') === -1 && html.indexOf('<footer class="footer">') !== -1 && html.indexOf('<div class="mobile-menu">') !== -1) {
     html = html.replace(/(<div class="mobile-menu">[\s\S]*?<\/div>)/, '$1' + nl + '<main>')
