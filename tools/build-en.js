@@ -1353,7 +1353,6 @@ module.exports = function buildEnglish(h) {
         sec(4, 'Cookies and advertising',
           para('The website uses or connects to external services that may set cookies or collect limited usage data, including:', 'en-legal__lead') +
           ul(['<strong>Google Analytics</strong> (through Google Tag Manager) — to measure visits, pages viewed and buttons clicked, without identifying you personally.',
-            '<strong>Google Fonts</strong> and <strong>Font Awesome</strong> — to load fonts and icons.',
             '<strong>Google Ads</strong> and <strong>Meta Ads</strong> (Facebook/Instagram) — if you reached the website from an ad, or if we run remarketing later, pixels/cookies may be used to measure ad performance and show you relevant ads on other platforms.']) +
           para('You can control or block cookies from your browser settings at any time, although this may affect some features of the website.', 'en-legal__after')) +
         sec(5, 'Sharing data',

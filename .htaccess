@@ -81,10 +81,15 @@ RewriteRule ^(.+)$ $1.html [L]
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
   ExpiresByType image/x-icon "access plus 30 days"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
+<IfModule mod_mime.c>
+  AddType font/woff .woff
+</IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "\.(css|js)$">
+  <FilesMatch "\.(css|js|woff)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.(webp|jpe?g|png|svg|ico)$">

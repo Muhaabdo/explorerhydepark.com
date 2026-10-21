@@ -1879,6 +1879,16 @@ function versionStaticAssets(relPath) {
 var THIRD_PARTY_CSS = /(?<!<noscript>)<link (?:rel="stylesheet" href="(https:\/\/(?:fonts\.googleapis\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)\/[^"]+)"|href="(https:\/\/fonts\.googleapis\.com\/[^"]+)" rel="stylesheet")>/g;
 function nonBlockingStyles(html) {
   var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  // Fonts are self-hosted (assets/fonts, @font-face in style.css): drop the
+  // Google Fonts stylesheet + preconnects, and preload the one font file the
+  // first screen needs (Arabic Cairo, or Manrope on English pages).
+  html = html.replace(/(?:<noscript>)?<link (?:rel="stylesheet" )?href="https:\/\/fonts\.googleapis\.com\/[^"]+"[^>]*>(?:<\/noscript>)?(?:<noscript><link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com\/[^"]+"><\/noscript>)?\r?\n?/g, '')
+    .replace(/<link rel="preconnect" href="https:\/\/fonts\.(?:googleapis|gstatic)\.com"(?: crossorigin)?>\r?\n?/g, '');
+  if (html.indexOf('rel="preload" as="font"') === -1) {
+    var fontFile = /<html lang="en"/.test(html) ? 'manrope-latin.woff' : 'cairo-arabic.woff';
+    html = html.replace(/(<link rel="stylesheet" href="(?:\.\.\/|\/)?assets\/css\/style\.css[^"]*">)/,
+      '$1' + nl + '<link rel="preload" as="font" type="font/woff" href="/assets/fonts/' + fontFile + '" crossorigin>');
+  }
   // Font Awesome is replaced by the SVG icons at the end of style.css.
   html = html.replace(/(?:<noscript>)?<link rel="stylesheet" href="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/font-awesome\/[^"]+"[^>]*>(?:<\/noscript>)?\r?\n?/g, '');
   html = html.replace(THIRD_PARTY_CSS, function (m, a, b) {
@@ -1905,11 +1915,6 @@ function nonBlockingStyles(html) {
   if (html.indexOf('<main') === -1 && html.indexOf('<footer class="footer">') !== -1 && html.indexOf('<div class="mobile-menu">') !== -1) {
     html = html.replace(/(<div class="mobile-menu">[\s\S]*?<\/div>)/, '$1' + nl + '<main>')
       .replace(/(\s*)<footer class="footer">/, nl + '</main>$1<footer class="footer">');
-  }
-  // Font files come from fonts.gstatic.com — open that connection early too.
-  if (html.indexOf('fonts.gstatic.com') === -1) {
-    html = html.replace('<link rel="preconnect" href="https://fonts.googleapis.com">',
-      '<link rel="preconnect" href="https://fonts.googleapis.com">' + nl + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
   }
   return html;
 }

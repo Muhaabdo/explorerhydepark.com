@@ -4,6 +4,24 @@
    in <bdi class="en"> in the markup so they stay LTR inside RTL sentences.
    ========================================================================== */
 
+/* Self-hosted fonts (were Google Fonts: a third-party request, and the late
+   swap moved the hero text — PageSpeed CLS). Variable fonts, weights 400–800,
+   split by script so a page only downloads what it shows. SIL OFL 1.1. */
+@font-face {
+  font-family: 'Cairo'; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url('../fonts/cairo-arabic.woff') format('woff');
+  unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+2066-2069;
+}
+@font-face {
+  font-family: 'Cairo'; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url('../fonts/cairo-latin.woff') format('woff');
+  unicode-range: U+0020-007E, U+00A0-00FF, U+2013-2014, U+2018-201E, U+2022, U+2026, U+20AC, U+2122, U+2190-2193, U+2212;
+}
+@font-face {
+  font-family: 'Manrope'; font-style: normal; font-weight: 400 800; font-display: swap;
+  src: url('../fonts/manrope-latin.woff') format('woff');
+}
+
 :root {
   --navy: #040E33;
   --blue: #0D4088;
