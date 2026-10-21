@@ -139,6 +139,20 @@ function imageSize(relPath) {
   return null;
 }
 
+/** Small copy of a photo made by tools/make-responsive.py, if it exists:
+ *  thumbFor('assets/img/projects/x/x-gallery-1.webp') → '.../responsive/x-gallery-1-thumb.webp'. */
+function thumbFor(rel) {
+  var dir = path.dirname(rel), base = path.basename(rel, path.extname(rel)).toLowerCase();
+  var t = dir + '/responsive/' + base + '-thumb.webp';
+  return fs.existsSync(path.join(ROOT, t)) ? t : rel;
+}
+
+/** Hero photo at card size (the 800 px responsive copy when there is one). */
+function cardImage(slug) {
+  var small = 'assets/img/projects/' + slug + '/responsive/' + slug + '-hero-800.webp';
+  return fs.existsSync(path.join(ROOT, small)) ? small : findImage(slug, 'hero');
+}
+
 /** Renders a real <img> when a matching file exists on disk, else the same
  * placeholder box used everywhere else — callers don't need to branch. */
 function mediaSlot(slug, name, altText, placeholderText, icon, prefix, wrapperStyle) {
@@ -914,7 +928,7 @@ function compareSectionMarkup(p, allMerged) {
       (areaUrl(p.areaSlug) ? '      <p class="pp-area-link"><a class="pp-link" href="' + areaUrl(p.areaSlug) + '">كل مشاريع هايد بارك في ' + escapeHtml(AREAS[p.areaSlug].nameAr) + ' والمقارنة الكاملة ←</a></p>\n' : '');
   }
   var cards = others.map(function (o) {
-    var img = findImage(o.slug, 'hero');
+    var img = cardImage(o.slug);
     var media = img
       ? '<img src="../' + img + '" alt="' + escapeHtml(o.nameEn) + '" loading="lazy" decoding="async">'
       : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(o.nameEn) + '</span></div>';
@@ -1222,7 +1236,7 @@ function galleryMarkup(p) {
     return (
       '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../' + src + '" data-alt="' + escapeHtml(alt(i + 1)) + '"' +
       ' aria-label="صورة ' + (i + 1) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
-      '<img src="../' + src + '" alt="' + escapeHtml(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n'
+      '<img src="../' + thumbFor(src) + '" alt="' + escapeHtml(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n'
     );
   }).join('');
   return (
@@ -1703,7 +1717,9 @@ function projectCardMarkup(p, href, extraClass, imgPrefix) {
     '    <a href="' + href + '" class="card project-card' + (extraClass ? ' ' + extraClass : '') + '" style="text-decoration:none;color:inherit">\n' +
     '      <div class="card__media project-card__media">\n' +
     '        <span class="badge-area">' + escapeHtml(p.areaAr) + '</span>\n' +
-    '        ' + mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', imgPrefix, 'position:absolute;inset:0') + '\n' +
+    '        ' + (cardImage(p.slug)
+      ? '<img class="real-img" style="position:absolute;inset:0" src="' + (imgPrefix || '') + cardImage(p.slug) + '" alt="' + escapeHtml(p.nameEn) + '" loading="lazy" decoding="async">'
+      : mediaSlot(p.slug, 'hero', p.nameEn, p.heroPlaceholder, 'fa-image', imgPrefix, 'position:absolute;inset:0')) + '\n' +
     '      </div>\n' +
     '      <div class="card__body project-card__body">\n' +
     '        <span class="project-card__name">' + escapeHtml(p.nameAr) + '</span>\n' +
@@ -2015,7 +2031,7 @@ injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
 var english = require('./build-en')({
   merged: merged, pricing: pricing, ROOT: ROOT, IMG_ROOT: IMG_ROOT, SITE_ORIGIN: SITE_ORIGIN, SITE_NAME: SITE_NAME,
   PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
-  fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, imageSize: imageSize, mediaSlot: mediaSlot,
+  fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, thumbFor: thumbFor, cardImage: cardImage, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
   pageContextScript: pageContextScript, isCommercial: isCommercial, isCoreShell: isCoreShell, onlyCoreShell: onlyCoreShell, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
   bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,

@@ -28,6 +28,11 @@ no framework and no build dependencies beyond Node.
 ## Everyday tasks
 
 ```sh
+# after adding or replacing photos: shrink them, make phone sizes + gallery thumbnails
+python tools/optimize-images.py
+python tools/make-responsive.py
+node tools/build-pages.js
+
 # new availability sheet from the developer (CSV export) → prices, units, counts
 python tools/import-availability.py path/to/Sales_Availability_Report.csv --date 2026-10-19
 node tools/build-pages.js

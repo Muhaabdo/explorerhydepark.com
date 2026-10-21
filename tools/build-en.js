@@ -522,7 +522,7 @@ module.exports = function buildEnglish(h) {
       imgs.map(function (src, i) {
         return '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="/' + src + '" data-alt="' + esc(alt(i + 1)) + '"' +
           ' aria-label="Photo ' + (i + 1) + '" aria-pressed="' + (i === 0) + '">' +
-          '<img src="/' + src + '" alt="' + esc(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n';
+          '<img src="/' + h.thumbFor(src) + '" alt="' + esc(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n';
       }).join('') +
       '        </div>\n' +
       '      </div>\n' +
@@ -870,7 +870,7 @@ module.exports = function buildEnglish(h) {
   function shortMillions(n) { return (Math.round(n / 1e4) / 100).toString() + 'M'; }
 
   function projectCardSmall(o) {
-    var img = findImage(o.slug, 'hero');
+    var img = h.cardImage(o.slug);
     var media = img
       ? '<img src="/' + img + '" alt="' + esc(o.nameEn) + '" loading="lazy" decoding="async">'
       : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + esc(o.nameEn) + '</span></div>';
@@ -984,7 +984,9 @@ module.exports = function buildEnglish(h) {
       '    <a href="' + enProjectPath(p.slug) + '" class="card project-card" style="text-decoration:none;color:inherit">\n' +
       '      <div class="card__media project-card__media">\n' +
       '        <span class="badge-area">' + esc(p.areaEn) + '</span>\n' +
-      '        ' + h.mediaSlot(p.slug, 'hero', p.nameEn, p.nameEn, 'fa-image', '/', 'position:absolute;inset:0') + '\n' +
+      '        ' + (h.cardImage(p.slug)
+        ? '<img class="real-img" style="position:absolute;inset:0" src="/' + h.cardImage(p.slug) + '" alt="' + esc(p.nameEn) + '" loading="lazy" decoding="async">'
+        : h.mediaSlot(p.slug, 'hero', p.nameEn, p.nameEn, 'fa-image', '/', 'position:absolute;inset:0')) + '\n' +
       '      </div>\n' +
       '      <div class="card__body project-card__body">\n' +
       '        <span class="project-card__name">' + esc(p.nameEn) + '</span>\n' +
