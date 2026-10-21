@@ -1879,6 +1879,8 @@ function versionStaticAssets(relPath) {
 var THIRD_PARTY_CSS = /(?<!<noscript>)<link (?:rel="stylesheet" href="(https:\/\/(?:fonts\.googleapis\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)\/[^"]+)"|href="(https:\/\/fonts\.googleapis\.com\/[^"]+)" rel="stylesheet")>/g;
 function nonBlockingStyles(html) {
   var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  // Font Awesome is replaced by the SVG icons at the end of style.css.
+  html = html.replace(/(?:<noscript>)?<link rel="stylesheet" href="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/font-awesome\/[^"]+"[^>]*>(?:<\/noscript>)?\r?\n?/g, '');
   html = html.replace(THIRD_PARTY_CSS, function (m, a, b) {
     var href = a || b;
     return '<link rel="stylesheet" href="' + href + '" media="print" onload="this.media=\'all\'">' +
