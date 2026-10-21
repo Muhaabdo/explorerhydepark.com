@@ -939,7 +939,7 @@ module.exports = function buildEnglish(h) {
       title: title,
       description: description,
       canonical: canonical,
-      alternates: hreflang(arProjectPath(p.slug), enProjectPath(p.slug)),
+      alternates: hreflang(arProjectPath(p.slug), enProjectPath(p.slug)) + h.heroPreload(p, '/'),
       og: { title: title, description: description, url: canonical, image: h.ogImageUrl(p.slug) },
       schema: pageSchema(p, canonical, list),
       bodyClass: 'pp-page',

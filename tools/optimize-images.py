@@ -18,6 +18,8 @@ from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 MAX_W = 1600
+# Unit-type photos are shown at most ~650 px wide (desktop units tab).
+UNIT_MAX_W = 1000
 EXTS = ('.jpg', '.jpeg', '.png', '.webp')
 # Below this size (and width) a file is considered already optimized.
 SMALL_BYTES = 260 * 1024
@@ -28,13 +30,17 @@ for src in sorted(glob.glob(os.path.join(ROOT, 'assets', 'img', 'projects', '*',
     if ext.lower() not in EXTS:
         continue
     before = os.path.getsize(src)
+    name = base.lower()
+    max_w = MAX_W if (name.endswith('-hero') or '-gallery-' in name or name.endswith('-location')) else UNIT_MAX_W
     with Image.open(src) as im:
         width = im.width
-        if before <= SMALL_BYTES and width <= MAX_W and (base.lower().endswith('-hero') or ext.lower() == '.webp'):
+        # Already done: right width and WebP (or a hero under 450 KB). Never
+        # re-encode those — every pass would lose a little more quality.
+        if width <= max_w and (ext.lower() == '.webp' and before <= SMALL_BYTES or name.endswith('-hero') and before <= 450 * 1024):
             continue
         im = im.convert('RGB')
-        if im.width > MAX_W:
-            im = im.resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
+        if im.width > max_w:
+            im = im.resize((max_w, round(im.height * max_w / im.width)), Image.LANCZOS)
         if base.lower().endswith('-hero'):
             out = src
             if ext.lower() == '.webp':

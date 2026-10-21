@@ -1114,6 +1114,17 @@ function heroSrcset(p, img, size) {
   return ' srcset="' + list.map(function (x) { return x.src + ' ' + x.w + 'w'; }).join(', ') + '" sizes="100vw"';
 }
 
+/** <link rel=preload> for the hero photo — it's the LCP element on phones, and
+ * the preload lets the browser fetch it before the CSS/HTML above it is done. */
+function heroPreload(p, prefix) {
+  var img = findImage(p.slug, 'hero');
+  if (!img) return '';
+  var set = heroSrcset(p, img, imageSize(img));
+  var srcset = /srcset="([^"]*)"/.exec(set);
+  return '<link rel="preload" as="image" href="' + prefix + img + '"' +
+    (srcset ? ' imagesrcset="' + (prefix === '../' ? srcset[1] : srcset[1].replace(/\.\.\//g, prefix)) + '" imagesizes="100vw"' : '') + ' fetchpriority="high">\n';
+}
+
 function heroMarkup(p) {
   var img = findImage(p.slug, 'hero');
   var media;
@@ -1391,6 +1402,7 @@ pageContextScript({ page_type: 'project', project_name: p.nameEn, area: p.areaSl
 '<meta name="description" content="' + escapeHtml(description) + '">\n' +
 '<link rel="canonical" href="' + canonical + '">\n' +
 hreflangLinks('/projects/' + p.slug, '/en/projects/' + p.slug) +
+heroPreload(p, '../') +
 ogTagsMarkup({ title: title, description: description, url: canonical, image: ogImageUrl(p.slug) }) + '\n' +
 '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
 '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">\n' +
@@ -1854,12 +1866,41 @@ function versionStaticAssets(relPath) {
   writeIfChanged(relPath, bakeContactLinks(updated));
 }
 
+/* ---------------- Speed: third-party CSS off the critical path ----------------
+ * Google Fonts, Font Awesome and flag-icons were render-blocking (PageSpeed:
+ * ~2.7 s of the mobile first paint). They now load as preload → stylesheet,
+ * so the page paints with style.css + system fonts and swaps in when ready.
+ * Applied to every HTML file the build writes (generated and hand-written),
+ * idempotently: an already-converted link doesn't match the pattern again. */
+var THIRD_PARTY_CSS = /(?<!<noscript>)<link (?:rel="stylesheet" href="(https:\/\/(?:fonts\.googleapis\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)\/[^"]+)"|href="(https:\/\/fonts\.googleapis\.com\/[^"]+)" rel="stylesheet")>/g;
+function nonBlockingStyles(html) {
+  var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  html = html.replace(THIRD_PARTY_CSS, function (m, a, b) {
+    var href = a || b;
+    return '<link rel="preload" as="style" href="' + href + '" onload="this.onload=null;this.rel=\'stylesheet\'">' +
+      '<noscript><link rel="stylesheet" href="' + href + '"></noscript>';
+  });
+  // One <main> landmark (accessibility audit): page content between the mobile
+  // menu and the footer.
+  if (html.indexOf('<main') === -1 && html.indexOf('<footer class="footer">') !== -1 && html.indexOf('<div class="mobile-menu">') !== -1) {
+    html = html.replace(/(<div class="mobile-menu">[\s\S]*?<\/div>)/, '$1' + nl + '<main>')
+      .replace(/(\s*)<footer class="footer">/, nl + '</main>$1<footer class="footer">');
+  }
+  // Font files come from fonts.gstatic.com — open that connection early too.
+  if (html.indexOf('fonts.gstatic.com') === -1) {
+    html = html.replace('<link rel="preconnect" href="https://fonts.googleapis.com">',
+      '<link rel="preconnect" href="https://fonts.googleapis.com">' + nl + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
+  }
+  return html;
+}
+
 // Files whose content actually changed during this build (relative paths).
 var changedFiles = {};
 
 /** Writes only when the content differs, and records the change — so the
  * sitemap's <lastmod> moves only for pages that really changed. */
 function writeIfChanged(relPath, content) {
+  if (/\.html$/.test(relPath)) content = nonBlockingStyles(content);
   var filePath = path.join(ROOT, relPath);
   var old = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
   if (old === content) return false;
@@ -2034,7 +2075,7 @@ var english = require('./build-en')({
   fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, thumbFor: thumbFor, cardImage: cardImage, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
   pageContextScript: pageContextScript, isCommercial: isCommercial, isCoreShell: isCoreShell, onlyCoreShell: onlyCoreShell, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
-  bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl,
+  bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl, heroPreload: heroPreload,
 });
 // Articles (/articles/, /en/articles/) — content in tools/articles.js.
 var articleUrls = require('./build-articles')({

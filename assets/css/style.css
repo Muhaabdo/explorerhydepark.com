@@ -339,7 +339,7 @@ h1, h2, h3, h4 {
 .form-note { margin: 8px 0 0; text-align: center; font-size: 13.5px; line-height: 1.6; color: rgba(255,255,255,.65); }
 .form-consent { margin: -6px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--navy); opacity: .65; }
 .form-consent a { color: var(--blue); text-decoration: underline; }
-.section--navy .form-consent { color: rgba(255,255,255,.65); }
+.section--navy .form-consent { color: rgba(255,255,255,.8); opacity: 1; }
 .section--navy .form-consent a { color: var(--yellow); }
 
 /* ---------- Phone field: searchable country-code dropdown ---------- */
@@ -541,7 +541,8 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 }
 .pp-chips::-webkit-scrollbar { display: none; }
 /* When the site navbar slides back in, park the chips just under it. */
-.navbar:not(.is-hidden) ~ .pp-chips { top: var(--navbar-h, 57px); }
+.navbar:not(.is-hidden) ~ .pp-chips,
+.navbar:not(.is-hidden) ~ main .pp-chips { top: var(--navbar-h, 57px); }
 .pp-chip {
   position: relative; flex-shrink: 0; white-space: nowrap;
   font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 99px;
@@ -714,7 +715,7 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
 .pp-lead__nav .pp-btn { flex: 1; min-height: 52px; font-size: 16px; }
 .pp-lead__nav .pp-btn--ghost { flex: 0 0 96px; }
 .pp-lead .field label { color: var(--white); }
-.pp-lead-section .form-consent { margin-top: 12px; color: rgba(255,255,255,.65); }
+.pp-lead-section .form-consent { margin-top: 12px; color: rgba(255,255,255,.8); opacity: 1; }
 .pp-lead-section .form-consent a { color: var(--yellow); }
 /* Without JS every step shows at once; main.js adds .is-enhanced for the wizard. */
 .pp-lead:not(.is-enhanced) .pp-lead__nav [data-step-next],
@@ -851,7 +852,8 @@ html:has(body.pp-page) { scroll-padding-top: 120px; }
     padding: 12px max(24px, calc((100% - 1200px) / 2)); gap: 10px;
     border-top: none; box-shadow: 0 4px 12px rgba(4,14,51,.05);
   }
-  .pp-page .navbar ~ .pp-chips { top: 0; }
+  .pp-page .navbar ~ .pp-chips,
+  .pp-page .navbar ~ main .pp-chips { top: 0; }
   .pp-chip { font-size: 14px; padding: 8px 18px; }
 
   /* 3. Overview: summary (5fr) | facts 3×2 (6fr). */
