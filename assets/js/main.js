@@ -129,6 +129,8 @@
       if (!main) return;
       thumbs.forEach(function (thumb, i) {
         thumb.addEventListener('click', function () {
+          // srcset wins over src, so swap it too (empty → the full photo).
+          main.srcset = thumb.getAttribute('data-srcset') || '';
           main.src = thumb.getAttribute('data-src');
           main.alt = thumb.getAttribute('data-alt');
           if (count) count.textContent = (i + 1) + ' / ' + thumbs.length;

@@ -28,7 +28,8 @@ no framework and no build dependencies beyond Node.
 ## Everyday tasks
 
 ```sh
-# after adding or replacing photos: shrink them, make phone sizes + gallery thumbnails
+# after adding or replacing photos: shrink them, make phone sizes (hero 800/1200/1600,
+# gallery 800, unit types 720) + gallery thumbnails — the build adds them as srcset
 python tools/optimize-images.py
 python tools/make-responsive.py
 node tools/build-pages.js

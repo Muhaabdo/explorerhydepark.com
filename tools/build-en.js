@@ -515,12 +515,12 @@ module.exports = function buildEnglish(h) {
       '      <h2 class="pp-h2">Project photos</h2>\n' +
       '      <div class="pp-gallery__body">\n' +
       '        <div class="pp-gallery__main">\n' +
-      '          <img src="/' + imgs[0] + '" alt="' + esc(alt(1)) + '" decoding="async" data-gallery-main>\n' +
+      '          <img src="/' + imgs[0] + '"' + h.srcsetAttr(imgs[0], '/', h.GALLERY_SIZES) + ' alt="' + esc(alt(1)) + '" loading="lazy" decoding="async" data-gallery-main>\n' +
       '          <span class="pp-gallery__count" data-gallery-count>1 / ' + imgs.length + '</span>\n' +
       '        </div>\n' +
       '        <div class="pp-gallery__thumbs">\n' +
       imgs.map(function (src, i) {
-        return '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="/' + src + '" data-alt="' + esc(alt(i + 1)) + '"' +
+        return '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="/' + src + '"' + h.srcsetAttr(src, '/', h.GALLERY_SIZES).replace(' srcset=', ' data-srcset=').replace(/ sizes="[^"]*"/, '') + ' data-alt="' + esc(alt(i + 1)) + '"' +
           ' aria-label="Photo ' + (i + 1) + '" aria-pressed="' + (i === 0) + '">' +
           '<img src="/' + h.thumbFor(src) + '" alt="' + esc(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n';
       }).join('') +
@@ -542,9 +542,9 @@ module.exports = function buildEnglish(h) {
     var fallbackImg = findImage(p.slug, 'hero') || p.galleryImages[0];
     var panels = p.units.map(function (u, i) {
       var media = u.image
-        ? '<img class="real-img" src="/' + u.image + '" alt="' + esc(typeEn(u) + ' at ' + p.nameEn) + '" loading="lazy" decoding="async">'
+        ? '<img class="real-img" src="/' + u.image + '"' + h.srcsetAttr(u.image, '/', h.UNIT_SIZES) + ' alt="' + esc(typeEn(u) + ' at ' + p.nameEn) + '" loading="lazy" decoding="async">'
         : fallbackImg
-          ? '<img class="real-img" src="/' + fallbackImg + '" alt="' + esc(p.nameEn + ' — ' + typeEn(u)) + '" loading="lazy" decoding="async">'
+          ? '<img class="real-img" src="/' + fallbackImg + '"' + h.srcsetAttr(fallbackImg, '/', h.UNIT_SIZES) + ' alt="' + esc(p.nameEn + ' — ' + typeEn(u)) + '" loading="lazy" decoding="async">'
           : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + esc(typeEn(u)) + '</span></div>';
       var chip = u.count === 1 ? '<span class="pp-unit__avail">Last unit</span>'
         : (u.count ? '<span class="pp-unit__avail">' + u.count + ' available</span>' : '');

@@ -147,6 +147,28 @@ function thumbFor(rel) {
   return fs.existsSync(path.join(ROOT, t)) ? t : rel;
 }
 
+/** srcset/sizes attributes for a photo that has phone-size copies made by
+ *  tools/make-responsive.py (responsive/<name>-<width>.webp), plus the original
+ *  at its own width. '' when there are none. prefix: '../' or '/'. */
+// Shown width of the unit-type photo and the gallery's main photo (see style.css).
+var UNIT_SIZES = '(min-width: 900px) 480px, calc(100vw - 40px)';
+var GALLERY_SIZES = '(min-width: 900px) 900px, calc(100vw - 40px)';
+
+function srcsetAttr(rel, prefix, sizes) {
+  var dir = path.dirname(rel), base = path.basename(rel, path.extname(rel)).toLowerCase();
+  var abs = path.join(ROOT, dir, 'responsive');
+  var size = imageSize(rel);
+  if (!size || !fs.existsSync(abs)) return '';
+  var re = new RegExp('^' + base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '-(\\d+)\\.webp$');
+  var list = fs.readdirSync(abs).map(function (f) {
+    var m = re.exec(f);
+    return m && Number(m[1]) < size.width ? { w: Number(m[1]), src: prefix + dir + '/responsive/' + f } : null;
+  }).filter(Boolean).sort(function (a, b) { return a.w - b.w; });
+  if (!list.length) return '';
+  list.push({ w: size.width, src: prefix + rel });
+  return ' srcset="' + list.map(function (x) { return x.src + ' ' + x.w + 'w'; }).join(', ') + '" sizes="' + sizes + '"';
+}
+
 /** Hero photo at card size (the 800 px responsive copy when there is one). */
 function cardImage(slug) {
   var small = 'assets/img/projects/' + slug + '/responsive/' + slug + '-hero-800.webp';
@@ -541,9 +563,9 @@ function unitsSectionMarkup(p) {
     // never an empty "صورة …" placeholder box on the live page.
     var fallbackImg = findImage(p.slug, 'hero') || p.galleryImages[0];
     var media = u.image
-      ? '<img class="real-img" src="../' + u.image + '" alt="' + escapeHtml(u.nameAr + ' في ' + p.nameAr) + '" loading="lazy" decoding="async">'
+      ? '<img class="real-img" src="../' + u.image + '"' + srcsetAttr(u.image, '../', UNIT_SIZES) + ' alt="' + escapeHtml(u.nameAr + ' في ' + p.nameAr) + '" loading="lazy" decoding="async">'
       : fallbackImg
-        ? '<img class="real-img" src="../' + fallbackImg + '" alt="' + escapeHtml(p.nameAr + ' — ' + u.nameAr) + '" loading="lazy" decoding="async">'
+        ? '<img class="real-img" src="../' + fallbackImg + '"' + srcsetAttr(fallbackImg, '../', UNIT_SIZES) + ' alt="' + escapeHtml(p.nameAr + ' — ' + u.nameAr) + '" loading="lazy" decoding="async">'
         : '<div class="img-slot"><i class="fa-solid fa-image"></i><span>' + escapeHtml(u.placeholder) + '</span></div>';
     var chip = u.count === 1 ? '<span class="pp-unit__avail">آخر وحدة</span>'
       : (u.count ? '<span class="pp-unit__avail">متاح <bdi class="en">' + u.count + '</bdi></span>' : '');
@@ -1245,7 +1267,7 @@ function galleryMarkup(p) {
   var alt = function (n) { return 'صورة ' + n + ' من مشروع ' + p.nameAr + ' (' + p.nameEn + ') في ' + areaLabel(p); };
   var thumbs = imgs.map(function (src, i) {
     return (
-      '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../' + src + '" data-alt="' + escapeHtml(alt(i + 1)) + '"' +
+      '        <button type="button" class="pp-gallery__thumb" data-gallery-thumb data-src="../' + src + '"' + srcsetAttr(src, '../', GALLERY_SIZES).replace(' srcset=', ' data-srcset=').replace(/ sizes="[^"]*"/, '') + ' data-alt="' + escapeHtml(alt(i + 1)) + '"' +
       ' aria-label="صورة ' + (i + 1) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '">' +
       '<img src="../' + thumbFor(src) + '" alt="' + escapeHtml(alt(i + 1)) + '" loading="lazy" decoding="async"></button>\n'
     );
@@ -1256,7 +1278,7 @@ function galleryMarkup(p) {
     '      <h2 class="pp-h2">صور المشروع</h2>\n' +
     '      <div class="pp-gallery__body">\n' +
     '        <div class="pp-gallery__main">\n' +
-    '          <img src="../' + imgs[0] + '" alt="' + escapeHtml(alt(1)) + '" decoding="async" data-gallery-main>\n' +
+    '          <img src="../' + imgs[0] + '"' + srcsetAttr(imgs[0], '../', GALLERY_SIZES) + ' alt="' + escapeHtml(alt(1)) + '" loading="lazy" decoding="async" data-gallery-main>\n' +
     '          <span class="pp-gallery__count" data-gallery-count><bdi class="en">1 / ' + imgs.length + '</bdi></span>\n' +
     '        </div>\n' +
     '        <div class="pp-gallery__thumbs">\n' +
@@ -2097,7 +2119,7 @@ injectStaticOgTags('privacy.html', OG_DEFAULT_IMAGE);
 var english = require('./build-en')({
   merged: merged, pricing: pricing, ROOT: ROOT, IMG_ROOT: IMG_ROOT, SITE_ORIGIN: SITE_ORIGIN, SITE_NAME: SITE_NAME,
   PHONE_NUMBER: PHONE_NUMBER, OG_DEFAULT_IMAGE: OG_DEFAULT_IMAGE,
-  fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, thumbFor: thumbFor, cardImage: cardImage, imageSize: imageSize, mediaSlot: mediaSlot,
+  fmt: fmt, escapeHtml: escapeHtml, uniq: uniq, findImage: findImage, thumbFor: thumbFor, cardImage: cardImage, srcsetAttr: srcsetAttr, UNIT_SIZES: UNIT_SIZES, GALLERY_SIZES: GALLERY_SIZES, imageSize: imageSize, mediaSlot: mediaSlot,
   groupsAreaRange: groupsAreaRange, budgetPresets: budgetPresets, roundBudget: roundBudget, pricingYear: pricingYear,
   pageContextScript: pageContextScript, isCommercial: isCommercial, isCoreShell: isCoreShell, onlyCoreShell: onlyCoreShell, jsonLd: jsonLd, faqJsonLd: faqJsonLd, ogTagsMarkup: ogTagsMarkup, ogImageUrl: ogImageUrl,
   bakeContactLinks: bakeContactLinks, assetUrl: assetUrl, writeIfChanged: writeIfChanged, areaUrl: areaUrl, heroPreload: heroPreload,

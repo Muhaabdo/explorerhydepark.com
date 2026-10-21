@@ -16,6 +16,10 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 WIDTHS = [800, 1200, 1600]
 QUALITY = 78
+# The 800 px copy is what phones download for the hero (their LCP image), so it
+# gets a little more compression — on a phone it's shown ~400 px wide under a
+# dark overlay, where q70 looks the same as q78.
+MOBILE_QUALITY = 70
 
 for src in sorted(glob.glob(os.path.join(ROOT, 'assets', 'img', 'projects', '*', '*'))):
     name = os.path.basename(src)
@@ -32,7 +36,9 @@ for src in sorted(glob.glob(os.path.join(ROOT, 'assets', 'img', 'projects', '*',
                 continue
             h = round(im.height * w / im.width)
             out = os.path.join(out_dir, '%s-hero-%d.webp' % (slug, w))
-            im.resize((w, h), Image.LANCZOS).save(out, 'WEBP', quality=QUALITY, method=6)
+            if os.path.exists(out) and os.path.getmtime(out) >= os.path.getmtime(src):
+                continue
+            im.resize((w, h), Image.LANCZOS).save(out, 'WEBP', quality=MOBILE_QUALITY if w <= 800 else QUALITY, method=6)
             print('wrote', os.path.relpath(out, ROOT), '%d KB' % (os.path.getsize(out) // 1024))
 
 # Gallery thumbnails (the strip under the main photo is ~100 px wide — loading
@@ -53,4 +59,26 @@ for src in sorted(glob.glob(os.path.join(ROOT, 'assets', 'img', 'projects', '*',
         im = im.convert('RGB')
         h = round(im.height * THUMB_W / im.width)
         im.resize((THUMB_W, h), Image.LANCZOS).save(out, 'WEBP', quality=72, method=6)
+    print('wrote', os.path.relpath(out, ROOT), '%d KB' % (os.path.getsize(out) // 1024))
+
+# Phone-size copies of the other big photos: the gallery's main photo (800 px)
+# and the unit-type photos (720 px). Lazy images near the top of the page still
+# download during page load, so full-size copies compete with the hero.
+# responsive/<name>-<width>.webp — the build adds them as srcset automatically.
+for src in sorted(glob.glob(os.path.join(ROOT, 'assets', 'img', 'projects', '*', '*'))):
+    base, ext = os.path.splitext(os.path.basename(src))
+    name = base.lower()
+    if ext.lower() not in ('.jpg', '.jpeg', '.png', '.webp') or name.endswith('-hero') or name.endswith('-location'):
+        continue
+    w = 800 if '-gallery-' in name else 720
+    out_dir = os.path.join(os.path.dirname(src), 'responsive')
+    os.makedirs(out_dir, exist_ok=True)
+    out = os.path.join(out_dir, '%s-%d.webp' % (name, w))
+    if os.path.exists(out) and os.path.getmtime(out) >= os.path.getmtime(src):
+        continue
+    with Image.open(src) as im:
+        if im.width <= w * 1.15:
+            continue
+        im = im.convert('RGB')
+        im.resize((w, round(im.height * w / im.width)), Image.LANCZOS).save(out, 'WEBP', quality=72, method=6)
     print('wrote', os.path.relpath(out, ROOT), '%d KB' % (os.path.getsize(out) // 1024))
