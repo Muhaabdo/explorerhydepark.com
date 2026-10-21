@@ -1866,22 +1866,36 @@ function versionStaticAssets(relPath) {
   writeIfChanged(relPath, bakeContactLinks(updated));
 }
 
-/* ---------------- Speed: third-party CSS off the critical path ----------------
- * Google Fonts, Font Awesome and flag-icons were render-blocking (PageSpeed:
- * ~2.7 s of the mobile first paint). They now load as preload → stylesheet,
- * so the page paints with style.css + system fonts and swaps in when ready.
- * Applied to every HTML file the build writes (generated and hand-written),
- * idempotently: an already-converted link doesn't match the pattern again. */
+/* ---------------- Speed: critical path ----------------
+ * PageSpeed (mobile) was waiting on Google Fonts, Font Awesome and flag-icons
+ * before painting anything, and our own style.css was requested last. Every
+ * HTML page the build writes (generated and hand-written) is post-processed:
+ *  - charset, viewport and style.css move to the top of <head>, so the only
+ *    render-blocking file is requested first (before GTM and the rest);
+ *  - third-party CSS loads with media="print" + onload → all: non-blocking and
+ *    low priority, so it doesn't compete with style.css and the hero photo;
+ *  - one <main> landmark around the page content (accessibility audit).
+ * Idempotent: converted links no longer match, moved tags are found in place. */
 var THIRD_PARTY_CSS = /(?<!<noscript>)<link (?:rel="stylesheet" href="(https:\/\/(?:fonts\.googleapis\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)\/[^"]+)"|href="(https:\/\/fonts\.googleapis\.com\/[^"]+)" rel="stylesheet")>/g;
 function nonBlockingStyles(html) {
   var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
   html = html.replace(THIRD_PARTY_CSS, function (m, a, b) {
     var href = a || b;
-    return '<link rel="preload" as="style" href="' + href + '" onload="this.onload=null;this.rel=\'stylesheet\'">' +
+    return '<link rel="stylesheet" href="' + href + '" media="print" onload="this.media=\'all\'">' +
       '<noscript><link rel="stylesheet" href="' + href + '"></noscript>';
   });
-  // One <main> landmark (accessibility audit): page content between the mobile
-  // menu and the footer.
+  // Our stylesheet (+ charset/viewport) first in <head>.
+  var head = /<head>\r?\n/.exec(html);
+  var styleRe = /<link rel="stylesheet" href="(?:\.\.\/|\/)?assets\/css\/style\.css[^"]*">\r?\n/;
+  var style = styleRe.exec(html);
+  if (head && style && html.indexOf(style[0]) > head.index + head[0].length + 200) {
+    var charset = '<meta charset="UTF-8">' + nl, viewport = '<meta name="viewport" content="width=device-width, initial-scale=1">' + nl;
+    html = html.replace(style[0], '');
+    if (html.indexOf(charset) !== -1) html = html.replace(charset, '');
+    if (html.indexOf(viewport) !== -1) html = html.replace(viewport, '');
+    html = html.replace(head[0], head[0] + charset + viewport + style[0]);
+  }
+  // One <main> landmark: page content between the mobile menu and the footer.
   if (html.indexOf('<main') === -1 && html.indexOf('<footer class="footer">') !== -1 && html.indexOf('<div class="mobile-menu">') !== -1) {
     html = html.replace(/(<div class="mobile-menu">[\s\S]*?<\/div>)/, '$1' + nl + '<main>')
       .replace(/(\s*)<footer class="footer">/, nl + '</main>$1<footer class="footer">');
