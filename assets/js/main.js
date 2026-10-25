@@ -581,7 +581,7 @@
         window.open(whatsappUrl(lines.join('\n')), '_blank', 'noopener');
 
         // Multi-step form: hand the answers to GTM on the thank-you page as
-        // URL params (generate_lead itself stays a GTM page-view trigger).
+        // URL params (generate_lead is pushed below on submit, not on that page).
         var successUrl = form.getAttribute('data-success-url') || 'thank-you.html';
         if (form.hasAttribute('data-multistep')) {
           var params = [];
