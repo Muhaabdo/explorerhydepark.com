@@ -30,6 +30,8 @@ RewriteRule ^projects/hyde-new-cairo(/index)?(\.html)?/?$ https://www.explorerhy
 RewriteRule ^projects/hyde-terraces(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-terraces [R=301,L]
 RewriteRule ^projects/(garden-lakes|hyde-park-garden-lakes)(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-garden-lake [R=301,L]
 RewriteRule ^projects/(seashore|hyde-park-seashore)(/index)?(\.html)?/?$ https://www.explorerhydepark.com/projects/hyde-park-sea-shore [R=301,L]
+# Old page from the first version of the site, still in Google's index (Oct 2026).
+RewriteRule ^cookies-policy(\.html)?/?$ https://www.explorerhydepark.com/privacy [R=301,L]
 
 # --- 1b. "index"/"index.html" is the docroot's DirectoryIndex file, not a
 # distinct page — must 301 straight to the site root in one hop. Without
