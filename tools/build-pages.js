@@ -1032,9 +1032,22 @@ function seoDescription(p) {
 /** Page context for GA4 (via GTM): pushed BEFORE the GTM snippet so the
  * page_view and every event on the page carry page_type / project_name / area. */
 function pageContextScript(ctx) {
-  return '<script>window.dataLayer=window.dataLayer||[];window.dataLayer.push(' +
+  return '<script>window.dataLayer=window.dataLayer||[];(' + INTERNAL_FLAG_JS + ')(' +
     JSON.stringify(ctx).replace(/</g, '\\u003c') + ');</script>\n';
 }
+
+/* Our own visits (Abdo, testing) are marked so GA4 can drop them: open any
+ * page once per browser with ?internal=1 (?internal=0 undoes it). The flag
+ * lives in localStorage, and every page then adds traffic_type: 'internal' to
+ * its context push; GTM passes it to GA4, whose "Internal Traffic" data
+ * filter excludes those hits. A small note confirms the switch on screen. */
+var INTERNAL_FLAG_JS = 'function(c){try{var m=/[?&]internal=([01])/.exec(location.search);' +
+  'if(m){if(m[1]==="1")localStorage.setItem("ehp_internal","1");else localStorage.removeItem("ehp_internal");' +
+  'document.addEventListener("DOMContentLoaded",function(){var d=document.createElement("div");' +
+  'd.textContent=m[1]==="1"?"✓ زياراتك من المتصفح ده مش هتتحسب في GA4":"✓ زياراتك من المتصفح ده هتتحسب في GA4 تاني";' +
+  'd.style.cssText="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9999;background:#040E33;color:#fff;padding:10px 16px;border-radius:10px;font:600 14px/1.4 Cairo,system-ui,sans-serif";' +
+  'document.body.appendChild(d);setTimeout(function(){d.remove()},5000)})}' +
+  'if(localStorage.getItem("ehp_internal")==="1")c.traffic_type="internal"}catch(e){}window.dataLayer.push(c)}';
 
 function jsonLd(data) {
   return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
