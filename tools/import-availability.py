@@ -91,6 +91,10 @@ def main():
         if not price or not bua:
             skipped += 1
             continue
+        # The developer's own test records (e.g. "Test/HPD") are not real units.
+        if r['Inventory Item Name'].strip().lower().startswith('test'):
+            skipped += 1
+            continue
         rooms = num(r.get('Number of rooms'))
         units.append(OrderedDict([
             ('project', r['project Name'].strip()),

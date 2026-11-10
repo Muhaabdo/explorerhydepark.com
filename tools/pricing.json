@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-19",
+    "lastUpdated": "2026-11-10",
     "currency": "EGP",
     "priceBasis": "Lowest available price per unit type (developer inventory export).",
     "source": "Hyde Park Sales Availability Report — available units only."
@@ -60,7 +60,7 @@
     },
     "signature": {
       "refreshed": true,
-      "availableUnits": 48,
+      "availableUnits": 56,
       "minPrice": 6650000,
       "bedrooms": [
         1,
@@ -79,7 +79,7 @@
             2,
             3
           ],
-          "count": 31
+          "count": 40
         },
         {
           "type": "Townhouse",
@@ -88,7 +88,7 @@
           "areaMin": 195.0,
           "areaMax": 195.0,
           "bedrooms": [],
-          "count": 8
+          "count": 7
         },
         {
           "type": "Twin House",
@@ -112,7 +112,7 @@
     },
     "hyde-central": {
       "refreshed": true,
-      "availableUnits": 110,
+      "availableUnits": 99,
       "minPrice": 6410000,
       "bedrooms": [
         1,
@@ -135,16 +135,16 @@
             4,
             5
           ],
-          "count": 83
+          "count": 74
         },
         {
           "type": "Townhouse",
           "label": "تاون هاوس",
-          "minPrice": 25520000,
+          "minPrice": 25580000,
           "areaMin": 212.0,
           "areaMax": 212.0,
           "bedrooms": [],
-          "count": 11
+          "count": 9
         },
         {
           "type": "Quad",
@@ -153,7 +153,7 @@
           "areaMin": 217.0,
           "areaMax": 217.0,
           "bedrooms": [],
-          "count": 10
+          "count": 7
         },
         {
           "type": "Standalone",
@@ -174,17 +174,18 @@
             3,
             4
           ],
-          "count": 4
+          "count": 7
         }
       ]
     },
     "hyde-new-cairo": {
       "refreshed": true,
-      "availableUnits": 33,
+      "availableUnits": 30,
       "minPrice": 10280000,
       "bedrooms": [
         1,
-        2
+        2,
+        3
       ],
       "units": [
         {
@@ -192,12 +193,13 @@
           "label": "شقق",
           "minPrice": 10280000,
           "areaMin": 78.28,
-          "areaMax": 125.55,
+          "areaMax": 175.94,
           "bedrooms": [
             1,
-            2
+            2,
+            3
           ],
-          "count": 28
+          "count": 25
         },
         {
           "type": "Standalone",
@@ -212,7 +214,7 @@
     },
     "seashore": {
       "refreshed": true,
-      "availableUnits": 122,
+      "availableUnits": 116,
       "minPrice": 9060000,
       "bedrooms": [
         1,
@@ -231,7 +233,7 @@
             2,
             3
           ],
-          "count": 80
+          "count": 74
         },
         {
           "type": "Standard Chalet",
@@ -293,7 +295,7 @@
     },
     "hyde-terraces": {
       "refreshed": true,
-      "availableUnits": 6,
+      "availableUnits": 5,
       "minPrice": 23400000,
       "bedrooms": [],
       "units": [
@@ -304,7 +306,7 @@
           "areaMin": 196.0,
           "areaMax": 196.0,
           "bedrooms": [],
-          "count": 4
+          "count": 3
         },
         {
           "type": "Standalone",
@@ -354,7 +356,7 @@
     },
     "one-hyde-park": {
       "refreshed": true,
-      "availableUnits": 129,
+      "availableUnits": 109,
       "minPrice": 6870000,
       "bedrooms": [
         1,
@@ -368,25 +370,25 @@
           "label": "شقق",
           "minPrice": 6870000,
           "areaMin": 73.0,
-          "areaMax": 199.0,
+          "areaMax": 185.0,
           "bedrooms": [
             1,
             2,
             3,
             4
           ],
-          "count": 90
+          "count": 75
         },
         {
           "type": "Duplex",
           "label": "دوبلكس",
-          "minPrice": 17200000,
+          "minPrice": 17550000,
           "areaMin": 203.0,
           "areaMax": 208.0,
           "bedrooms": [
             3
           ],
-          "count": 9
+          "count": 6
         },
         {
           "type": "Sky Villa",
@@ -397,23 +399,23 @@
           "bedrooms": [
             3
           ],
-          "count": 9
+          "count": 8
         },
         {
           "type": "Garden Villa",
           "label": "جاردن فيلا",
-          "minPrice": 23040000,
-          "areaMin": 219.0,
-          "areaMax": 219.0,
+          "minPrice": 19600000,
+          "areaMin": 208.0,
+          "areaMax": 208.0,
           "bedrooms": [
             3
           ],
-          "count": 1
+          "count": 2
         },
         {
           "type": "Townhouse",
           "label": "تاون هاوس",
-          "minPrice": 26240000,
+          "minPrice": 26830000,
           "areaMin": 196.0,
           "areaMax": 198.0,
           "bedrooms": [],
@@ -422,11 +424,11 @@
         {
           "type": "Twin House",
           "label": "توين هاوس",
-          "minPrice": 34920000,
+          "minPrice": 36030000,
           "areaMin": 218.0,
           "areaMax": 218.0,
           "bedrooms": [],
-          "count": 5
+          "count": 3
         },
         {
           "type": "Standalone",
@@ -441,7 +443,7 @@
     },
     "business-district": {
       "refreshed": true,
-      "availableUnits": 15,
+      "availableUnits": 13,
       "minPrice": 13120000,
       "bedrooms": [],
       "units": [
@@ -452,7 +454,7 @@
           "areaMin": 50.0,
           "areaMax": 144.0,
           "bedrooms": [],
-          "count": 15
+          "count": 13
         }
       ]
     }

@@ -1,11 +1,11 @@
 {
-  "generated_from": "Sales Availability Report 2026-10-19",
+  "generated_from": "Sales Availability Report 2026-11-10",
   "projects": {
     "Business District": {
       "Office": {
         "min_price": 13120000,
         "max_price": 32480000,
-        "count": 15,
+        "count": 13,
         "bua_min": 50.0,
         "bua_max": 144.0,
         "min_unit_bua": 50.0,
@@ -64,8 +64,8 @@
     "Hyde Park Central": {
       "Apartment": {
         "min_price": 6410000,
-        "max_price": 20280000,
-        "count": 83,
+        "max_price": 16470000,
+        "count": 74,
         "bua_min": 63.0,
         "bua_max": 178.0,
         "min_unit_bua": 70.0,
@@ -76,7 +76,7 @@
       "Duplex": {
         "min_price": 16480000,
         "max_price": 21070000,
-        "count": 4,
+        "count": 7,
         "bua_min": 185.0,
         "bua_max": 211.0,
         "min_unit_bua": 196.0,
@@ -87,7 +87,7 @@
       "Quad": {
         "min_price": 26790000,
         "max_price": 28700000,
-        "count": 10,
+        "count": 7,
         "bua_min": 217.0,
         "bua_max": 217.0,
         "min_unit_bua": 217.0,
@@ -107,9 +107,9 @@
         ]
       },
       "Townhouse": {
-        "min_price": 25520000,
+        "min_price": 25580000,
         "max_price": 31940000,
-        "count": 11,
+        "count": 9,
         "bua_min": 212.0,
         "bua_max": 212.0,
         "min_unit_bua": 212.0,
@@ -122,7 +122,7 @@
       "Apartment": {
         "min_price": 9060000,
         "max_price": 20070000,
-        "count": 80,
+        "count": 74,
         "bua_min": 63.0,
         "bua_max": 138.0,
         "min_unit_bua": 67.0,
@@ -200,10 +200,10 @@
     "Hyde Park Residential": {
       "Apartment": {
         "min_price": 10280000,
-        "max_price": 17790000,
-        "count": 28,
+        "max_price": 19920000,
+        "count": 25,
         "bua_min": 78.28,
-        "bua_max": 125.55,
+        "bua_max": 175.94,
         "min_unit_bua": 78.28,
         "finishings": [
           "Core & Shell",
@@ -239,19 +239,19 @@
     "One Hyde Park": {
       "Apartment": {
         "min_price": 6870000,
-        "max_price": 19700000,
-        "count": 90,
+        "max_price": 18540000,
+        "count": 75,
         "bua_min": 73.0,
-        "bua_max": 199.0,
+        "bua_max": 185.0,
         "min_unit_bua": 78.0,
         "finishings": [
           "Core & Shell"
         ]
       },
       "Duplex": {
-        "min_price": 17200000,
+        "min_price": 17550000,
         "max_price": 18160000,
-        "count": 9,
+        "count": 6,
         "bua_min": 203.0,
         "bua_max": 208.0,
         "min_unit_bua": 203.0,
@@ -260,12 +260,12 @@
         ]
       },
       "Garden Villa": {
-        "min_price": 23040000,
-        "max_price": 23040000,
-        "count": 1,
-        "bua_min": 219.0,
-        "bua_max": 219.0,
-        "min_unit_bua": 219.0,
+        "min_price": 19600000,
+        "max_price": 22050000,
+        "count": 2,
+        "bua_min": 208.0,
+        "bua_max": 208.0,
+        "min_unit_bua": 208.0,
         "finishings": [
           "Core & Shell"
         ]
@@ -273,7 +273,7 @@
       "Sky Villa": {
         "min_price": 23280000,
         "max_price": 25500000,
-        "count": 9,
+        "count": 8,
         "bua_min": 234.0,
         "bua_max": 270.0,
         "min_unit_bua": 267.0,
@@ -293,8 +293,8 @@
         ]
       },
       "Townhouse": {
-        "min_price": 26240000,
-        "max_price": 34080000,
+        "min_price": 26830000,
+        "max_price": 35170000,
         "count": 6,
         "bua_min": 196.0,
         "bua_max": 198.0,
@@ -304,9 +304,9 @@
         ]
       },
       "Twin House": {
-        "min_price": 34920000,
+        "min_price": 36030000,
         "max_price": 38200000,
-        "count": 5,
+        "count": 3,
         "bua_min": 218.0,
         "bua_max": 218.0,
         "min_unit_bua": 218.0,
@@ -318,8 +318,8 @@
     "Signature": {
       "Apartment": {
         "min_price": 6650000,
-        "max_price": 17300000,
-        "count": 31,
+        "max_price": 17370000,
+        "count": 40,
         "bua_min": 68.21,
         "bua_max": 148.4,
         "min_unit_bua": 68.21,
@@ -341,7 +341,7 @@
       "Townhouse": {
         "min_price": 23940000,
         "max_price": 28600000,
-        "count": 8,
+        "count": 7,
         "bua_min": 195.0,
         "bua_max": 195.0,
         "min_unit_bua": 195.0,
@@ -376,7 +376,7 @@
       "Townhouse": {
         "min_price": 23400000,
         "max_price": 23410000,
-        "count": 4,
+        "count": 3,
         "bua_min": 196.0,
         "bua_max": 196.0,
         "min_unit_bua": 196.0,
@@ -632,30 +632,12 @@
     },
     {
       "project": "Signature",
-      "type": "Townhouse",
-      "unit_name": "HPS/6PLEX/48B",
-      "rooms": null,
-      "bua_sqm": 195.0,
-      "finishing": "Core & Shell",
-      "price": 24300000
-    },
-    {
-      "project": "Signature",
       "type": "Twin House",
       "unit_name": "HPS/TW/49A",
       "rooms": null,
       "bua_sqm": 215.0,
       "finishing": "Core & Shell",
       "price": 32090000
-    },
-    {
-      "project": "Terraces",
-      "type": "Townhouse",
-      "unit_name": "HPTC1/6Plex/15C",
-      "rooms": null,
-      "bua_sqm": 196.0,
-      "finishing": "Core & Shell",
-      "price": 23400000
     },
     {
       "project": "Terraces",
@@ -759,15 +741,6 @@
     {
       "project": "Signature",
       "type": "Apartment",
-      "unit_name": "HPS/3/304",
-      "rooms": 2,
-      "bua_sqm": 100.0,
-      "finishing": "Core & Shell",
-      "price": 9420000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
       "unit_name": "HPS/4B/G03",
       "rooms": 3,
       "bua_sqm": 148.4,
@@ -800,15 +773,6 @@
       "bua_sqm": 68.21,
       "finishing": "Core & Shell",
       "price": 6820000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
-      "unit_name": "HPS/5A/101",
-      "rooms": 3,
-      "bua_sqm": 148.4,
-      "finishing": "Core & Shell",
-      "price": 14620000
     },
     {
       "project": "Signature",
@@ -876,29 +840,11 @@
     {
       "project": "Signature",
       "type": "Apartment",
-      "unit_name": "HPS/13/101",
-      "rooms": 2,
-      "bua_sqm": 99.53,
-      "finishing": "Core & Shell",
-      "price": 9620000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
       "unit_name": "HPS/13/204",
       "rooms": 2,
       "bua_sqm": 107.93,
       "finishing": "Core & Shell",
       "price": 10350000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
-      "unit_name": "HPS/13/304",
-      "rooms": 2,
-      "bua_sqm": 107.93,
-      "finishing": "Core & Shell",
-      "price": 10170000
     },
     {
       "project": "Signature",
@@ -921,15 +867,6 @@
     {
       "project": "Signature",
       "type": "Apartment",
-      "unit_name": "HPS/15B/302",
-      "rooms": 2,
-      "bua_sqm": 108.28,
-      "finishing": "Core & Shell",
-      "price": 10470000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
       "unit_name": "HPS/16A/G02",
       "rooms": 2,
       "bua_sqm": 108.45,
@@ -944,15 +881,6 @@
       "bua_sqm": 108.0,
       "finishing": "Core & Shell",
       "price": 12960000
-    },
-    {
-      "project": "Signature",
-      "type": "Apartment",
-      "unit_name": "HPS/17/101",
-      "rooms": 2,
-      "bua_sqm": 99.53,
-      "finishing": "Core & Shell",
-      "price": 9620000
     },
     {
       "project": "Signature",
@@ -1092,15 +1020,6 @@
     {
       "project": "Hyde Park Central",
       "type": "Apartment",
-      "unit_name": "HPC/WR-4A/902",
-      "rooms": 3,
-      "bua_sqm": 130.0,
-      "finishing": "Core & Shell",
-      "price": 11380000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
       "unit_name": "HPC/WR-1C/105",
       "rooms": 2,
       "bua_sqm": 102.0,
@@ -1137,29 +1056,11 @@
     {
       "project": "Hyde Park Central",
       "type": "Apartment",
-      "unit_name": "HPC/WR-1C/704",
-      "rooms": 2,
-      "bua_sqm": 117.0,
-      "finishing": "Core & Shell",
-      "price": 10420000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
       "unit_name": "HPC/WR-3C/104",
       "rooms": 3,
       "bua_sqm": 135.0,
       "finishing": "Core & Shell",
       "price": 11230000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
-      "unit_name": "HPC/WR-5C/G06",
-      "rooms": 3,
-      "bua_sqm": 135.0,
-      "finishing": "Core & Shell",
-      "price": 13730000
     },
     {
       "project": "Hyde Park Central",
@@ -1343,6 +1244,15 @@
     },
     {
       "project": "Hyde Park Central",
+      "type": "Duplex",
+      "unit_name": "HPC/WR-1C/305",
+      "rooms": 3,
+      "bua_sqm": 185.0,
+      "finishing": "Core & Shell",
+      "price": 16960000
+    },
+    {
+      "project": "Hyde Park Central",
       "type": "Apartment",
       "unit_name": "HPC/WR-7A/402",
       "rooms": 1,
@@ -1385,15 +1295,6 @@
       "bua_sqm": 70.0,
       "finishing": "Core & Shell",
       "price": 6750000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
-      "unit_name": "HPC/WR-8B/403",
-      "rooms": 2,
-      "bua_sqm": 106.0,
-      "finishing": "Core & Shell",
-      "price": 10030000
     },
     {
       "project": "Hyde Park Central",
@@ -1938,15 +1839,6 @@
     {
       "project": "Hyde Park Central",
       "type": "Apartment",
-      "unit_name": "HPC/WR-33D/G03",
-      "rooms": 5,
-      "bua_sqm": 178.0,
-      "finishing": "Core & Shell",
-      "price": 20280000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
       "unit_name": "HPC/WR-33D/G05",
       "rooms": 3,
       "bua_sqm": 133.0,
@@ -1973,12 +1865,30 @@
     },
     {
       "project": "Hyde Park Central",
+      "type": "Duplex",
+      "unit_name": "HPC/WR-33D/201",
+      "rooms": 4,
+      "bua_sqm": 185.0,
+      "finishing": "Core & Shell",
+      "price": 16860000
+    },
+    {
+      "project": "Hyde Park Central",
       "type": "Apartment",
       "unit_name": "HPC/WR-33D/203",
       "rooms": 5,
       "bua_sqm": 178.0,
       "finishing": "Core & Shell",
       "price": 16470000
+    },
+    {
+      "project": "Hyde Park Central",
+      "type": "Duplex",
+      "unit_name": "HPC/WR-33D/205",
+      "rooms": 4,
+      "bua_sqm": 185.0,
+      "finishing": "Core & Shell",
+      "price": 16860000
     },
     {
       "project": "Hyde Park Central",
@@ -2073,29 +1983,11 @@
     {
       "project": "One Hyde Park",
       "type": "Townhouse",
-      "unit_name": "OHPC1/6PLEX/1F",
+      "unit_name": "OHPC1/6PLEX/2A",
       "rooms": null,
       "bua_sqm": 198.0,
       "finishing": "Core & Shell",
-      "price": 33330000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Townhouse",
-      "unit_name": "OHPC1/6PLEX/2E",
-      "rooms": null,
-      "bua_sqm": 196.0,
-      "finishing": "Core & Shell",
-      "price": 26240000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Townhouse",
-      "unit_name": "OHPC1/4PLEX/3D",
-      "rooms": null,
-      "bua_sqm": 198.0,
-      "finishing": "Core & Shell",
-      "price": 33140000
+      "price": 32850000
     },
     {
       "project": "One Hyde Park",
@@ -2145,20 +2037,29 @@
     {
       "project": "One Hyde Park",
       "type": "Twin House",
-      "unit_name": "OHPC1/TW/10A",
-      "rooms": null,
-      "bua_sqm": 218.0,
-      "finishing": "Core & Shell",
-      "price": 34920000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Twin House",
       "unit_name": "OHPC1/TW/11A",
       "rooms": null,
       "bua_sqm": 218.0,
       "finishing": "Core & Shell",
       "price": 36030000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Townhouse",
+      "unit_name": "OHPC1/6PLEX/18A",
+      "rooms": null,
+      "bua_sqm": 198.0,
+      "finishing": "Core & Shell",
+      "price": 35170000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Townhouse",
+      "unit_name": "OHPC1/6PLEX/18E",
+      "rooms": null,
+      "bua_sqm": 196.0,
+      "finishing": "Core & Shell",
+      "price": 26830000
     },
     {
       "project": "One Hyde Park",
@@ -2177,15 +2078,6 @@
       "bua_sqm": 240.0,
       "finishing": "Core & Shell",
       "price": 52240000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Twin House",
-      "unit_name": "OHPC1/TW/25B",
-      "rooms": null,
-      "bua_sqm": 218.0,
-      "finishing": "Core & Shell",
-      "price": 36600000
     },
     {
       "project": "One Hyde Park",
@@ -2252,24 +2144,6 @@
     },
     {
       "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/15A-4/5",
-      "rooms": 4,
-      "bua_sqm": 185.0,
-      "finishing": "Core & Shell",
-      "price": 16050000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/15A-6/3",
-      "rooms": 4,
-      "bua_sqm": 199.0,
-      "finishing": "Core & Shell",
-      "price": 19700000
-    },
-    {
-      "project": "One Hyde Park",
       "type": "Duplex",
       "unit_name": "OHC/15B-6/5",
       "rooms": 3,
@@ -2279,12 +2153,30 @@
     },
     {
       "project": "One Hyde Park",
+      "type": "Garden Villa",
+      "unit_name": "OHC/16B-G/3",
+      "rooms": 3,
+      "bua_sqm": 208.0,
+      "finishing": "Core & Shell",
+      "price": 19600000
+    },
+    {
+      "project": "One Hyde Park",
       "type": "Duplex",
       "unit_name": "OHC/16A-2/6",
       "rooms": 3,
       "bua_sqm": 208.0,
       "finishing": "Core & Shell",
       "price": 17810000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
+      "unit_name": "OHC/16B-2/1",
+      "rooms": 3,
+      "bua_sqm": 150.0,
+      "finishing": "Core & Shell",
+      "price": 13270000
     },
     {
       "project": "One Hyde Park",
@@ -2307,20 +2199,20 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
+      "unit_name": "OHC/10B-6/1",
+      "rooms": 3,
+      "bua_sqm": 157.0,
+      "finishing": "Core & Shell",
+      "price": 13980000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
       "unit_name": "OHC/11A-G/2",
       "rooms": 3,
       "bua_sqm": 142.0,
       "finishing": "Core & Shell",
       "price": 16830000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/11B-G/6",
-      "rooms": 3,
-      "bua_sqm": 150.0,
-      "finishing": "Core & Shell",
-      "price": 17060000
     },
     {
       "project": "One Hyde Park",
@@ -2333,12 +2225,12 @@
     },
     {
       "project": "One Hyde Park",
-      "type": "Duplex",
-      "unit_name": "OHC/11B-4/3",
-      "rooms": 3,
-      "bua_sqm": 208.0,
+      "type": "Apartment",
+      "unit_name": "OHC/11A-2/4",
+      "rooms": 4,
+      "bua_sqm": 185.0,
       "finishing": "Core & Shell",
-      "price": 17700000
+      "price": 15740000
     },
     {
       "project": "One Hyde Park",
@@ -2351,30 +2243,12 @@
     },
     {
       "project": "One Hyde Park",
-      "type": "Duplex",
-      "unit_name": "OHC/11B-6/2",
-      "rooms": 3,
-      "bua_sqm": 203.0,
-      "finishing": "Core & Shell",
-      "price": 17200000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Duplex",
-      "unit_name": "OHC/11B-6/3",
-      "rooms": 3,
-      "bua_sqm": 208.0,
-      "finishing": "Core & Shell",
-      "price": 17870000
-    },
-    {
-      "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/1B-G/1",
+      "unit_name": "OCR/1A-1/1",
       "rooms": 2,
-      "bua_sqm": 124.0,
+      "bua_sqm": 122.0,
       "finishing": "Core & Shell",
-      "price": 11510000
+      "price": 9780000
     },
     {
       "project": "One Hyde Park",
@@ -2406,15 +2280,6 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/2A-G/1",
-      "rooms": 1,
-      "bua_sqm": 74.0,
-      "finishing": "Core & Shell",
-      "price": 7620000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OCR/2A-G/2",
       "rooms": 1,
       "bua_sqm": 74.0,
@@ -2433,20 +2298,20 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/2B-4/1",
-      "rooms": 3,
-      "bua_sqm": 157.0,
-      "finishing": "Core & Shell",
-      "price": 12970000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OCR/2A-5/4",
       "rooms": 2,
       "bua_sqm": 122.0,
       "finishing": "Core & Shell",
       "price": 9770000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
+      "unit_name": "OCR/2B-5/1",
+      "rooms": 3,
+      "bua_sqm": 157.0,
+      "finishing": "Core & Shell",
+      "price": 12780000
     },
     {
       "project": "One Hyde Park",
@@ -2532,15 +2397,6 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/4A-G/1",
-      "rooms": 1,
-      "bua_sqm": 74.0,
-      "finishing": "Core & Shell",
-      "price": 7810000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OCR/6A-G/1",
       "rooms": 1,
       "bua_sqm": 74.0,
@@ -2595,29 +2451,29 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/7B-G/2",
-      "rooms": 1,
-      "bua_sqm": 73.0,
+      "unit_name": "OCR/8A-6/2",
+      "rooms": 2,
+      "bua_sqm": 135.0,
       "finishing": "Core & Shell",
-      "price": 7230000
+      "price": 13300000
     },
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OCR/7A-1/1",
+      "unit_name": "OCR/10A-3/4",
       "rooms": 2,
       "bua_sqm": 122.0,
       "finishing": "Core & Shell",
-      "price": 9540000
+      "price": 10010000
     },
     {
       "project": "One Hyde Park",
-      "type": "Sky Villa",
-      "unit_name": "OCR/9B-4/3",
+      "type": "Apartment",
+      "unit_name": "OCR/10B-3/1",
       "rooms": 3,
-      "bua_sqm": 267.0,
+      "bua_sqm": 157.0,
       "finishing": "Core & Shell",
-      "price": 23280000
+      "price": 12970000
     },
     {
       "project": "One Hyde Park",
@@ -2627,6 +2483,15 @@
       "bua_sqm": 267.0,
       "finishing": "Core & Shell",
       "price": 23280000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
+      "unit_name": "OCR/11A-4/4",
+      "rooms": 2,
+      "bua_sqm": 129.0,
+      "finishing": "Core & Shell",
+      "price": 12430000
     },
     {
       "project": "One Hyde Park",
@@ -2645,15 +2510,6 @@
       "bua_sqm": 157.0,
       "finishing": "Core & Shell",
       "price": 18400000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/1A-4/1",
-      "rooms": 2,
-      "bua_sqm": 122.0,
-      "finishing": "Core & Shell",
-      "price": 10690000
     },
     {
       "project": "One Hyde Park",
@@ -2676,15 +2532,6 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/1A-5/1",
-      "rooms": 2,
-      "bua_sqm": 122.0,
-      "finishing": "Core & Shell",
-      "price": 10530000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OHC/1A-5/3",
       "rooms": 2,
       "bua_sqm": 135.0,
@@ -2694,38 +2541,11 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/1A-6/1",
-      "rooms": 2,
-      "bua_sqm": 122.0,
-      "finishing": "Core & Shell",
-      "price": 10280000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/1A-6/2",
-      "rooms": 3,
-      "bua_sqm": 190.0,
-      "finishing": "Core & Shell",
-      "price": 18460000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OHC/2-1/3",
       "rooms": 2,
       "bua_sqm": 120.0,
       "finishing": "Core & Shell",
       "price": 10740000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/2-3/4",
-      "rooms": 1,
-      "bua_sqm": 75.0,
-      "finishing": "Core & Shell",
-      "price": 7230000
     },
     {
       "project": "One Hyde Park",
@@ -2744,6 +2564,15 @@
       "bua_sqm": 120.0,
       "finishing": "Core & Shell",
       "price": 10850000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
+      "unit_name": "OHC/3-3/3",
+      "rooms": 2,
+      "bua_sqm": 118.0,
+      "finishing": "Core & Shell",
+      "price": 11200000
     },
     {
       "project": "One Hyde Park",
@@ -2780,42 +2609,6 @@
       "bua_sqm": 74.0,
       "finishing": "Core & Shell",
       "price": 8000000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/4A-2/1",
-      "rooms": 2,
-      "bua_sqm": 113.0,
-      "finishing": "Core & Shell",
-      "price": 9810000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/4A-2/3",
-      "rooms": 1,
-      "bua_sqm": 78.0,
-      "finishing": "Core & Shell",
-      "price": 6870000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/4B-5/1",
-      "rooms": 2,
-      "bua_sqm": 124.0,
-      "finishing": "Core & Shell",
-      "price": 10800000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/4B-8/6",
-      "rooms": 3,
-      "bua_sqm": 150.0,
-      "finishing": "Core & Shell",
-      "price": 14210000
     },
     {
       "project": "One Hyde Park",
@@ -2874,11 +2667,11 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/5A-3/4",
-      "rooms": 1,
-      "bua_sqm": 78.0,
+      "unit_name": "OHC/5B-4/6",
+      "rooms": 3,
+      "bua_sqm": 150.0,
       "finishing": "Core & Shell",
-      "price": 7010000
+      "price": 13190000
     },
     {
       "project": "One Hyde Park",
@@ -2888,6 +2681,15 @@
       "bua_sqm": 124.0,
       "finishing": "Core & Shell",
       "price": 12110000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Garden Villa",
+      "unit_name": "OHC/6B-G/4",
+      "rooms": 3,
+      "bua_sqm": 208.0,
+      "finishing": "Core & Shell",
+      "price": 22050000
     },
     {
       "project": "One Hyde Park",
@@ -2910,20 +2712,20 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/6B-10/1",
-      "rooms": 3,
-      "bua_sqm": 150.0,
-      "finishing": "Core & Shell",
-      "price": 12820000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OHC/6A-11/1",
       "rooms": 3,
       "bua_sqm": 158.0,
       "finishing": "Core & Shell",
       "price": 16410000
+    },
+    {
+      "project": "One Hyde Park",
+      "type": "Apartment",
+      "unit_name": "OHC/6B-11/2",
+      "rooms": 2,
+      "bua_sqm": 124.0,
+      "finishing": "Core & Shell",
+      "price": 11410000
     },
     {
       "project": "One Hyde Park",
@@ -2973,15 +2775,6 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/9A-3/1",
-      "rooms": 2,
-      "bua_sqm": 122.0,
-      "finishing": "Core & Shell",
-      "price": 10790000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OHC/9A-3/4",
       "rooms": 2,
       "bua_sqm": 112.0,
@@ -3005,15 +2798,6 @@
       "bua_sqm": 267.0,
       "finishing": "Core & Shell",
       "price": 25360000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/9A-6/2",
-      "rooms": 3,
-      "bua_sqm": 190.0,
-      "finishing": "Core & Shell",
-      "price": 18630000
     },
     {
       "project": "One Hyde Park",
@@ -3054,24 +2838,6 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/11B-7/2",
-      "rooms": 2,
-      "bua_sqm": 124.0,
-      "finishing": "Core & Shell",
-      "price": 11470000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Duplex",
-      "unit_name": "OHC/11B-8/3",
-      "rooms": 3,
-      "bua_sqm": 208.0,
-      "finishing": "Core & Shell",
-      "price": 17540000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
       "unit_name": "OHC/11B-11/1",
       "rooms": 2,
       "bua_sqm": 124.0,
@@ -3089,30 +2855,12 @@
     },
     {
       "project": "One Hyde Park",
-      "type": "Garden Villa",
-      "unit_name": "OHC/12B-G/3",
+      "type": "Apartment",
+      "unit_name": "OHC/15B-1/3",
       "rooms": 3,
-      "bua_sqm": 219.0,
+      "bua_sqm": 150.0,
       "finishing": "Core & Shell",
-      "price": 23040000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/12A-6/3",
-      "rooms": 4,
-      "bua_sqm": 199.0,
-      "finishing": "Core & Shell",
-      "price": 19700000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/13-1/2",
-      "rooms": 2,
-      "bua_sqm": 120.0,
-      "finishing": "Core & Shell",
-      "price": 10310000
+      "price": 13400000
     },
     {
       "project": "One Hyde Park",
@@ -3131,15 +2879,6 @@
       "bua_sqm": 150.0,
       "finishing": "Core & Shell",
       "price": 13140000
-    },
-    {
-      "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/16B-10/4",
-      "rooms": 3,
-      "bua_sqm": 150.0,
-      "finishing": "Core & Shell",
-      "price": 14260000
     },
     {
       "project": "One Hyde Park",
@@ -3180,7 +2919,7 @@
     {
       "project": "One Hyde Park",
       "type": "Apartment",
-      "unit_name": "OHC/19-9/3",
+      "unit_name": "OHC/19-9/1",
       "rooms": 2,
       "bua_sqm": 116.0,
       "finishing": "Core & Shell",
@@ -3188,12 +2927,12 @@
     },
     {
       "project": "One Hyde Park",
-      "type": "Apartment",
-      "unit_name": "OHC/20A-1/4",
-      "rooms": 1,
-      "bua_sqm": 78.0,
+      "type": "Duplex",
+      "unit_name": "OHC/20A-2/3",
+      "rooms": 3,
+      "bua_sqm": 208.0,
       "finishing": "Core & Shell",
-      "price": 6870000
+      "price": 17810000
     },
     {
       "project": "One Hyde Park",
@@ -3223,13 +2962,139 @@
       "price": 18160000
     },
     {
-      "project": "One Hyde Park",
+      "project": "Signature",
       "type": "Apartment",
-      "unit_name": "OHC/20B-10/1",
-      "rooms": 3,
-      "bua_sqm": 150.0,
+      "unit_name": "HPS/18/G01",
+      "rooms": 2,
+      "bua_sqm": 108.0,
       "finishing": "Core & Shell",
-      "price": 14220000
+      "price": 13680000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/G02",
+      "rooms": 3,
+      "bua_sqm": 131.0,
+      "finishing": "Core & Shell",
+      "price": 17370000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/G03",
+      "rooms": 2,
+      "bua_sqm": 97.0,
+      "finishing": "Core & Shell",
+      "price": 12020000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/G04",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 11650000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/101",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10930000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/102",
+      "rooms": 3,
+      "bua_sqm": 132.0,
+      "finishing": "Core & Shell",
+      "price": 13570000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/103",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 10690000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/201",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 11030000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/202",
+      "rooms": 3,
+      "bua_sqm": 132.0,
+      "finishing": "Core & Shell",
+      "price": 13700000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/203",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 10790000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/204",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 10220000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/301",
+      "rooms": 2,
+      "bua_sqm": 108.0,
+      "finishing": "Core & Shell",
+      "price": 10820000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/302",
+      "rooms": 3,
+      "bua_sqm": 132.0,
+      "finishing": "Core & Shell",
+      "price": 13430000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/303",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 10580000
+    },
+    {
+      "project": "Signature",
+      "type": "Apartment",
+      "unit_name": "HPS/18/304",
+      "rooms": 2,
+      "bua_sqm": 100.0,
+      "finishing": "Core & Shell",
+      "price": 10020000
     },
     {
       "project": "Hyde Park Residential",
@@ -3261,15 +3126,6 @@
     {
       "project": "Hyde Park Residential",
       "type": "Apartment",
-      "unit_name": "HPPW/6-G/G01",
-      "rooms": 1,
-      "bua_sqm": 87.4,
-      "finishing": "Finished",
-      "price": 11100000
-    },
-    {
-      "project": "Hyde Park Residential",
-      "type": "Apartment",
       "unit_name": "HPPW/5-5/505",
       "rooms": 1,
       "bua_sqm": 78.28,
@@ -3284,15 +3140,6 @@
       "bua_sqm": 78.28,
       "finishing": "Finished",
       "price": 12830000
-    },
-    {
-      "project": "Hyde Park Residential",
-      "type": "Apartment",
-      "unit_name": "HPPW/5-5/503",
-      "rooms": 2,
-      "bua_sqm": 116.0,
-      "finishing": "Finished",
-      "price": 16070000
     },
     {
       "project": "Hyde Park Residential",
@@ -3320,15 +3167,6 @@
       "bua_sqm": 116.23,
       "finishing": "Finished",
       "price": 17790000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
-      "unit_name": "HPN5/LTA-13/503",
-      "rooms": 2,
-      "bua_sqm": 100.0,
-      "finishing": "Finished",
-      "price": 12940000
     },
     {
       "project": "Hyde Park North",
@@ -3387,15 +3225,6 @@
     {
       "project": "Hyde Park Central",
       "type": "Quad",
-      "unit_name": "HPC/QD/9C",
-      "rooms": null,
-      "bua_sqm": 217.0,
-      "finishing": "Core & Shell",
-      "price": 27760000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Quad",
       "unit_name": "HPC/QD/8D",
       "rooms": null,
       "bua_sqm": 217.0,
@@ -3405,38 +3234,11 @@
     {
       "project": "Hyde Park Central",
       "type": "Quad",
-      "unit_name": "HPC/QD/8C",
-      "rooms": null,
-      "bua_sqm": 217.0,
-      "finishing": "Core & Shell",
-      "price": 27960000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Quad",
-      "unit_name": "HPC/QD/7D",
-      "rooms": null,
-      "bua_sqm": 217.0,
-      "finishing": "Core & Shell",
-      "price": 27120000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Quad",
       "unit_name": "HPC/QD/7C",
       "rooms": null,
       "bua_sqm": 217.0,
       "finishing": "Core & Shell",
       "price": 27760000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Townhouse",
-      "unit_name": "HPC/4PLEX/80B",
-      "rooms": null,
-      "bua_sqm": 212.0,
-      "finishing": "Core & Shell",
-      "price": 25520000
     },
     {
       "project": "Hyde Park Central",
@@ -3455,15 +3257,6 @@
       "bua_sqm": 212.0,
       "finishing": "Core & Shell",
       "price": 25580000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Townhouse",
-      "unit_name": "HPC/6PLEX/79C",
-      "rooms": null,
-      "bua_sqm": 212.0,
-      "finishing": "Core & Shell",
-      "price": 25540000
     },
     {
       "project": "Hyde Park Central",
@@ -3554,15 +3347,6 @@
       "bua_sqm": 78.28,
       "finishing": "Finished",
       "price": 10280000
-    },
-    {
-      "project": "Hyde Park Residential",
-      "type": "Apartment",
-      "unit_name": "HPPW/6-4/404",
-      "rooms": 2,
-      "bua_sqm": 116.15,
-      "finishing": "Finished",
-      "price": 16310000
     },
     {
       "project": "Hyde Park Residential",
@@ -3666,38 +3450,20 @@
     {
       "project": "Business District",
       "type": "Office",
-      "unit_name": "HPO/1A-3/311",
-      "rooms": null,
-      "bua_sqm": 110.0,
-      "finishing": "Core & Shell",
-      "price": 20310000
-    },
-    {
-      "project": "Business District",
-      "type": "Office",
-      "unit_name": "HPO/1A-2/211",
-      "rooms": null,
-      "bua_sqm": 110.0,
-      "finishing": "Core & Shell",
-      "price": 20110000
-    },
-    {
-      "project": "Business District",
-      "type": "Office",
-      "unit_name": "HPO/1A-2/208",
-      "rooms": null,
-      "bua_sqm": 105.0,
-      "finishing": "Core & Shell",
-      "price": 19330000
-    },
-    {
-      "project": "Business District",
-      "type": "Office",
-      "unit_name": "HPO/1A-2/207",
+      "unit_name": "HPO/1A-4/407",
       "rooms": null,
       "bua_sqm": 75.0,
       "finishing": "Core & Shell",
-      "price": 15750000
+      "price": 16870000
+    },
+    {
+      "project": "Business District",
+      "type": "Office",
+      "unit_name": "HPO/1A-3/301",
+      "rooms": null,
+      "bua_sqm": 80.0,
+      "finishing": "Core & Shell",
+      "price": 17380000
     },
     {
       "project": "Business District",
@@ -3855,15 +3621,6 @@
     {
       "project": "Hyde Park North",
       "type": "Apartment",
-      "unit_name": "HPN5/LTA-34/206",
-      "rooms": 2,
-      "bua_sqm": 110.0,
-      "finishing": "Finished",
-      "price": 13950000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
       "unit_name": "HPN5/LTA-47/306",
       "rooms": 2,
       "bua_sqm": 110.0,
@@ -3900,29 +3657,11 @@
     {
       "project": "Hyde Park North",
       "type": "Apartment",
-      "unit_name": "HPN5/LTB-46/G02",
-      "rooms": 1,
-      "bua_sqm": 65.0,
-      "finishing": "Finished",
-      "price": 10510000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
       "unit_name": "HPN5/LTA-44/402",
       "rooms": 1,
       "bua_sqm": 80.0,
       "finishing": "Finished",
       "price": 9610000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
-      "unit_name": "HPN5/LTA-44/401",
-      "rooms": 1,
-      "bua_sqm": 65.0,
-      "finishing": "Finished",
-      "price": 9700000
     },
     {
       "project": "Hyde Park North",
@@ -4107,15 +3846,6 @@
     {
       "project": "Hyde Park North",
       "type": "Apartment",
-      "unit_name": "HPN5/LTA-28/401",
-      "rooms": 1,
-      "bua_sqm": 65.0,
-      "finishing": "Finished",
-      "price": 9740000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
       "unit_name": "HPN5/LTA-28/302",
       "rooms": 1,
       "bua_sqm": 79.0,
@@ -4238,15 +3968,6 @@
       "bua_sqm": 138.0,
       "finishing": "Finished",
       "price": 17990000
-    },
-    {
-      "project": "Hyde Park North",
-      "type": "Apartment",
-      "unit_name": "HPN5/LTA-6/G05",
-      "rooms": 1,
-      "bua_sqm": 73.0,
-      "finishing": "Finished",
-      "price": 10460000
     },
     {
       "project": "Hyde Park North",
@@ -4458,11 +4179,11 @@
     {
       "project": "Hyde Park Residential",
       "type": "Apartment",
-      "unit_name": "HPG/20-4/403",
-      "rooms": 2,
-      "bua_sqm": 113.38,
+      "unit_name": "HPG/20-2/206",
+      "rooms": 3,
+      "bua_sqm": 175.94,
       "finishing": "Core & Shell",
-      "price": 14650000
+      "price": 19920000
     },
     {
       "project": "Hyde Park Residential",
@@ -4701,6 +4422,15 @@
     {
       "project": "Hyde Park Residential",
       "type": "Standalone",
+      "unit_name": "HPDC18P/G2/30",
+      "rooms": null,
+      "bua_sqm": 355.0,
+      "finishing": "Core & Shell",
+      "price": 94640000
+    },
+    {
+      "project": "Hyde Park Residential",
+      "type": "Standalone",
       "unit_name": "HPDC9/B2/11",
       "rooms": null,
       "bua_sqm": 926.0,
@@ -4715,15 +4445,6 @@
       "bua_sqm": 926.0,
       "finishing": "Core & Shell",
       "price": 244500000
-    },
-    {
-      "project": "Hyde Park Residential",
-      "type": "Standalone",
-      "unit_name": "HPDC18/V/52",
-      "rooms": null,
-      "bua_sqm": 327.7,
-      "finishing": "Core & Shell",
-      "price": 80750000
     },
     {
       "project": "Hyde Park Residential",
@@ -4791,15 +4512,6 @@
     {
       "project": "Hyde Park Central",
       "type": "Apartment",
-      "unit_name": "HPC/CR-10/201",
-      "rooms": 3,
-      "bua_sqm": 150.13,
-      "finishing": "Core & Shell",
-      "price": 14430000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
       "unit_name": "HPC/CR-10/501",
       "rooms": 3,
       "bua_sqm": 150.13,
@@ -4814,15 +4526,6 @@
       "bua_sqm": 150.13,
       "finishing": "Core & Shell",
       "price": 13600000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
-      "unit_name": "HPC/CR-12/305",
-      "rooms": 2,
-      "bua_sqm": 101.43,
-      "finishing": "Core & Shell",
-      "price": 10230000
     },
     {
       "project": "Hyde Park Central",
@@ -4906,15 +4609,6 @@
       "price": 13140000
     },
     {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
-      "unit_name": "Test/HPD",
-      "rooms": 3,
-      "bua_sqm": 100.0,
-      "finishing": null,
-      "price": 10500000
-    },
-    {
       "project": "Garden Lakes",
       "type": "Apartment",
       "unit_name": "GL1/1/G02",
@@ -4971,11 +4665,11 @@
     {
       "project": "Garden Lakes",
       "type": "Standalone",
-      "unit_name": "GL1/SA/30",
+      "unit_name": "GL1/SA/31",
       "rooms": null,
       "bua_sqm": 242.0,
       "finishing": "Core & Shell",
-      "price": 39530000
+      "price": 39800000
     },
     {
       "project": "Garden Lakes",
@@ -5066,15 +4760,6 @@
       "bua_sqm": 131.16,
       "finishing": "Core & Shell",
       "price": 15000000
-    },
-    {
-      "project": "Hyde Park Central",
-      "type": "Apartment",
-      "unit_name": "HPC/CR-19/702",
-      "rooms": 2,
-      "bua_sqm": 111.8,
-      "finishing": "Core & Shell",
-      "price": 10220000
     }
   ]
 }
