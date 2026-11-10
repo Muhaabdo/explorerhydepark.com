@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.explorerhydepark.com/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/contact</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/privacy</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -158,21 +158,27 @@
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/en/contact</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/en/privacy</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/articles/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/articles/hyde-park-inventory-movement-november-2026</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/articles/hyde-park-dream-land-october</loc>
@@ -182,9 +188,15 @@
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/en/articles/</loc>
-    <lastmod>2026-10-29</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.explorerhydepark.com/en/articles/hyde-park-inventory-movement-november-2026</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.explorerhydepark.com/en/articles/hyde-park-dream-land-october</loc>

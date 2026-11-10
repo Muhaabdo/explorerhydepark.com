@@ -6,6 +6,7 @@
  *   slug, published / updated (YYYY-MM-DD)
  *   related: project slugs shown as cards under the article (and linked in the text)
  *   sources: [{ title, url }] — listed at the bottom; facts in the text must come from them
+ *            (url is optional: the developer's availability report has none)
  *   ar / en: { title (H1), seoTitle (<title>, ≤ ~60 chars), description (≤ 160),
  *              lede (first paragraph, plain text), body(ctx) → HTML, faqs: [{ q, a }] }
  *
@@ -27,6 +28,7 @@ var DREAM_LAND_SOURCES = [
 ];
 
 module.exports = [
+  require('./articles-movement')('2026-11-10', 'hyde-park-inventory-movement-november-2026'),
   {
     slug: 'hyde-park-dream-land-october',
     published: '2026-10-19',

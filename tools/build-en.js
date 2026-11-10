@@ -1490,5 +1490,6 @@ module.exports = function buildEnglish(h) {
       { loc: SITE + '/en/contact', file: 'en/contact.html', changefreq: 'monthly', priority: '0.5' },
       { loc: SITE + '/en/privacy', file: 'en/privacy.html', changefreq: 'yearly', priority: '0.3' },
     ]);
-  return { urls: urls, doc: doc, nav: nav, hreflang: hreflang, homeCard: homeCard };
+  // Callers outside this file (the articles) hold the Arabic project objects, so look the English one up by slug.
+  return { urls: urls, doc: doc, nav: nav, hreflang: hreflang, homeCard: function (p) { return homeCard(bySlug[p.slug] || p); } };
 };

@@ -38,6 +38,11 @@ node tools/build-pages.js
 python tools/import-availability.py path/to/Sales_Availability_Report.csv --date 2026-10-19
 node tools/build-pages.js
 
+# "inventory movement" article for a new report: what left / entered since the previous one
+git show <commit-before-the-import>:tools/inventory.json > old.json
+python tools/inventory-movement.py old.json tools/inventory.json --from 2026-10-19 --to 2026-11-10
+#   then add  require('./articles-movement')('2026-11-10', '<slug>')  to tools/articles.js and build
+
 # after editing projects-data.js, pricing.json, inventory.json or adding photos
 node tools/build-pages.js
 

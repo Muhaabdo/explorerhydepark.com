@@ -88,7 +88,7 @@ module.exports = function buildArticles(ar, en) {
       author: { '@type': 'Organization', name: ar.SITE_NAME, url: SITE + (lang === 'en' ? '/en/' : '/') },
       publisher: { '@type': 'Organization', name: ar.SITE_NAME, url: SITE + '/' },
       image: ar.ogImageUrl(a.related[0]),
-      citation: a.sources.map(function (s) { return s.url; }),
+      citation: a.sources.map(function (s) { return s.url || s.title; }),
     };
     var crumbs = {
       '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -136,7 +136,10 @@ module.exports = function buildArticles(ar, en) {
       '      </div>\n' +
       '      <h2 class="pp-h2 article__sources-title">' + t.sources + '</h2>\n' +
       '      <ul class="article__sources">\n' +
-      a.sources.map(function (s) { return '        <li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.title) + '</a></li>\n'; }).join('') +
+      a.sources.map(function (s) {
+        // A source with no url (e.g. the developer's availability report) is listed as plain text.
+        return '        <li>' + (s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.title) + '</a>' : esc(s.title)) + '</li>\n';
+      }).join('') +
       '      </ul>\n' +
       '    </div>\n' +
       '  </section>\n\n'

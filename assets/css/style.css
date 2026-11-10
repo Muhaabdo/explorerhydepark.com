@@ -1077,6 +1077,8 @@ html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3, html[lang="en"] h4 {
 .article__lede { font-size: 18px; line-height: 1.9; font-weight: 600; margin: 8px 0 24px; }
 .article__body { font-size: 16.5px; line-height: 1.95; }
 .article__body h2 { font-size: clamp(20px, 3.4vw, 26px); color: var(--blue); margin: 32px 0 12px; }
+.article__body h3 { font-size: 18px; margin: 22px 0 6px; }
+.article__body h3 a { color: var(--navy); }
 .article__body p { margin: 0 0 14px; }
 .article__body ul { margin: 0 0 16px; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 6px; }
 .article__body a { color: var(--blue); font-weight: 700; }
