@@ -235,7 +235,20 @@ module.exports = function buildArticles(ar, en) {
       '  <section class="pp-section">\n' +
       '    <ul class="pp-wrap article__wrap article-list">\n' + items + '    </ul>\n' +
       '  </section>\n\n';
+    var home = SITE + (lang === 'en' ? '/en/' : '/');
+    var hubSchema = ar.jsonLd({
+      '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t.home, item: home },
+        { '@type': 'ListItem', position: 2, name: t.hub, item: canonical },
+      ],
+    }) + '\n' + ar.jsonLd({
+      '@context': 'https://schema.org', '@type': 'ItemList', name: t.hubTitle, numberOfItems: list.length,
+      itemListElement: list.map(function (a, i) {
+        return { '@type': 'ListItem', position: i + 1, name: a[lang].title, url: SITE + articlePath(lang, a.slug) };
+      }),
+    });
     var o = {
+      schema: hubSchema,
       ctx: { page_type: 'articles', project_name: '', area: '' },
       title: t.hubTitle + ' | Explorer Hyde Park',
       description: t.hubLede,
@@ -248,6 +261,7 @@ module.exports = function buildArticles(ar, en) {
       ctx: o.ctx, title: o.title, description: o.description, canonical: canonical,
       alternates: en.hreflang(arPath, enPath),
       og: { title: o.title, description: o.description, url: canonical, image: o.image },
+      schema: o.schema,
       bodyClass: 'pp-page',
       body: en.nav(false, arPath) + '\n\n' + bodyHtml,
     });

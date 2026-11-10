@@ -1022,6 +1022,11 @@ module.exports = function buildEnglish(h) {
       telephone: h.PHONE_NUMBER,
       areaServed: 'EG',
       description: 'Marketing platform and authorized broker for Hyde Park Developments projects in Egypt. Not the developer.',
+    }) + '\n' + h.jsonLd({
+      '@context': 'https://schema.org', '@type': 'ItemList', name: 'Hyde Park projects in Egypt', numberOfItems: all.length,
+      itemListElement: all.map(function (o, i) {
+        return { '@type': 'ListItem', position: i + 1, name: o.nameEn, url: SITE + '/en/projects/' + o.slug };
+      }),
     });
     var projectsHtml = areas.map(function (area) {
       var hub = area === COMMERCIAL_GROUP ? '' : enAreaPath(byArea[area][0].areaSlug);

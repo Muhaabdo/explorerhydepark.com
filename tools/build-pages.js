@@ -2030,6 +2030,49 @@ function writeRobotsTxt() {
   console.log('wrote robots.txt');
 }
 
+/** Homepage structured data (index.html is hand-written, so this is spliced in
+ * between AUTO:SCHEMA markers before </head>): who we are (the broker, never the
+ * developer), the site, and the list of project pages — from the same data as the cards. */
+function updateIndexSchema(merged) {
+  var html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  var nl = html.indexOf('\r\n') !== -1 ? '\r\n' : '\n';
+  var graph = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'RealEstateAgent',
+        '@id': SITE_ORIGIN + '/#organization',
+        name: SITE_NAME,
+        url: SITE_ORIGIN + '/',
+        telephone: PHONE_NUMBER,
+        areaServed: 'EG',
+        description: 'منصة تسويق ووسيط عقاري لمشاريع هايد بارك للتطوير العقاري في مصر. المنصة ليست المطوّر.',
+      },
+      {
+        '@type': 'WebSite',
+        '@id': SITE_ORIGIN + '/#website',
+        name: SITE_NAME,
+        url: SITE_ORIGIN + '/',
+        inLanguage: ['ar', 'en'],
+        publisher: { '@id': SITE_ORIGIN + '/#organization' },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'مشاريع هايد بارك',
+        numberOfItems: merged.length,
+        itemListElement: merged.map(function (p, i) {
+          return { '@type': 'ListItem', position: i + 1, name: p.nameAr, url: SITE_ORIGIN + '/projects/' + p.slug };
+        }),
+      },
+    ],
+  };
+  var block = '<!-- AUTO:SCHEMA:START -->' + nl + jsonLd(graph) + nl + '<!-- AUTO:SCHEMA:END -->';
+  var re = /<!-- AUTO:SCHEMA:START -->[\s\S]*?<!-- AUTO:SCHEMA:END -->/;
+  var updated = re.test(html) ? html.replace(re, function () { return block; })
+    : html.replace('</head>', function () { return block + nl + '</head>'; });
+  writeIfChanged('index.html', updated);
+}
+
 /** "آخر الأخبار" on index.html between AUTO:NEWS markers (inserted after the
  * projects section the first time) — newest 3 articles from tools/articles.js. */
 function updateIndexNews() {
@@ -2120,6 +2163,7 @@ Object.keys(AREAS).forEach(function (slug) {
 writeIfChanged('404.html', notFoundPage(merged));
 console.log('wrote 404.html');
 updateIndexHtml(merged);
+updateIndexSchema(merged);
 writeIfChanged('assets/img/projects/README.md', imageChecklist(merged));
 console.log('wrote assets/img/projects/README.md (image checklist)');
 injectStaticOgTags('index.html', OG_DEFAULT_IMAGE);
